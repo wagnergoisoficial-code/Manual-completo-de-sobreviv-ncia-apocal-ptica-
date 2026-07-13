@@ -1,0 +1,6 @@
+{
+  "name": "Manual de Sobrevivência Apocalíptica - VSL",
+  "description": "Uma página de vendas de alta conversão (VSL) para o Manual de Sobrevivência Apocalíptica, projetada especificamente para pensadores revolucionários contemporâneos com vídeo interativo, quiz de prontidão e simulador de checkout.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
