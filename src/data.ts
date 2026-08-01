@@ -1,5 +1,11 @@
 import { QuizQuestion, Chapter, Bonus, Testimonial } from './types';
 
+// Link de Checkout Oficial da Kiwify - Pode ser configurado pela variável VITE_KIWIFY_URL
+export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/jJXmZkl";
+
+// Link ou ID do Vídeo do YouTube para a VSL (ex: "https://www.youtube.com/watch?v=CODIGO" ou "CODIGO")
+export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "";
+
 export const EBOOK_TITLE = "Manual Completo de Sobrevivência Apocalíptica";
 export const EBOOK_SUBTITLE = "O guia definitivo de autonomia tática e resiliência civil para mentes estratégicas contemporâneas.";
 
@@ -118,21 +124,21 @@ export const BONUSES: Bonus[] = [
   {
     id: 1,
     title: "O Guia Secreto de Telecomunicações Resilientes",
-    value: "R$ 97,00",
+    value: "Grátis",
     description: "O atlas definitivo contendo o mapa de frequências oficiais do governo, frequências militares ativas e o manual prático para montar receptores de ondas curtas usando sucatas eletrônicas.",
     badge: "EXCLUSIVO DE HOJE"
   },
   {
     id: 2,
     title: "Checklist do Protocolo de Evacuação de 72 Horas",
-    value: "R$ 49,00",
+    value: "Grátis",
     description: "Um infográfico tático de ação imediata em formato PDF. Um fluxograma contendo passos milimetricamente calculados para as primeiras 72 horas pós-desastre cibernético ou financeiro.",
     badge: "ESSENCIAL"
   },
   {
     id: 3,
     title: "Guia da Farmácia Natural e Antibióticos de Emergência",
-    value: "R$ 79,00",
+    value: "Grátis",
     description: "Como estocar antibióticos veterinários de forma segura, dosagens para humanos e o catálogo de plantas medicinais de alto rendimento atestadas por estudos de medicina de combate.",
     badge: "SOBREVIVÊNCIA BIOLÓGICA"
   }

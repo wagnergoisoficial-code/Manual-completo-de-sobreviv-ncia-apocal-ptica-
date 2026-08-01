@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { QUIZ_QUESTIONS } from '../data';
+import { QUIZ_QUESTIONS, KIWIFY_CHECKOUT_URL } from '../data';
 import { QuizQuestion } from '../types';
 import { ShieldAlert, ShieldCheck, ArrowRight, RotateCcw, AlertTriangle, BookOpen, CheckCircle, BarChart3 } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -249,8 +249,10 @@ export default function SurvivalQuiz() {
               </p>
             </div>
             <a 
-              href="#pricing-module"
-              className="w-full md:w-auto px-6 py-3.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-black font-display font-black text-xs uppercase tracking-wider text-center transition-all duration-300 shrink-0 shadow-lg shadow-survival-amber/10 hover:scale-[1.02]"
+              href={KIWIFY_CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full md:w-auto px-6 py-3.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-xs uppercase tracking-wider text-center transition-all duration-300 shrink-0 shadow-lg shadow-survival-amber/10 hover:scale-[1.02]"
             >
               CORRIGIR MINHA MATRIZ AGORA
             </a>

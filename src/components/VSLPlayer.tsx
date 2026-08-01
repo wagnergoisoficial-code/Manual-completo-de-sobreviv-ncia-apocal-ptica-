@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize2, AlertTriangle, ShieldAlert, Sparkles, Activity, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { YOUTUBE_VIDEO_URL } from '../data';
 
 interface VSLSlide {
   timeStart: number;
@@ -13,12 +14,20 @@ interface VSLSlide {
   accentColor: string;
 }
 
+function extractYouTubeId(url: string): string | null {
+  if (!url) return null;
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  if (match) return match[1];
+  if (/^[\w-]{11}$/.test(url.trim())) return url.trim();
+  return null;
+}
+
 const VSL_SLIDES: VSLSlide[] = [
   {
     timeStart: 0,
     timeEnd: 10,
     title: "A ILUSÃO DE ESTABILIDADE",
-    badge: "TRANSMISSÃO CRÍTICA",
+    badge: "ANÁLISE INICIAL",
     subtitle: "Por que o sistema global em que você confia está pendurado por um fio?",
     copy: "Nossa civilização moderna baseia-se em entregas 'just-in-time'. Não há estoques reais. Um atraso de 3 dias no diesel zera as prateleiras de qualquer supermercado metropolitano.",
     bgStyle: "bg-radial from-red-950/40 via-apoc-gray to-apoc-black",
@@ -77,16 +86,18 @@ const VSL_SLIDES: VSLSlide[] = [
   {
     timeStart: 110,
     timeEnd: 135,
-    title: "O APORTE INTELIGENTE",
-    badge: "OFERTA HISTÓRICA",
-    subtitle: "Acesso vitalício por uma fração do custo de um tanque de gasolina.",
-    copy: "O valor regular de R$ 197,00 foi reduzido para apenas R$ 47,00 hoje. Um investimento marginal para uma autonomia tática que pode salvar a vida de sua família.",
+    title: "AUTONOMIA TÁTICA",
+    badge: "ACESSO VITALÍCIO",
+    subtitle: "Acesso vitalício ao manual e bônus.",
+    copy: "Um compêndio definitivo contendo estratégias práticas de sobrevivência e autonomia para proteger sua família em qualquer cenário.",
     bgStyle: "bg-radial from-amber-950/30 via-apoc-gray to-apoc-black",
     accentColor: "text-survival-amber border-amber-900/40"
   }
 ];
 
 export default function VSLPlayer() {
+  const youtubeId = extractYouTubeId(YOUTUBE_VIDEO_URL);
+
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -97,6 +108,7 @@ export default function VSLPlayer() {
 
   // Auto-play / update time ticker
   useEffect(() => {
+    if (youtubeId) return; // Skip simulated interval if using YouTube video
     if (isPlaying) {
       timerRef.current = setInterval(() => {
         setCurrentTime((prev) => {
@@ -116,7 +128,23 @@ export default function VSLPlayer() {
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [isPlaying]);
+  }, [isPlaying, youtubeId]);
+
+  if (youtubeId) {
+    return (
+      <div className="w-full max-w-4xl mx-auto" id="vsl-module">
+        <div className="relative border border-zinc-800/80 rounded-2xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.85)] bg-black aspect-video group transition-all duration-500 hover:border-zinc-700/60">
+          <iframe
+            className="w-full h-full border-0"
+            src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=0`}
+            title="Vídeo de Apresentação"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    );
+  }
 
   // Find active slide based on current time
   const activeSlide = VSL_SLIDES.find(
@@ -164,7 +192,7 @@ export default function VSLPlayer() {
             <span className="hidden sm:inline text-[9px] text-zinc-600 font-medium">SAT-INTEL: DECRYPTED_FILE // COD-771</span>
             <div className="flex items-center gap-1.5 bg-zinc-950/90 border border-zinc-800/80 px-3 py-1 rounded-lg text-survival-amber shadow-sm">
               <Clock className="w-3.5 h-3.5" />
-              <span className="font-semibold">TIME INTRUSION: {formatTime(currentTime)}</span>
+              <span className="font-semibold">{formatTime(currentTime)}</span>
             </div>
           </div>
         </div>

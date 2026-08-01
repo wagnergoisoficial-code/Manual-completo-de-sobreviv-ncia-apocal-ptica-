@@ -11,11 +11,11 @@ import EbookPreview from './components/EbookPreview';
 import CheckoutSection from './components/CheckoutSection';
 import FAQ from './components/FAQ';
 import { ShieldAlert, Radio, Activity, Star, Users, ArrowRight, ShieldCheck, HeartPulse, Sparkles, BookOpen } from 'lucide-react';
-import { TESTIMONIALS } from './data';
+import { TESTIMONIALS, KIWIFY_CHECKOUT_URL } from './data';
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-black text-zinc-100 flex flex-col font-sans relative overflow-x-hidden selection:bg-survival-light selection:text-black">
+    <div className="min-h-screen bg-apoc-black text-zinc-100 flex flex-col font-sans relative overflow-x-hidden selection:bg-survival-light selection:text-black">
       
       {/* Decorative background grids & faint glows */}
       <div className="absolute top-0 left-0 w-full h-[600px] bg-gradient-to-b from-survival-green/5 via-transparent to-transparent pointer-events-none z-0 animate-pulse" />
@@ -29,17 +29,33 @@ export default function App() {
       <main className="flex-1 relative z-10">
         
         {/* HERO SECTION - FIRST SESSION WITH VIDEO PLAYER */}
-        <section className="py-12 px-4 sm:px-8 relative" id="hero-module">
-          <div className="max-w-5xl mx-auto text-center space-y-8">
+        <section className="py-16 px-4 sm:px-8 relative" id="hero-module">
+          <div className="max-w-5xl mx-auto text-center space-y-10 animate-fade-in">
             
-            {/* VSL VIDEO PLAYER - IN FIRST SESSION */}
+            {/* VSL VIDEO PLAYER - IN FIRST SESSION AT THE TOP */}
             <div className="pt-2">
               <VSLPlayer />
             </div>
 
+            {/* IMMEDIATE CTA BUTTON BELOW VIDEO */}
+            <div className="flex flex-col items-center pt-2">
+              <a 
+                href={KIWIFY_CHECKOUT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full max-w-lg py-5 px-8 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-base sm:text-lg uppercase tracking-wider text-center block transition-all duration-300 transform hover:scale-[1.02] shadow-[0_12px_40px_rgba(245,158,11,0.35)] hover:shadow-[0_15px_50px_rgba(245,158,11,0.5)] cursor-pointer active:scale-[0.98] animate-pulse"
+              >
+                <span className="block">QUERO MEU MANUAL COMPLETO AGORA</span>
+                <span className="text-[10px] tracking-widest font-mono block mt-1 opacity-90 font-bold text-white">OBTER MEU ACESSO IMEDIATO + BÔNUS EXCLUSIVOS</span>
+              </a>
+            </div>
+
             {/* PERSUASIVE HEADLINE BELOW THE VIDEO */}
-            <div className="pt-10 space-y-5 max-w-4xl mx-auto">
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight leading-tight uppercase">
+            <div className="space-y-5 max-w-4xl mx-auto pt-4">
+              <span className="text-[10px] font-mono text-survival-amber tracking-widest uppercase font-black bg-survival-amber/10 border border-survival-amber/20 px-3.5 py-1.5 rounded-full inline-block">
+                ALERTA: COMUNICADO IMPORTANTE DE SEGURANÇA
+              </span>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight leading-tight uppercase pt-2">
                 O colapso sistêmico não é uma questão de <span className="text-survival-amber">se</span>, mas de <span className="text-survival-light">quando</span>. Aqueles que continuarem cegos serão os primeiros a sucumbir.
               </h1>
 
@@ -49,15 +65,8 @@ export default function App() {
               </p>
             </div>
 
-            {/* Post-VSL Trust Elements & Main Highly Prominent Call-to-Action */}
-            <div className="pt-6 max-w-2xl mx-auto space-y-6 flex flex-col items-center">
-              <a 
-                href="#pricing-module"
-                className="w-full max-w-md py-4.5 px-8 rounded-xl bg-survival-light hover:bg-green-500 text-black font-display font-black text-sm uppercase tracking-wider text-center block transition-all duration-300 transform hover:scale-[1.01] shadow-[0_10px_35px_rgba(34,197,94,0.25)] cursor-pointer"
-              >
-                QUERO O MANUAL COMPLETO COM ACESSO IMEDIATO
-              </a>
-
+            {/* Post-VSL Trust Elements */}
+            <div className="pt-4 max-w-2xl mx-auto space-y-6 flex flex-col items-center">
               <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] text-zinc-500 font-mono font-bold">
                 <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-survival-light" />
@@ -80,7 +89,7 @@ export default function App() {
         </section>
 
         {/* INTERACTIVE COMPONENT 1: THE RESILIENCY MATRIX QUIZ */}
-        <section className="py-20 sm:py-28 px-4 sm:px-8 border-y border-zinc-900 bg-zinc-950/20 relative">
+        <section className="py-20 sm:py-28 px-4 sm:px-8 border-y border-apoc-border bg-apoc-gray/40 relative">
           {/* Subtle warning stripe design element on margins */}
           <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-survival-amber/0 via-survival-amber/35 to-survival-amber/0" />
           
@@ -105,7 +114,7 @@ export default function App() {
         </section>
 
         {/* STATS BANNER - SOCIAL PROOF */}
-        <section className="py-14 bg-zinc-950/80 border-y border-zinc-900 text-center">
+        <section className="py-14 bg-apoc-gray border-y border-apoc-border text-center">
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="space-y-1">
               <span className="text-3xl sm:text-4xl font-mono font-black text-white block tracking-tighter">9.7k+</span>
@@ -144,7 +153,7 @@ export default function App() {
             {TESTIMONIALS.map((test) => (
               <div 
                 key={test.id} 
-                className="bg-zinc-950/40 border border-zinc-900 rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-lg relative group hover:border-zinc-800 transition-all duration-350 backdrop-blur-xl"
+                className="bg-apoc-gray border border-apoc-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-lg relative group hover:border-zinc-850 transition-all duration-350 backdrop-blur-xl"
               >
                 <div className="space-y-5">
                   <div className="flex gap-1 text-survival-amber">
@@ -157,12 +166,12 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="flex items-center gap-3.5 pt-5 mt-6 border-t border-zinc-900/60">
+                <div className="flex items-center gap-3.5 pt-5 mt-6 border-t border-apoc-border">
                   <img 
                     src={test.avatar} 
                     alt={test.name} 
                     referrerPolicy="no-referrer"
-                    className="w-10 h-10 rounded-full object-cover shrink-0 border border-zinc-800"
+                    className="w-10 h-10 rounded-full object-cover shrink-0 border border-apoc-border"
                   />
                   <div className="min-w-0">
                     <h4 className="text-xs font-extrabold text-white truncate">{test.name}</h4>
@@ -175,7 +184,7 @@ export default function App() {
         </section>
 
         {/* CORE CHECKOUT & BONUSES SECTION */}
-        <section className="py-20 sm:py-28 px-4 sm:px-8 bg-zinc-950/10 border-t border-zinc-900 relative">
+        <section className="py-20 sm:py-28 px-4 sm:px-8 bg-apoc-gray/10 border-t border-apoc-border relative">
           <CheckoutSection />
         </section>
 
@@ -185,7 +194,7 @@ export default function App() {
         </section>
 
         {/* HIGHEST SCARCITY PRE-FOOTER PITCH */}
-        <section className="py-14 bg-survival-red/5 border-y border-zinc-900/80 text-center px-4 sm:px-8">
+        <section className="py-14 bg-survival-red/5 border-y border-apoc-border text-center px-4 sm:px-8">
           <div className="max-w-3xl mx-auto space-y-4">
             <h3 className="text-xl sm:text-3xl font-display font-black text-survival-red uppercase tracking-wide">
               VOCÊ VAI ESPERAR A REDE CAIR PARA APRENDER?
@@ -195,8 +204,10 @@ export default function App() {
             </p>
             <div className="pt-4">
               <a 
-                href="#pricing-module"
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-survival-red hover:bg-red-500 text-white font-display font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-survival-red/10 hover:scale-[1.01] cursor-pointer"
+                href={KIWIFY_CHECKOUT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-survival-amber/10 hover:scale-[1.01] cursor-pointer"
               >
                 ADQUIRIR O MANUAL COMPLETO AGORA
                 <ArrowRight className="w-4 h-4" />
@@ -207,16 +218,13 @@ export default function App() {
 
       </main>
 
-      {/* DISCREET SYSTEM FOOTER */}
-      <footer className="border-t border-zinc-900 bg-black py-10 text-center text-[10px] font-mono text-zinc-600 px-4">
-        <div className="max-w-6xl mx-auto space-y-4">
-          <p className="uppercase tracking-widest font-bold text-zinc-500">
-            SOCIETAL DECRYPT SECURITY PROTOCOL // COGNITIVE FREEDOM DIVISION
+      {/* FOOTER */}
+      <footer className="border-t border-apoc-border bg-apoc-black py-8 text-center text-[10px] font-mono text-zinc-600 px-4">
+        <div className="max-w-6xl mx-auto space-y-3">
+          <p className="max-w-3xl mx-auto leading-relaxed font-medium text-zinc-500">
+            AVISO DE RESPONSABILIDADE: Os métodos descritos neste compêndio são de teor estritamente pedagógico e informativo de resiliência civil.
           </p>
-          <p className="max-w-3xl mx-auto leading-relaxed font-semibold">
-            AVISO DE RESPONSABILIDADE: Os métodos descritos neste compêndio são de teor estritamente pedagógico e informativo de resiliência civil. O leitor assume integral responsabilidade civil e jurídica pela aplicação das táticas off-grid e práticas laboratoriais descritas.
-          </p>
-          <p className="text-zinc-700 font-bold">
+          <p className="text-zinc-600 font-bold">
             © {new Date().getFullYear()} MANUAL COMPLETO DE SOBREVIVÊNCIA APOCALÍPTICA. TODOS OS DIREITOS RESERVADOS.
           </p>
         </div>

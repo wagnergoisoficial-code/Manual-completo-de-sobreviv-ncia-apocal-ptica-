@@ -105,7 +105,7 @@ export default function EbookPreview() {
                 </div>
                 <div>
                   <span className="text-[9px] font-mono text-survival-amber tracking-widest uppercase block font-bold">
-                    PROTOCOLO SEGURO // MÓDULO 0{activeChapter.number}
+                    MÓDULO 0{activeChapter.number}
                   </span>
                   <h3 className="text-xl sm:text-2xl font-display font-black text-white tracking-wider uppercase mt-0.5">
                     {activeChapter.title}
