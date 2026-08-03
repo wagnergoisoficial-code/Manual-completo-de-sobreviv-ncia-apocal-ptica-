@@ -16,7 +16,7 @@ interface VSLSlide {
 
 function extractYouTubeId(url: string): string | null {
   if (!url) return null;
-  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
+  const match = url.match(/(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/(?:embed\/|v\/|shorts\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
   if (match) return match[1];
   if (/^[\w-]{11}$/.test(url.trim())) return url.trim();
   return null;
@@ -136,7 +136,7 @@ export default function VSLPlayer() {
         <div className="relative border border-zinc-800/80 rounded-2xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.85)] bg-black aspect-video group transition-all duration-500 hover:border-zinc-700/60">
           <iframe
             className="w-full h-full border-0"
-            src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=0`}
+            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=0`}
             title="Vídeo de Apresentação"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowFullScreen
