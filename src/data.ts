@@ -5,7 +5,7 @@ export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://p
 
 // Link ou ID do Vídeo do YouTube para a VSL
 // VOCÊ PODE COLOCAR SEU LINK DO YOUTUBE DIRETAMENTE ENTRE AS ASPAS ABAIXO:
-// Exemplo: "https://www.youtube.com/watch?v=SEU_CODIGO" ou apenas "SEU_CODIGO"
+// Exemplo: "export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "COLE_AQUI_SEU_LINK_DO_YOUTUBE";" ou apenas "SEU_CODIGO"
 export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "";
 
 export const EBOOK_TITLE = "Manual Completo de Sobrevivência Apocalíptica";
