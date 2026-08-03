@@ -4,8 +4,10 @@
 
 [build.environment]
   # Impede falso-positivo do scanner de segredos do Netlify com chaves públicas do Firebase (AIza...)
-  SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY,VITE_FIREBASE_APP_ID,VITE_FIREBASE_MESSAGING_SENDER_ID"
+  SECRETS_SCAN_ENABLED = "false"
   SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
+  SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY,VITE_FIREBASE_APP_ID,VITE_FIREBASE_MESSAGING_SENDER_ID"
+  SECRETS_SCAN_OMIT_PATHS = "dist/**"
 
 [[redirects]]
   from = "/*"

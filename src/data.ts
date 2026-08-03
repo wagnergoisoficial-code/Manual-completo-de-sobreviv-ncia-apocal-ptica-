@@ -3,7 +3,9 @@ import { QuizQuestion, Chapter, Bonus, Testimonial } from './types';
 // Link de Checkout Oficial da Kiwify - Pode ser configurado pela variável VITE_KIWIFY_URL
 export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/jJXmZkl";
 
-// Link ou ID do Vídeo do YouTube para a VSL (ex: "https://www.youtube.com/watch?v=CODIGO" ou "CODIGO")
+// Link ou ID do Vídeo do YouTube para a VSL
+// VOCÊ PODE COLOCAR SEU LINK DO YOUTUBE DIRETAMENTE ENTRE AS ASPAS ABAIXO:
+// Exemplo: "https://www.youtube.com/watch?v=SEU_CODIGO" ou apenas "SEU_CODIGO"
 export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "";
 
 export const EBOOK_TITLE = "Manual Completo de Sobrevivência Apocalíptica";
