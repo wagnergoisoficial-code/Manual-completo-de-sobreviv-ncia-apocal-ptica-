@@ -12,6 +12,7 @@ import CheckoutSection from './components/CheckoutSection';
 import FAQ from './components/FAQ';
 import { ShieldAlert, Radio, Activity, Star, Users, ArrowRight, ShieldCheck, HeartPulse, Sparkles, BookOpen } from 'lucide-react';
 import { TESTIMONIALS, KIWIFY_CHECKOUT_URL } from './data';
+import { trackPixel } from './pixel';
 
 export default function App() {
   return (
@@ -43,6 +44,7 @@ export default function App() {
                 href={KIWIFY_CHECKOUT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Hero' })}
                 className="w-full max-w-lg py-5 px-8 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-base sm:text-lg uppercase tracking-wider text-center block transition-all duration-300 transform hover:scale-[1.02] shadow-[0_12px_40px_rgba(245,158,11,0.35)] hover:shadow-[0_15px_50px_rgba(245,158,11,0.5)] cursor-pointer active:scale-[0.98] animate-pulse"
               >
                 <span className="block">QUERO MEU MANUAL COMPLETO AGORA</span>
@@ -207,6 +209,7 @@ export default function App() {
                 href={KIWIFY_CHECKOUT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Pré-rodapé' })}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-survival-amber/10 hover:scale-[1.01] cursor-pointer"
               >
                 ADQUIRIR O MANUAL COMPLETO AGORA

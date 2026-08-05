@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BONUSES, KIWIFY_CHECKOUT_URL } from '../data';
+import { trackPixel } from '../pixel';
 import { Shield, Sparkles, Clock, Check, ArrowRight, ShieldCheck, Star, Users, Flame } from 'lucide-react';
 import manualCover from '../assets/images/manual_cover_1783965348887.jpg';
 
@@ -216,6 +217,7 @@ export default function CheckoutSection() {
                 href={KIWIFY_CHECKOUT_URL}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Checkout' })}
                 className="w-full py-4.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-center text-sm sm:text-base uppercase tracking-wider transition-all duration-300 shadow-[0_8px_30px_rgba(245,158,11,0.3)] hover:shadow-[0_12px_40px_rgba(245,158,11,0.5)] flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] animate-bounce-slow"
               >
                 QUERO MEU ACESSO IMEDIATO + BÔNUS
