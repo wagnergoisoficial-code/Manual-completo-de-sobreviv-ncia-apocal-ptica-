@@ -6,7 +6,7 @@ export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://p
 // Link ou ID do Vídeo do YouTube para a VSL
 // VOCÊ PODE COLOCAR SEU LINK DO YOUTUBE DIRETAMENTE ENTRE AS ASPAS ABAIXO:
 // Exemplo: "export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "COLE_AQUI_SEU_LINK_DO_YOUTUBE";" ou apenas "SEU_CODIGO"
-export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "https://www.youtube-nocookie.com/embed/JBilsEOP7JY?rel=0&modestbranding=1";
+export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "https://www.youtube-nocookie.com/embed/JN376P1nCZY?rel=0&modestbranding=1";
 
 export const EBOOK_TITLE = "Manual Completo de Sobrevivência Apocalíptica";
 export const EBOOK_SUBTITLE = "O guia definitivo de autonomia tática e resiliência civil para mentes estratégicas contemporâneas.";
