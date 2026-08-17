@@ -32,8 +32,24 @@ export default function App() {
         {/* HERO SECTION - FIRST SESSION WITH VIDEO PLAYER */}
         <section className="py-16 px-4 sm:px-8 relative" id="hero-module">
           <div className="max-w-5xl mx-auto text-center space-y-10 animate-fade-in">
-            
-            {/* VSL VIDEO PLAYER - IN FIRST SESSION AT THE TOP */}
+
+            {/* HERO COPY ABOVE THE VIDEO */}
+            <div className="space-y-5 max-w-4xl mx-auto pt-4">
+              <span className="text-[10px] font-mono text-survival-amber tracking-widest uppercase font-black bg-survival-amber/10 border border-survival-amber/20 px-3.5 py-1.5 rounded-full inline-block">
+                EBOOK COMPLETO + PLATAFORMA
+              </span>
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight leading-tight uppercase pt-2">
+                QUANDO O SISTEMA PARA, NÃO EXISTE TEMPO PARA APRENDER. <span className="text-survival-amber">EXISTE O QUE VOCÊ PREPAROU ANTES.</span>
+              </h1>
+              <p className="text-sm sm:text-lg text-zinc-400 max-w-3xl mx-auto font-sans font-medium leading-relaxed">
+                Um plano prático para água, alimentos, energia, saúde, segurança e evacuação — com manual completo, ferramentas e checklists para transformar preparação em ação.
+              </p>
+              <p className="text-sm sm:text-base text-zinc-200 max-w-2xl mx-auto font-sans font-bold leading-relaxed">
+                Assista ao vídeo abaixo e descubra como se preparar antes que uma emergência aconteça.
+              </p>
+            </div>
+
+            {/* VSL VIDEO PLAYER BELOW THE HERO COPY */}
             <div className="pt-2">
               <VSLPlayer />
             </div>
@@ -47,24 +63,9 @@ export default function App() {
                 onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Hero' })}
                 className="w-full max-w-lg py-5 px-8 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-base sm:text-lg uppercase tracking-wider text-center block transition-all duration-300 transform hover:scale-[1.02] shadow-[0_12px_40px_rgba(245,158,11,0.35)] hover:shadow-[0_15px_50px_rgba(245,158,11,0.5)] cursor-pointer active:scale-[0.98] animate-pulse"
               >
-                <span className="block">QUERO MEU MANUAL COMPLETO AGORA</span>
+                <span className="block">QUERO ACESSAR O MÉTODO 5P AGORA</span>
                 <span className="text-[10px] tracking-widest font-mono block mt-1 opacity-90 font-bold text-white">OBTER MEU ACESSO IMEDIATO + BÔNUS EXCLUSIVOS</span>
               </a>
-            </div>
-
-            {/* PERSUASIVE HEADLINE BELOW THE VIDEO */}
-            <div className="space-y-5 max-w-4xl mx-auto pt-4">
-              <span className="text-[10px] font-mono text-survival-amber tracking-widest uppercase font-black bg-survival-amber/10 border border-survival-amber/20 px-3.5 py-1.5 rounded-full inline-block">
-                ALERTA: COMUNICADO IMPORTANTE DE SEGURANÇA
-              </span>
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight leading-tight uppercase pt-2">
-                O colapso sistêmico não é uma questão de <span className="text-survival-amber">se</span>, mas de <span className="text-survival-light">quando</span>. Aqueles que continuarem cegos serão os primeiros a sucumbir.
-              </h1>
-
-              {/* Sub-headline / Copy targeting revolutionary thinkers */}
-              <p className="text-sm sm:text-lg text-zinc-400 max-w-3xl mx-auto font-sans font-medium leading-relaxed">
-                Para mentes estratégicas contemporâneas que recusam a ingenuidade civil: o <span className="text-white font-bold">Manual Completo de Sobrevivência Apocalíptica</span> é a única doutrina prática de engenharia improvisada, rádio off-grid e medicina de campo feita sob medida para a sua autonomia absoluta.
-              </p>
             </div>
 
             {/* Post-VSL Trust Elements */}
@@ -236,4 +237,3 @@ export default function App() {
     </div>
   );
 }
-
