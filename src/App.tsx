@@ -35,7 +35,7 @@ export default function App() {
 
             {/* HERO COPY ABOVE THE VIDEO */}
             <div className="space-y-5 max-w-4xl mx-auto pt-4">
-              <span className="text-[10px] font-mono text-survival-amber tracking-widest uppercase font-black bg-survival-amber/10 border border-survival-amber/20 px-3.5 py-1.5 rounded-full inline-block">
+              <span className="text-[10px] font-mono text-white tracking-widest uppercase font-black bg-survival-red border border-red-400/50 px-3.5 py-1.5 rounded-full inline-block">
                 EBOOK COMPLETO + PLATAFORMA
               </span>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight leading-tight uppercase pt-2">
