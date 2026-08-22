@@ -24,13 +24,13 @@ export default function EbookPreview() {
     <div className="max-w-5xl mx-auto" id="chapters-module">
       <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
         <span className="text-[10px] font-mono text-survival-light tracking-widest uppercase font-bold bg-survival-light/10 border border-survival-light/20 px-3 py-1 rounded-full">
-          CONTEÚDO PROGRAMÁTICO DETALHADO
+          O QUE EXISTE DENTRO DA PLATAFORMA
         </span>
         <h2 className="text-2xl sm:text-4xl font-display font-black text-white uppercase tracking-tight pt-2">
-          O QUE VOCÊ VAI DOMINAR NO MANUAL?
+          5 MÓDULOS COMPLETOS, LIBERADOS DE UMA VEZ
         </h2>
         <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-lg mx-auto">
-          Explore a grade curricular estruturada sob rigorosas metodologias de resiliência, engenharia improvisada e soberania de recursos civis.
+          Cada módulo abaixo fica disponível na plataforma, com os checklists e as ferramentas correspondentes — e também no manual em PDF, para consultar sem internet. Clique para ver o conteúdo de cada um.
         </p>
       </div>
 
@@ -140,8 +140,8 @@ export default function EbookPreview() {
 
           {/* Static bottom bar */}
           <div className="border-t border-zinc-900 pt-5 mt-8 flex flex-col sm:flex-row justify-between items-center gap-2 text-[10px] font-mono text-zinc-500 font-semibold uppercase tracking-wider">
-            <span>FORMATO: PDF DIGITAL / ACESSO COGNITIVO DIRETO</span>
-            <span>CAPÍTULO DE SUPREMO INTERESSE TÁTICO</span>
+            <span>DISPONÍVEL NA PLATAFORMA ONLINE + PDF PARA DOWNLOAD</span>
+            <span>ACESSO VITALÍCIO • ATUALIZAÇÕES INCLUSAS</span>
           </div>
 
         </div>

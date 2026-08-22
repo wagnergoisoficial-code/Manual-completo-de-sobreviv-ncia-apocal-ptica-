@@ -36,16 +36,16 @@ export default function App() {
             {/* HERO COPY ABOVE THE VIDEO */}
             <div className="space-y-5 max-w-4xl mx-auto pt-4">
               <span className="text-[10px] font-mono text-white tracking-widest uppercase font-black bg-survival-red border border-red-400/50 px-3.5 py-1.5 rounded-full inline-block">
-                EBOOK COMPLETO + PLATAFORMA
+                ACESSO À PLATAFORMA COMPLETA + EBOOK
               </span>
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-black text-white tracking-tight leading-tight uppercase pt-2">
                 QUANDO O SISTEMA PARA, NÃO EXISTE TEMPO PARA APRENDER. <span className="text-survival-amber">EXISTE O QUE VOCÊ PREPAROU ANTES.</span>
               </h1>
               <p className="text-sm sm:text-lg text-zinc-400 max-w-3xl mx-auto font-sans font-medium leading-relaxed">
-                Um plano prático para água, alimentos, energia, saúde, segurança e evacuação — com manual completo, ferramentas e checklists para transformar preparação em ação.
+                Você não está comprando um e-book avulso. Você entra na plataforma completa de preparação — com checklists, ferramentas e novos módulos — e ainda leva o Manual Completo em PDF para consultar offline, quando faltar internet.
               </p>
               <p className="text-sm sm:text-base text-zinc-200 max-w-2xl mx-auto font-sans font-bold leading-relaxed">
-                Assista ao vídeo abaixo e descubra como se preparar antes que uma emergência aconteça.
+                Água, alimentos, energia, saúde, segurança e evacuação: assista ao vídeo abaixo e veja como funciona o plano que você vai executar dentro da plataforma.
               </p>
             </div>
 
@@ -64,7 +64,7 @@ export default function App() {
                 className="w-full max-w-lg py-5 px-8 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-base sm:text-lg uppercase tracking-wider text-center block transition-all duration-300 transform hover:scale-[1.02] shadow-[0_12px_40px_rgba(245,158,11,0.35)] hover:shadow-[0_15px_50px_rgba(245,158,11,0.5)] cursor-pointer active:scale-[0.98] animate-pulse"
               >
                 <span className="block">QUERO ACESSAR O MÉTODO 5P AGORA</span>
-                <span className="text-[10px] tracking-widest font-mono block mt-1 opacity-90 font-bold text-white">OBTER MEU ACESSO IMEDIATO + BÔNUS EXCLUSIVOS</span>
+                <span className="text-[10px] tracking-widest font-mono block mt-1 opacity-90 font-bold text-white">ACESSO IMEDIATO À PLATAFORMA + MANUAL EM PDF + BÔNUS</span>
               </a>
             </div>
 
@@ -73,12 +73,12 @@ export default function App() {
               <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] text-zinc-500 font-mono font-bold">
                 <span className="flex items-center gap-1.5">
                   <Sparkles className="w-4 h-4 text-survival-light" />
-                  ACESSO IMEDIATO E VITALÍCIO
+                  PLATAFORMA ONLINE + MANUAL EM PDF
                 </span>
                 <span className="hidden sm:inline text-zinc-800">•</span>
                 <span className="flex items-center gap-1.5">
                   <BookOpen className="w-4 h-4 text-survival-light" />
-                  MANUAL COMPLETO + 3 BÔNUS
+                  CHECKLISTS, FERRAMENTAS E 3 BÔNUS
                 </span>
                 <span className="hidden sm:inline text-zinc-800">•</span>
                 <span className="flex items-center gap-1.5">
@@ -104,7 +104,7 @@ export default function App() {
               DESCUBRA SE VOCÊ SOBREVIVERIA A UM BLACKOUT DE 7 DIAS
             </h2>
             <p className="text-xs sm:text-sm text-zinc-400 mt-2 max-w-2xl mx-auto leading-relaxed font-sans font-medium">
-              Sua infraestrutura doméstica suportaria o corte completo de água e sinal de rede? Faça o teste tático de 2 minutos para revelar suas maiores vulnerabilidades operacionais e aprenda imediatamente como sanar cada uma delas antes que a rede colapse.
+              Sua infraestrutura doméstica suportaria o corte completo de água e sinal de rede? Faça o teste tático de 2 minutos para revelar suas maiores vulnerabilidades operacionais e ver exatamente qual módulo da plataforma resolve cada uma delas.
             </p>
           </div>
 
@@ -121,7 +121,7 @@ export default function App() {
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="space-y-1">
               <span className="text-3xl sm:text-4xl font-mono font-black text-white block tracking-tighter">5</span>
-              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Módulos Completos</span>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Módulos na Plataforma</span>
             </div>
             <div className="space-y-1">
               <span className="text-3xl sm:text-4xl font-mono font-black text-survival-light block tracking-tighter">3</span>
@@ -133,7 +133,7 @@ export default function App() {
             </div>
             <div className="space-y-1">
               <span className="text-3xl sm:text-4xl font-mono font-black text-white block tracking-tighter">24/7</span>
-              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Acesso Vitalício</span>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Acesso à Plataforma</span>
             </div>
           </div>
         </section>
@@ -148,7 +148,7 @@ export default function App() {
               ESTE MANUAL É PARA QUEM PREFERE ESTAR PRONTO
             </h2>
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-md mx-auto font-sans font-medium">
-              Nada de teoria ou fanatismo de bunker. É um plano de contingência doméstico, escrito passo a passo para ser executado por qualquer pessoa.
+              Nada de teoria ou fanatismo de bunker. É um plano de contingência doméstico que você executa passo a passo dentro da plataforma — e leva no PDF para consultar mesmo sem internet.
             </p>
           </div>
 
@@ -161,7 +161,7 @@ export default function App() {
                 Quem tem uma família para proteger
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans font-medium">
-                Você aprende a montar reserva de água, comida e um kit de primeiros socorros de verdade — o suficiente para atravessar os primeiros dias sem depender de ninguém.
+                Na plataforma você monta, item por item, a reserva de água, de comida e o kit de primeiros socorros da sua casa — com checklist para marcar o que já tem e o que ainda falta.
               </p>
             </div>
 
@@ -173,7 +173,7 @@ export default function App() {
                 Quem mora em cidade grande
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans font-medium">
-                Apagão, falta d'água, enchente ou greve de transporte param um centro urbano em horas. Aqui está o protocolo das primeiras 72 horas e as rotas de evacuação a pé.
+                Apagão, falta d'água, enchente ou greve de transporte param um centro urbano em horas. O protocolo das primeiras 72 horas e o plano de evacuação a pé ficam prontos dentro da sua conta.
               </p>
             </div>
 
@@ -185,7 +185,7 @@ export default function App() {
                 Quem começa do zero
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans font-medium">
-                Cada capítulo é passo a passo, com listas de compras, diagramas e checklists. Você não precisa de experiência prévia, terreno no interior nem equipamento caro.
+                Cada módulo é passo a passo, com listas de compras, diagramas e checklists. Você não precisa de experiência prévia, terreno no interior nem equipamento caro — é só seguir a ordem que a plataforma indica.
               </p>
             </div>
           </div>
@@ -198,7 +198,7 @@ export default function App() {
               onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Para Quem' })}
               className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-survival-amber/10 hover:scale-[1.01] cursor-pointer"
             >
-              QUERO MEU ACESSO AGORA
+              QUERO ACESSO À PLATAFORMA AGORA
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
@@ -221,7 +221,7 @@ export default function App() {
               VOCÊ VAI ESPERAR A REDE CAIR PARA APRENDER?
             </h3>
             <p className="text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed font-sans font-medium">
-              Mentes estratégicas agem antes da multidão. Quando a energia sumir e os sistemas se desintegrarem, seu acesso ao manual estará bloqueado pela barreira física. Adquira sua cópia digital vitalícia enquanto a conectividade ainda existe.
+              Mentes estratégicas agem antes da multidão. Quando a energia sumir e as redes caírem, ninguém entra em plataforma nenhuma nem baixa PDF nenhum. Garanta agora o acesso vitalício e deixe o manual salvo no seu celular enquanto a conectividade ainda existe.
             </p>
             <div className="pt-4">
               <a 
@@ -231,7 +231,7 @@ export default function App() {
                 onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Pré-rodapé' })}
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-survival-amber/10 hover:scale-[1.01] cursor-pointer"
               >
-                ADQUIRIR O MANUAL COMPLETO AGORA
+                QUERO A PLATAFORMA + O MANUAL AGORA
                 <ArrowRight className="w-4 h-4" />
               </a>
             </div>

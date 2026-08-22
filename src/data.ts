@@ -148,8 +148,16 @@ export const BONUSES: Bonus[] = [
 
 export const FAQS = [
   {
-    question: "O que realmente este e-book ensina?",
-    answer: "O Manual Completo de Sobrevivência Apocalíptica ensina um sistema integrado de auto-defesa e autossuficiência civil. Você aprenderá: 1) Purificação molecular de água contaminada sem filtros comerciais; 2) Preservação de calorias e macronutrientes em cenários de Grid-Down (rede elétrica desligada); 3) Comunicações analógicas criptografadas off-grid com rádios amadores de baixo custo; 4) Protocolos de APH tático, estancamento de hemorragia severa e controle cirúrgico de infecções sem hospitais; 5) A doutrina de ocultamento urbano 'Homem Cinzento' para transitar por zonas de conflito de forma invisível. É um plano tático pragmático, livre de teorias e focado em engenharia de sobrevivência pura."
+    question: "Estou comprando apenas um e-book?",
+    answer: "Não. O e-book é só uma parte do que você leva. A compra libera o acesso à plataforma completa: uma área de membros com login e senha, onde ficam os 5 módulos, os checklists e as ferramentas para montar seu plano passo a passo — no celular ou no computador, a hora que quiser. Dentro dela você também baixa o Manual Completo em PDF, para consultar mesmo sem internet, e encontra os 3 bônus já liberados. Novos módulos e atualizações entram na sua conta sem você pagar de novo."
+  },
+  {
+    question: "Qual a diferença entre a plataforma e o manual em PDF?",
+    answer: "O manual em PDF é o conteúdo para ler e guardar: ele fica no seu aparelho e funciona sem internet, sem energia na rede e sem depender de site nenhum. A plataforma é onde você coloca esse conteúdo em prática: é lá que estão os checklists para marcar o que já tem e o que falta, as ferramentas de plano de evacuação e de reserva de água e alimentos, e é lá que os novos módulos e atualizações aparecem primeiro. Um serve para aprender e consultar; o outro, para executar e manter seu plano vivo. Você recebe os dois."
+  },
+  {
+    question: "O que exatamente eu vou aprender?",
+    answer: "A plataforma e o Manual Completo de Sobrevivência Apocalíptica ensinam um sistema integrado de auto-defesa e autossuficiência civil. Você aprenderá: 1) Purificação molecular de água contaminada sem filtros comerciais; 2) Preservação de calorias e macronutrientes em cenários de Grid-Down (rede elétrica desligada); 3) Comunicações analógicas criptografadas off-grid com rádios amadores de baixo custo; 4) Protocolos de APH tático, estancamento de hemorragia severa e controle cirúrgico de infecções sem hospitais; 5) A doutrina de ocultamento urbano 'Homem Cinzento' para transitar por zonas de conflito de forma invisível. É um plano tático pragmático, livre de teorias e focado em engenharia de sobrevivência pura."
   },
   {
     question: "Como este manual resolve o problema do desabastecimento de água e comida?",
@@ -164,11 +172,11 @@ export const FAQS = [
     answer: "O manual dedica um módulo inteiro aos protocolos clínicos de linha de frente. Você aprenderá a improvisar torniquetes funcionais, estancar hemorragias arteriais sob extrema pressão, realizar suturas básicas e estocar/utilizar antibióticos de amplo espectro com segurança. É o escudo biológico que separa a vida da morte em um blackout institucional."
   },
   {
-    question: "Como receberei o manual?",
-    answer: "O envio é 100% digital, imediato e totalmente automatizado. Assim que sua inscrição for confirmada pelo nosso sistema de pagamento seguro (seja por PIX ou Cartão de Crédito), você receberá um e-mail com o link de acesso seguro e as instruções para download imediato do e-book e de todos os bônus incluídos."
+    question: "Como funciona o acesso depois que eu pago?",
+    answer: "O acesso é 100% digital, imediato e automatizado. Assim que o pagamento for confirmado pelo sistema seguro (PIX ou Cartão de Crédito), você recebe um e-mail com o login e a senha da plataforma. Ao entrar, já encontra os 5 módulos, os checklists, as ferramentas e os 3 bônus liberados, além do botão para baixar o Manual Completo em PDF. O acesso é vitalício: pode voltar quantas vezes quiser, de qualquer aparelho."
   },
   {
     question: "E se eu sentir que o conteúdo é avançado demais ou não serve para mim?",
-    answer: "Oferecemos uma garantia incondicional de 7 dias. Se por qualquer motivo você julgar que as instruções e diagramas contidos no manual não elevam seu patamar de segurança e preparação, basta entrar em contato com o nosso suporte por e-mail para receber o reembolso integral de 100% do seu investimento de forma simples e rápida."
+    answer: "Oferecemos uma garantia incondicional de 7 dias. Entre na plataforma, abra os módulos, use os checklists e baixe o manual sem compromisso. Se em qualquer momento desses 7 dias você julgar que não elevam seu patamar de segurança e preparação, basta escrever para o nosso suporte por e-mail e receber o reembolso integral de 100% do seu investimento, de forma simples e rápida."
   }
 ];

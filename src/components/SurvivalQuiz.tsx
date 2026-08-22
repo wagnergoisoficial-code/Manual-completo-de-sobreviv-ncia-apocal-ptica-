@@ -227,7 +227,7 @@ export default function SurvivalQuiz() {
                           SOLUÇÃO: {cat.chapter}
                         </span>
                         <a href="#chapters-module" className="underline decoration-dotted hover:text-white transition-colors">
-                          Ver no Manual
+                          Ver o módulo
                         </a>
                       </div>
                     )}
@@ -248,7 +248,7 @@ export default function SurvivalQuiz() {
                 CORRIJA AS LACUNAS DA SUA MATRIZ DE RESILIÊNCIA
               </h4>
               <p className="text-xs text-zinc-400 max-w-lg font-sans font-medium">
-                O <strong>Manual Completo de Sobrevivência Apocalíptica</strong> cobre detalhadamente cada uma das fraquezas reveladas no diagnóstico. Fortaleça sua autonomia enquanto a estabilidade pública ainda vigora.
+                Cada fraqueza revelada aqui tem um módulo correspondente dentro da plataforma, com o checklist pronto para você executar — e tudo isso também no Manual Completo em PDF. Fortaleça sua autonomia enquanto a estabilidade pública ainda vigora.
               </p>
             </div>
             <a 

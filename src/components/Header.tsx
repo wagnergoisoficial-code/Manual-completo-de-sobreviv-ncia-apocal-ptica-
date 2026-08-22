@@ -28,7 +28,7 @@ export default function Header() {
           <div>
             <div className="flex items-center gap-2">
               <span className="text-[9px] font-mono font-bold text-survival-amber tracking-widest uppercase bg-survival-amber/10 px-1.5 py-0.5 rounded border border-survival-amber/20">
-                PROJETO AUTÔNOMO
+                PLATAFORMA + MANUAL
               </span>
             </div>
             <h1 className="font-display font-extrabold text-xs sm:text-sm text-white tracking-wider uppercase leading-none mt-1">

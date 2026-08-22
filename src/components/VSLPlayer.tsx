@@ -58,8 +58,8 @@ const VSL_SLIDES: VSLSlide[] = [
     timeEnd: 65,
     title: "MANUAL COMPLETO DE SOBREVIVÊNCIA APOCALÍPTICA",
     badge: "O GRANDE RESET PESSOAL",
-    subtitle: "Apresentando o Manual Completo de Sobrevivência Apocalíptica.",
-    copy: "Não é ficção científica. É um projeto passo a passo para redefinir sua independência. Desenvolvido para mentes estratégicas que enxergam as falhas estruturais do mundo de hoje.",
+    subtitle: "A plataforma completa de preparação + o Manual em PDF.",
+    copy: "Não é só um e-book. É uma plataforma com 5 módulos, checklists e ferramentas para executar passo a passo — e o manual em PDF para consultar quando não houver internet.",
     bgStyle: "bg-radial from-zinc-900 via-apoc-gray to-apoc-black",
     accentColor: "text-white border-zinc-700/50"
   },
@@ -88,8 +88,8 @@ const VSL_SLIDES: VSLSlide[] = [
     timeEnd: 135,
     title: "AUTONOMIA TÁTICA",
     badge: "ACESSO VITALÍCIO",
-    subtitle: "Acesso vitalício ao manual e bônus.",
-    copy: "Um compêndio definitivo contendo estratégias práticas de sobrevivência e autonomia para proteger sua família em qualquer cenário.",
+    subtitle: "Acesso vitalício à plataforma, ao manual e aos bônus.",
+    copy: "Login liberado na hora, novos módulos e atualizações sem pagar de novo, e o manual em PDF para baixar. Tudo para proteger sua família em qualquer cenário.",
     bgStyle: "bg-radial from-amber-950/30 via-apoc-gray to-apoc-black",
     accentColor: "text-survival-amber border-amber-900/40"
   }

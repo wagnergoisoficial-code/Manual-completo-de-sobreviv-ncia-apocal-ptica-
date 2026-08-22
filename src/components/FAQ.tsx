@@ -20,7 +20,7 @@ export default function FAQ() {
           RESPOSTAS A DÚVIDAS CRÍTICAS
         </h2>
         <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-lg mx-auto">
-          Sanamos aqui os principais questionamentos e refutações de mentes críticas sobre a operacionalização do manual de contingência.
+          Tire aqui as dúvidas mais comuns sobre o que está incluído no acesso, como a plataforma funciona e o que acontece se você não gostar.
         </p>
       </div>
 

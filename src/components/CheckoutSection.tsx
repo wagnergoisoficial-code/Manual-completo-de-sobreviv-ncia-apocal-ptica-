@@ -54,7 +54,7 @@ export default function CheckoutSection() {
               Kit Tático de Suporte de Campo
             </h3>
             <p className="text-xs sm:text-sm text-zinc-400 mt-2 font-sans font-medium">
-              Para garantir sua autonomia e segurança em qualquer escala de desastre, incluímos sem custo adicional estes protocolos de apoio estratégico:
+              Além da plataforma e do manual, sua conta já vem com estes três protocolos de apoio liberados, sem custo adicional:
             </p>
           </div>
 
@@ -83,7 +83,7 @@ export default function CheckoutSection() {
                   Manual Completo de Sobrevivência Apocalíptica
                 </h4>
                 <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed font-sans font-medium">
-                  O compêndio definitivo contendo estratégias reais para proteger sua família quando tudo falhar.
+                  O manual que vem dentro da plataforma: estratégias reais para proteger sua família quando tudo falhar.
                 </p>
               </div>
               
@@ -97,8 +97,8 @@ export default function CheckoutSection() {
                   <span className="text-survival-light">2ª REVISADA</span>
                 </div>
                 <div>
-                  <span className="text-zinc-500 block text-[9px] tracking-wider">FORMATO:</span>
-                  <span className="text-zinc-200">PDF DIGITAL</span>
+                  <span className="text-zinc-500 block text-[9px] tracking-wider">ACESSO:</span>
+                  <span className="text-zinc-200">PLATAFORMA + PDF</span>
                 </div>
                 <div>
                   <span className="text-zinc-500 block text-[9px] tracking-wider">ENVIO:</span>
@@ -144,9 +144,9 @@ export default function CheckoutSection() {
           <div className="p-4.5 rounded-xl bg-zinc-950/30 border border-zinc-900/80 flex items-start gap-3.5">
             <Shield className="w-5 h-5 text-survival-light mt-0.5 shrink-0" />
             <div>
-              <h5 className="text-xs font-bold text-zinc-200 uppercase">ACESSO IMEDIATO E SEGURO</h5>
+              <h5 className="text-xs font-bold text-zinc-200 uppercase">COMO VOCÊ ACESSA DEPOIS DE PAGAR</h5>
               <p className="text-[11px] text-zinc-500 leading-normal mt-1 font-sans font-medium">
-                Você receberá o link para download imediato do Manual de Sobrevivência e de todos os bônus diretamente em seu e-mail cadastrado, de forma rápida, segura e livre de taxas adicionais.
+                Assim que o pagamento for confirmado, você recebe no seu e-mail o login e a senha da plataforma. Lá dentro estão os 5 módulos, os checklists, as ferramentas e os 3 bônus — e o botão para baixar o manual em PDF. Sem espera e sem taxa extra.
               </p>
             </div>
           </div>
@@ -174,23 +174,31 @@ export default function CheckoutSection() {
             {/* Access Callout */}
             <div className="text-center pb-6 border-b border-zinc-900/80 space-y-2">
               <span className="text-[10px] font-mono text-survival-amber uppercase tracking-widest font-bold block">
-                ACESSO IMEDIATO AO CONTEÚDO
+                VOCÊ NÃO ESTÁ COMPRANDO SÓ UM E-BOOK
               </span>
               <h3 className="text-xl sm:text-2xl font-display font-black text-white uppercase">
-                Manual Completo + Todos os Bônus Exclusivos
+                Plataforma Completa + Manual em PDF + 3 Bônus
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 font-sans font-medium">
-                Garanta o download em PDF e acesso vitalício ao material de autonomia tática.
+                Você recebe login próprio na plataforma, onde o plano fica salvo e sempre atualizado — e o manual em PDF para levar no celular.
               </p>
             </div>
 
             {/* Value Stack checklist */}
             <div className="space-y-4">
-              <h4 className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">O QUE VOCÊ VAI RECEBER:</h4>
+              <h4 className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider">O QUE ESTÁ INCLUÍDO NO SEU ACESSO:</h4>
               <div className="space-y-3 font-sans text-xs sm:text-sm text-zinc-300 font-semibold">
                 <div className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-survival-light shrink-0 mt-0.5" />
-                  <span>Manual Completo de Sobrevivência Apocalíptica <span className="text-zinc-500">(Digital PDF)</span></span>
+                  <span>Acesso à Plataforma Completa <span className="text-zinc-500">(área de membros online, 24/7, no celular ou no computador)</span></span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-survival-light shrink-0 mt-0.5" />
+                  <span>Manual Completo de Sobrevivência Apocalíptica <span className="text-zinc-500">(em PDF, para baixar e consultar sem internet)</span></span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Check className="w-4 h-4 text-survival-light shrink-0 mt-0.5" />
+                  <span>Checklists e ferramentas práticas dentro da plataforma <span className="text-zinc-500">(reserva de água, kit médico, plano de evacuação)</span></span>
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-survival-light shrink-0 mt-0.5" />
@@ -206,7 +214,7 @@ export default function CheckoutSection() {
                 </div>
                 <div className="flex items-start gap-3">
                   <Check className="w-4 h-4 text-survival-light shrink-0 mt-0.5" />
-                  <span>Acesso Vitalício e Atualizações Futuras Sem Custo</span>
+                  <span>Acesso vitalício: novos módulos e atualizações entram na sua conta sem custo</span>
                 </div>
               </div>
             </div>
@@ -220,7 +228,7 @@ export default function CheckoutSection() {
                 onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Checkout' })}
                 className="w-full py-4.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-center text-sm sm:text-base uppercase tracking-wider transition-all duration-300 shadow-[0_8px_30px_rgba(245,158,11,0.3)] hover:shadow-[0_12px_40px_rgba(245,158,11,0.5)] flex items-center justify-center gap-2 cursor-pointer hover:scale-[1.01] active:scale-[0.99] animate-bounce-slow"
               >
-                QUERO MEU ACESSO IMEDIATO + BÔNUS
+                QUERO MEU ACESSO À PLATAFORMA + MANUAL
                 <ArrowRight className="w-5 h-5" />
               </a>
 
@@ -246,9 +254,9 @@ export default function CheckoutSection() {
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-zinc-950/60 border border-zinc-900">
                   <Users className="w-5 h-5 text-survival-amber shrink-0" />
                   <div>
-                    <h5 className="text-[10px] font-mono font-bold text-white uppercase">SISTEMA INTEGRADO</h5>
+                    <h5 className="text-[10px] font-mono font-bold text-white uppercase">PLATAFORMA + PDF</h5>
                     <p className="text-[10px] text-zinc-500 font-sans font-medium mt-0.5 leading-normal">
-                      Segurança de compra processada de ponta a ponta pela plataforma Kiwify.
+                      Login na área de membros para usar no dia a dia e o manual em PDF para ter offline. Compra processada com segurança pela Kiwify.
                     </p>
                   </div>
                 </div>
