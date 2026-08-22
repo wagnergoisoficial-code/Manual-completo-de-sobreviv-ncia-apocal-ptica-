@@ -24,12 +24,3 @@ export interface Bonus {
   description: string;
   badge: string;
 }
-
-export interface Testimonial {
-  id: number;
-  name: string;
-  role: string;
-  avatar: string;
-  quote: string;
-  verified: boolean;
-}

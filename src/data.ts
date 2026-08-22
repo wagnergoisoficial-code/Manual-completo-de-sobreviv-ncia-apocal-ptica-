@@ -1,4 +1,4 @@
-import { QuizQuestion, Chapter, Bonus, Testimonial } from './types';
+import { QuizQuestion, Chapter, Bonus } from './types';
 
 // Link de Checkout Oficial da Kiwify - Pode ser configurado pela variável VITE_KIWIFY_URL
 export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/jJXmZkl";
@@ -143,33 +143,6 @@ export const BONUSES: Bonus[] = [
     value: "Grátis",
     description: "Como estocar antibióticos veterinários de forma segura, dosagens para humanos e o catálogo de plantas medicinais de alto rendimento atestadas por estudos de medicina de combate.",
     badge: "SOBREVIVÊNCIA BIOLÓGICA"
-  }
-];
-
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    id: 1,
-    name: "Cel. Roberto M. Menezes",
-    role: "Analista de Riscos Geopolíticos & Ex-Oficial de Operações Especiais",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&auto=format&fit=crop",
-    quote: "Este material preenche uma lacuna que a maioria das literaturas peca por ignorar: a análise de sistemas complexos. O manual não propõe fanatismos irreais de bunker; propõe planos de contingência civil sob altíssima pressão analítica. Uma obra-prima de engenharia social e tática militar civil.",
-    verified: true
-  },
-  {
-    id: 2,
-    name: "Dra. Carolina Alencar",
-    role: "Pesquisadora de Resiliência Urbana e Medicina de Resgate",
-    avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=120&auto=format&fit=crop",
-    quote: "A seção de autonomia alimentar e potabilização de água por gravidade utiliza termos físicos e químicos de precisão cirúrgica. É um verdadeiro compêndio acadêmico voltado para a prática extrema. Essencial para acadêmicos, engenheiros e qualquer pessoa dotada de visão de futuro.",
-    verified: true
-  },
-  {
-    id: 3,
-    name: "Arthur S. Guttemberg",
-    role: "Investidor de Risco e Entusiasta de Tecnologias Descentralizadas",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&auto=format&fit=crop",
-    quote: "No mercado financeiro, nos preparamos para cisnes negros. Na vida real, a lógica é exatamente a mesma. O capítulo sobre criptografia e rádios off-grid se assemelha a protocolos de redes Mesh descentralizadas. Leitura obrigatória para os cérebros fora da curva.",
-    verified: true
   }
 ];
 

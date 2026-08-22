@@ -10,8 +10,8 @@ import SurvivalQuiz from './components/SurvivalQuiz';
 import EbookPreview from './components/EbookPreview';
 import CheckoutSection from './components/CheckoutSection';
 import FAQ from './components/FAQ';
-import { ShieldAlert, Radio, Activity, Star, Users, ArrowRight, ShieldCheck, HeartPulse, Sparkles, BookOpen } from 'lucide-react';
-import { TESTIMONIALS, KIWIFY_CHECKOUT_URL } from './data';
+import { ShieldAlert, Radio, ArrowRight, ShieldCheck, HeartPulse, Sparkles, BookOpen } from 'lucide-react';
+import { KIWIFY_CHECKOUT_URL } from './data';
 import { trackPixel } from './pixel';
 
 export default function App() {
@@ -72,18 +72,18 @@ export default function App() {
             <div className="pt-4 max-w-2xl mx-auto space-y-6 flex flex-col items-center">
               <div className="flex flex-wrap items-center justify-center gap-6 text-[10px] text-zinc-500 font-mono font-bold">
                 <span className="flex items-center gap-1.5">
+                  <Sparkles className="w-4 h-4 text-survival-light" />
+                  ACESSO IMEDIATO E VITALÍCIO
+                </span>
+                <span className="hidden sm:inline text-zinc-800">•</span>
+                <span className="flex items-center gap-1.5">
+                  <BookOpen className="w-4 h-4 text-survival-light" />
+                  MANUAL COMPLETO + 3 BÔNUS
+                </span>
+                <span className="hidden sm:inline text-zinc-800">•</span>
+                <span className="flex items-center gap-1.5">
                   <ShieldCheck className="w-4 h-4 text-survival-light" />
-                  ACESSO INCONDICIONAL
-                </span>
-                <span className="hidden sm:inline text-zinc-800">•</span>
-                <span className="flex items-center gap-1.5">
-                  <Star className="w-4 h-4 text-survival-light fill-survival-light" />
-                  AVALIAÇÃO DE CRÍTICOS: 4.9/5
-                </span>
-                <span className="hidden sm:inline text-zinc-800">•</span>
-                <span className="flex items-center gap-1.5">
-                  <Users className="w-4 h-4 text-survival-light" />
-                  9,731 LEITORES ATIVOS
+                  GARANTIA DE 7 DIAS
                 </span>
               </div>
             </div>
@@ -116,73 +116,91 @@ export default function App() {
           <EbookPreview />
         </section>
 
-        {/* STATS BANNER - SOCIAL PROOF */}
+        {/* PRODUCT FACTS BANNER - apenas atributos verificáveis do produto */}
         <section className="py-14 bg-apoc-gray border-y border-apoc-border text-center">
           <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="space-y-1">
-              <span className="text-3xl sm:text-4xl font-mono font-black text-white block tracking-tighter">9.7k+</span>
-              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Cópias Baixadas</span>
+              <span className="text-3xl sm:text-4xl font-mono font-black text-white block tracking-tighter">5</span>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Módulos Completos</span>
             </div>
             <div className="space-y-1">
-              <span className="text-3xl sm:text-4xl font-mono font-black text-survival-light block tracking-tighter">100%</span>
-              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Autonomia Digital</span>
+              <span className="text-3xl sm:text-4xl font-mono font-black text-survival-light block tracking-tighter">3</span>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Bônus Inclusos</span>
             </div>
             <div className="space-y-1">
-              <span className="text-3xl sm:text-4xl font-mono font-black text-survival-amber block tracking-tighter">0%</span>
-              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Rastreamento Fiscal</span>
+              <span className="text-3xl sm:text-4xl font-mono font-black text-survival-amber block tracking-tighter">7 dias</span>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Garantia Incondicional</span>
             </div>
             <div className="space-y-1">
               <span className="text-3xl sm:text-4xl font-mono font-black text-white block tracking-tighter">24/7</span>
-              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Protocolo de Envio</span>
+              <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest font-bold block">Acesso Vitalício</span>
             </div>
           </div>
         </section>
 
-        {/* ELITE TESTIMONIALS SECTION */}
-        <section className="py-20 sm:py-28 px-4 sm:px-8 max-w-5xl mx-auto" id="testimonials-module">
+        {/* PARA QUEM É — substitui a antiga seção de depoimentos (política de anúncios Meta) */}
+        <section className="py-20 sm:py-28 px-4 sm:px-8 max-w-5xl mx-auto" id="para-quem-module">
           <div className="text-center max-w-2xl mx-auto mb-14 space-y-2">
             <span className="text-[10px] font-mono text-survival-light tracking-widest uppercase font-bold bg-survival-light/10 border border-survival-light/20 px-3 py-1 rounded-full">
-              RESPALDO CRÍTICO
+              PARA QUEM FOI ESCRITO
             </span>
             <h2 className="text-2xl sm:text-4xl font-display font-black text-white uppercase mt-1 tracking-wider pt-2">
-              CHANCELADO POR METRICISTAS DE RISCO
+              ESTE MANUAL É PARA QUEM PREFERE ESTAR PRONTO
             </h2>
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-md mx-auto font-sans font-medium">
-              Leia o testemunho de analistas de segurança, ex-militares e investidores que avaliam o manual sob os preceitos de contingência contemporânea.
+              Nada de teoria ou fanatismo de bunker. É um plano de contingência doméstico, escrito passo a passo para ser executado por qualquer pessoa.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((test) => (
-              <div 
-                key={test.id} 
-                className="bg-apoc-gray border border-apoc-border rounded-2xl p-6 sm:p-7 flex flex-col justify-between shadow-lg relative group hover:border-zinc-850 transition-all duration-350 backdrop-blur-xl"
-              >
-                <div className="space-y-5">
-                  <div className="flex gap-1 text-survival-amber">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-survival-amber text-survival-amber" />
-                    ))}
-                  </div>
-                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed italic font-sans font-medium">
-                    "{test.quote}"
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-3.5 pt-5 mt-6 border-t border-apoc-border">
-                  <img 
-                    src={test.avatar} 
-                    alt={test.name} 
-                    referrerPolicy="no-referrer"
-                    className="w-10 h-10 rounded-full object-cover shrink-0 border border-apoc-border"
-                  />
-                  <div className="min-w-0">
-                    <h4 className="text-xs font-extrabold text-white truncate">{test.name}</h4>
-                    <span className="text-[9px] text-zinc-500 font-mono uppercase tracking-wider block mt-0.5">{test.role}</span>
-                  </div>
-                </div>
+            <div className="bg-apoc-gray border border-apoc-border rounded-2xl p-6 sm:p-7 space-y-4 shadow-lg backdrop-blur-xl">
+              <div className="w-11 h-11 rounded-xl bg-survival-amber/10 border border-survival-amber/25 flex items-center justify-center text-survival-amber">
+                <HeartPulse className="w-5 h-5" />
               </div>
-            ))}
+              <h3 className="text-sm font-display font-extrabold text-white uppercase tracking-wide">
+                Quem tem uma família para proteger
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans font-medium">
+                Você aprende a montar reserva de água, comida e um kit de primeiros socorros de verdade — o suficiente para atravessar os primeiros dias sem depender de ninguém.
+              </p>
+            </div>
+
+            <div className="bg-apoc-gray border border-apoc-border rounded-2xl p-6 sm:p-7 space-y-4 shadow-lg backdrop-blur-xl">
+              <div className="w-11 h-11 rounded-xl bg-survival-light/10 border border-survival-light/25 flex items-center justify-center text-survival-light">
+                <ShieldAlert className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-display font-extrabold text-white uppercase tracking-wide">
+                Quem mora em cidade grande
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans font-medium">
+                Apagão, falta d'água, enchente ou greve de transporte param um centro urbano em horas. Aqui está o protocolo das primeiras 72 horas e as rotas de evacuação a pé.
+              </p>
+            </div>
+
+            <div className="bg-apoc-gray border border-apoc-border rounded-2xl p-6 sm:p-7 space-y-4 shadow-lg backdrop-blur-xl">
+              <div className="w-11 h-11 rounded-xl bg-survival-green/10 border border-survival-green/25 flex items-center justify-center text-survival-light">
+                <Radio className="w-5 h-5" />
+              </div>
+              <h3 className="text-sm font-display font-extrabold text-white uppercase tracking-wide">
+                Quem começa do zero
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans font-medium">
+                Cada capítulo é passo a passo, com listas de compras, diagramas e checklists. Você não precisa de experiência prévia, terreno no interior nem equipamento caro.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <a
+              href={KIWIFY_CHECKOUT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Para Quem' })}
+              className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-survival-amber hover:bg-amber-500 text-white font-display font-black text-xs uppercase tracking-wider transition-all duration-300 shadow-lg shadow-survival-amber/10 hover:scale-[1.01] cursor-pointer"
+            >
+              QUERO MEU ACESSO AGORA
+              <ArrowRight className="w-4 h-4" />
+            </a>
           </div>
         </section>
 

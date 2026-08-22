@@ -226,7 +226,7 @@ export default function CheckoutSection() {
 
               <div className="flex items-center justify-center gap-2 text-center text-[10px] font-mono text-zinc-500 font-bold">
                 <Flame className="w-4 h-4 text-survival-amber animate-pulse" />
-                <span>LANÇAMENTO EXCLUSIVO: MAIS DE 9.7k LEITORES ATIVOS</span>
+                <span>DOWNLOAD LIBERADO NA HORA, ASSIM QUE O PAGAMENTO FOR CONFIRMADO</span>
               </div>
             </div>
 
