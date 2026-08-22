@@ -14,6 +14,7 @@ export const EBOOK_SUBTITLE = "O guia definitivo de autonomia tática e resiliê
 export const CHAPTERS: Chapter[] = [
   {
     number: 1,
+    tag: "INFRAESTRUTURA",
     title: "O Colapso de Redes Complexas",
     subtitle: "A Anatomia da Interrupção de Cadeia de Suprimentos",
     description: "Uma análise analítica detalhada sobre como o efeito cascata derruba a rede elétrica (Grid-Down), o fornecimento de água potável e a distribuição logística alimentar em menos de 72 horas.",
@@ -25,6 +26,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     number: 2,
+    tag: "ÁGUA & NUTRIÇÃO",
     title: "Autonomia Hídrica e Nutrição Pragmática",
     subtitle: "Termodinâmica da Conservação Alimentar Sem Eletricidade",
     description: "Métodos avançados de purificação molecular da água e conservação de macronutrientes sob condições climáticas adversas ou escassez absoluta de recursos industriais.",
@@ -36,6 +38,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     number: 3,
+    tag: "COMUNICAÇÕES",
     title: "Criptografia Analógica e Redes Silenciosas",
     subtitle: "Comunicações Resilientes com Rádios VHF/UHF e Ondas Curtas",
     description: "Como estabelecer redes de comunicação privada com rádio amador (Baofeng, rádios de ondas curtas) e codificar dados em canais abertos contra monitoramento eletrônico.",
@@ -47,6 +50,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     number: 4,
+    tag: "MÉDICO",
     title: "Farmácia de Emergência e Cirurgia de Campo",
     subtitle: "Protocolos Clínicos de Linha de Frente sem Apoio Institucional",
     description: "Gerenciamento de ferimentos graves, controle de infecções sem antibióticos convencionais e fitoterapia de espectro amplo fundamentada cientificamente.",
@@ -58,6 +62,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     number: 5,
+    tag: "DEFESA",
     title: "Psicologia de Massas e Defesa de Perímetro",
     subtitle: "A Dinâmica Comportamental no Caos Sistêmico",
     description: "Desenvolvimento de inteligência situacional, minimização de assinatura de calor/luz e estabelecimento de perímetros defensivos comunitários discretos.",
@@ -173,7 +178,7 @@ export const FAQS = [
   },
   {
     question: "Como funciona o acesso depois que eu pago?",
-    answer: "O acesso é 100% digital, imediato e automatizado. Assim que o pagamento for confirmado pelo sistema seguro (PIX ou Cartão de Crédito), você recebe um e-mail com o login e a senha da plataforma. Ao entrar, já encontra os 5 módulos, os checklists, as ferramentas e os 3 bônus liberados, além do botão para baixar o Manual Completo em PDF. O acesso é vitalício: pode voltar quantas vezes quiser, de qualquer aparelho."
+    answer: "O acesso é 100% digital, imediato e automatizado. A compra é finalizada no site da Kiwify, a plataforma oficial de pagamento — esta página apenas te leva até lá. Assim que a Kiwify confirmar o pagamento (PIX ou cartão de crédito), você recebe um e-mail com o login e a senha da plataforma. Ao entrar, já encontra os 5 módulos, os checklists, as ferramentas e os 3 bônus liberados, além do botão para baixar o Manual Completo em PDF. O acesso é vitalício: pode voltar quantas vezes quiser, de qualquer aparelho."
   },
   {
     question: "E se eu sentir que o conteúdo é avançado demais ou não serve para mim?",

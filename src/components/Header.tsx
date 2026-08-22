@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Shield, Clock } from 'lucide-react';
+import { Shield } from 'lucide-react';
+import { KIWIFY_CHECKOUT_URL } from '../data';
+import { trackPixel } from '../pixel';
+
+const NAV_LINKS = [
+  { label: 'Diagnóstico', href: '#diagnostico' },
+  { label: 'Módulos', href: '#modulos' },
+  { label: 'O que inclui', href: '#kit' },
+  { label: 'FAQ', href: '#faq' },
+];
 
 export default function Header() {
   const [utcTime, setUtcTime] = useState<string>('');
@@ -7,47 +16,61 @@ export default function Header() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setUtcTime(now.toUTCString().replace('GMT', 'UTC'));
+      const hh = String(now.getUTCHours()).padStart(2, '0');
+      const mm = String(now.getUTCMinutes()).padStart(2, '0');
+      const ss = String(now.getUTCSeconds()).padStart(2, '0');
+      setUtcTime(`${hh}:${mm}:${ss} UTC`);
     };
-    
+
     updateTime();
     const interval = setInterval(updateTime, 1000);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="sticky top-0 z-50">
-      <header className="border-b border-zinc-900/80 bg-black/85 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 flex items-center justify-between gap-4">
-        
-        {/* Logo and Status */}
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-survival-amber/10 border border-survival-amber/30 flex items-center justify-center text-survival-amber shadow-inner">
-            <Shield className="w-4.5 h-4.5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="text-[9px] font-mono font-bold text-survival-amber tracking-widest uppercase bg-survival-amber/10 px-1.5 py-0.5 rounded border border-survival-amber/20">
-                PLATAFORMA + MANUAL
-              </span>
-            </div>
-            <h1 className="font-display font-extrabold text-xs sm:text-sm text-white tracking-wider uppercase leading-none mt-1">
-              SOBREVIVÊNCIA APOCALÍPTICA
-            </h1>
-          </div>
-        </div>
+    <header className="sticky top-0 z-50 bg-void/85 backdrop-blur-md border-b border-hairline">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-6">
 
-        {/* Live Operational Clock */}
-        <div className="flex items-center gap-3 text-[10px] font-mono">
-          <div className="flex items-center gap-2 bg-zinc-950 px-3.5 py-1.5 border border-zinc-900/80 rounded-lg text-zinc-400 font-bold shrink-0 shadow-sm">
-            <Clock className="w-3.5 h-3.5 text-survival-amber animate-pulse" />
-            <span className="tracking-widest">{utcTime || 'CARREGANDO UTC...'}</span>
-          </div>
+        {/* Marca */}
+        <a href="#topo" className="flex items-center gap-3 min-w-0">
+          <span className="w-7 h-7 border border-hairline flex items-center justify-center shrink-0">
+            <Shield className="w-3.5 h-3.5 text-signal" strokeWidth={1.75} />
+          </span>
+          <span className="font-display font-bold uppercase tracking-tight text-[13px] sm:text-[15px] text-ink truncate">
+            Sobrevivência Apocalíptica
+          </span>
+        </a>
+
+        {/* Índice */}
+        <nav className="hidden lg:flex items-center gap-1">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="font-mono text-tag uppercase text-ink-dim hover:text-ink hover:bg-surface-high px-3 py-2 transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="flex items-center gap-5">
+          <span className="hidden xl:block font-mono text-tag text-outline tabular-nums">
+            {utcTime}
+          </span>
+          <a
+            href={KIWIFY_CHECKOUT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Topo' })}
+            className="bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-4 sm:px-6 py-3 transition-colors shrink-0"
+          >
+            <span className="sm:hidden">Acessar</span>
+            <span className="hidden sm:inline">Acessar plataforma</span>
+          </a>
         </div>
 
       </div>
     </header>
-    </div>
   );
 }
-

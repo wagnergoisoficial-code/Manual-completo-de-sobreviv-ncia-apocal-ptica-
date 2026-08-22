@@ -11,6 +11,7 @@ export interface QuizQuestion {
 
 export interface Chapter {
   number: number;
+  tag: string;
   title: string;
   subtitle: string;
   description: string;

@@ -1,28 +1,104 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
+/*
+  SURVIVAL EDITORIAL
+  Manual técnico + documentário. Cantos retos, hairlines de 1px, sem sombras,
+  profundidade só por camada tonal. O amarelo é reservado para ação e dado crítico.
+*/
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
-  --font-mono: "JetBrains Mono", monospace;
-  
-  --color-survival-green: #14532d;
-  --color-survival-light: #22c55e;
-  --color-survival-amber: #f59e0b;
-  --color-survival-red: #ef4444;
-  --color-apoc-black: #050505;
-  --color-apoc-gray: #121214;
-  --color-apoc-border: #27272a;
+  --font-display: "Hanken Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Superfícies — preto de fundo, camadas quentes por cima */
+  --color-void: #0a0a0a;
+  --color-surface-lowest: #130d05;
+  --color-surface: #181309;
+  --color-surface-low: #211b11;
+  --color-surface-mid: #251f14;
+  --color-surface-high: #30291e;
+  --color-surface-highest: #3b3428;
+  --color-surface-bright: #3f382d;
+
+  /* Tinta */
+  --color-ink: #ede1d0;
+  --color-ink-dim: #d5c4ab;
+  --color-outline: #9e8f78;
+  --color-outline-dim: #514532;
+  --color-hairline: #3b3428;
+
+  /* Sinal */
+  --color-signal: #ffb800;
+  --color-signal-soft: #ffdca1;
+  --color-signal-deep: #6b4c00;
+  --color-tactical: #22c55e;
+  --color-alert: #ef4444;
+
+  /* Escala tipográfica editorial */
+  --text-display: clamp(2.5rem, 7.4vw, 5.25rem);
+  --text-display--line-height: 0.98;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 800;
+
+  --text-headline: clamp(1.75rem, 4.4vw, 3rem);
+  --text-headline--line-height: 1.08;
+  --text-headline--letter-spacing: -0.025em;
+  --text-headline--font-weight: 700;
+
+  --text-subhead: clamp(1.3rem, 2.6vw, 2rem);
+  --text-subhead--line-height: 1.2;
+  --text-subhead--letter-spacing: -0.015em;
+  --text-subhead--font-weight: 700;
+
+  --text-body: 1.125rem;
+  --text-body--line-height: 1.6;
+
+  --text-bodysm: 1rem;
+  --text-bodysm--line-height: 1.55;
+
+  --text-tag: 0.75rem;
+  --text-tag--line-height: 1.35;
+  --text-tag--letter-spacing: 0.08em;
+  --text-tag--font-weight: 500;
 }
 
 @layer base {
-  body {
-    background-color: var(--color-apoc-black);
-    color: #f4f4f5;
-    font-family: var(--font-sans);
+  html {
+    scroll-behavior: smooth;
   }
-  
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
+  }
+
+  ::selection {
+    background-color: var(--color-signal);
+    color: #000;
+  }
+
+  /* Sem cantos arredondados em lugar nenhum: a rigidez é o estilo. */
+  button, input, select, textarea {
+    border-radius: 0;
+  }
+}
+
+@layer utilities {
+  /* Grão de filme sobre a página inteira — textura de documentário, nunca visível como enfeite */
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 60;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }

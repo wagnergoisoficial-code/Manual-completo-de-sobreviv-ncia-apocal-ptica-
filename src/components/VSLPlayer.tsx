@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, Maximize2, AlertTriangle, ShieldAlert, Sparkles, Activity, Clock } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { YOUTUBE_VIDEO_URL } from '../data';
 
@@ -10,8 +10,6 @@ interface VSLSlide {
   badge: string;
   subtitle: string;
   copy: string;
-  bgStyle: string; // Tailwind class
-  accentColor: string;
 }
 
 function extractYouTubeId(url: string): string | null {
@@ -29,9 +27,7 @@ const VSL_SLIDES: VSLSlide[] = [
     title: "A ILUSÃO DE ESTABILIDADE",
     badge: "ANÁLISE INICIAL",
     subtitle: "Por que o sistema global em que você confia está pendurado por um fio?",
-    copy: "Nossa civilização moderna baseia-se em entregas 'just-in-time'. Não há estoques reais. Um atraso de 3 dias no diesel zera as prateleiras de qualquer supermercado metropolitano.",
-    bgStyle: "bg-radial from-red-950/40 via-apoc-gray to-apoc-black",
-    accentColor: "text-red-500 border-red-900/50"
+    copy: "Nossa civilização moderna baseia-se em entregas 'just-in-time'. Não há estoques reais. Um atraso de 3 dias no diesel zera as prateleiras de qualquer supermercado metropolitano."
   },
   {
     timeStart: 10,
@@ -39,9 +35,7 @@ const VSL_SLIDES: VSLSlide[] = [
     title: "O PONTO DE RUPTURA: 72 HORAS",
     badge: "ANÁLISE DE VULNERABILIDADE",
     subtitle: "A velocidade assustadora do pânico social generalizado.",
-    copy: "Nas primeiras 12 horas, as pessoas acreditam ser uma oscilação temporária. Em 24 horas, os saques começam. Em 72 horas, as instituições tradicionais deixam de existir para fins práticos. O que você fará?",
-    bgStyle: "bg-radial from-amber-950/40 via-apoc-gray to-apoc-black",
-    accentColor: "text-amber-500 border-amber-900/50"
+    copy: "Nas primeiras 12 horas, as pessoas acreditam ser uma oscilação temporária. Em 24 horas, os saques começam. Em 72 horas, as instituições tradicionais deixam de existir para fins práticos. O que você fará?"
   },
   {
     timeStart: 25,
@@ -49,9 +43,7 @@ const VSL_SLIDES: VSLSlide[] = [
     title: "A REVOLUÇÃO COGNITIVA",
     badge: "ELITE INTELECTUAL",
     subtitle: "Por que bunkers bilionários são apenas túmulos luxuosos?",
-    copy: "Verdadeiros estrategistas não dependem de paredes grossas, mas sim de conhecimento técnico portátil. O verdadeiro bunker está gravado no seu intelecto, na sua capacidade de decodificar o caos.",
-    bgStyle: "bg-radial from-survival-green/40 via-apoc-gray to-apoc-black",
-    accentColor: "text-survival-light border-green-900/50"
+    copy: "Verdadeiros estrategistas não dependem de paredes grossas, mas sim de conhecimento técnico portátil. O verdadeiro bunker está gravado no seu intelecto, na sua capacidade de decodificar o caos."
   },
   {
     timeStart: 45,
@@ -59,19 +51,15 @@ const VSL_SLIDES: VSLSlide[] = [
     title: "MANUAL COMPLETO DE SOBREVIVÊNCIA APOCALÍPTICA",
     badge: "O GRANDE RESET PESSOAL",
     subtitle: "A plataforma completa de preparação + o Manual em PDF.",
-    copy: "Não é só um e-book. É uma plataforma com 5 módulos, checklists e ferramentas para executar passo a passo — e o manual em PDF para consultar quando não houver internet.",
-    bgStyle: "bg-radial from-zinc-900 via-apoc-gray to-apoc-black",
-    accentColor: "text-white border-zinc-700/50"
+    copy: "Não é só um e-book. É uma plataforma com 5 módulos, checklists e ferramentas para executar passo a passo — e o manual em PDF para consultar quando não houver internet."
   },
   {
     timeStart: 65,
     timeEnd: 85,
-    title: "TECOM off-grid",
+    title: "TELECOM OFF-GRID",
     badge: "PODER DA INFORMAÇÃO",
     subtitle: "Sua própria rede privada em frequências raras.",
-    copy: "Quando os servidores caírem e o sinal de celular sumir, as ondas curtas e o rádio analógico criptografado serão a única voz da verdade. Aprenda a programar frequências secretas.",
-    bgStyle: "bg-radial from-teal-950/40 via-apoc-gray to-apoc-black",
-    accentColor: "text-teal-400 border-teal-900/50"
+    copy: "Quando os servidores caírem e o sinal de celular sumir, as ondas curtas e o rádio analógico criptografado serão a única voz da verdade. Aprenda a programar frequências secretas."
   },
   {
     timeStart: 85,
@@ -79,9 +67,7 @@ const VSL_SLIDES: VSLSlide[] = [
     title: "O PROTOCOLO DO HOMEM CINZENTO",
     badge: "TÁTICA E INFILTRAÇÃO",
     subtitle: "Como transitar pelo caos de maneira totalmente invisível.",
-    copy: "Aprenda a não chamar atenção. Sem uniformes chamativos ou agressividade inútil. O verdadeiro sobrevivente urbano passa desapercebido pelas multidões desesperadas.",
-    bgStyle: "bg-radial from-zinc-950 via-apoc-gray to-apoc-black",
-    accentColor: "text-gray-400 border-zinc-800"
+    copy: "Aprenda a não chamar atenção. Sem uniformes chamativos ou agressividade inútil. O verdadeiro sobrevivente urbano passa desapercebido pelas multidões desesperadas."
   },
   {
     timeStart: 110,
@@ -89,11 +75,29 @@ const VSL_SLIDES: VSLSlide[] = [
     title: "AUTONOMIA TÁTICA",
     badge: "ACESSO VITALÍCIO",
     subtitle: "Acesso vitalício à plataforma, ao manual e aos bônus.",
-    copy: "Login liberado na hora, novos módulos e atualizações sem pagar de novo, e o manual em PDF para baixar. Tudo para proteger sua família em qualquer cenário.",
-    bgStyle: "bg-radial from-amber-950/30 via-apoc-gray to-apoc-black",
-    accentColor: "text-survival-amber border-amber-900/40"
+    copy: "Login liberado na hora, novos módulos e atualizações sem pagar de novo, e o manual em PDF para baixar. Tudo para proteger sua família em qualquer cenário."
   }
 ];
+
+const TOTAL_DURATION = 135;
+
+/** Moldura editorial: hairline de 1px, canto reto, zero sombra. */
+function PlayerFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="w-full max-w-4xl mx-auto" id="vsl-module">
+      <div className="flex items-center justify-between border border-b-0 border-hairline bg-surface-lowest px-4 py-2.5 font-mono text-tag uppercase">
+        <span className="flex items-center gap-2 text-ink-dim">
+          <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
+          Transmissão 01
+        </span>
+        <span className="hidden sm:inline text-outline">Assista antes de decidir</span>
+      </div>
+      <div className="relative border border-hairline bg-surface-lowest aspect-video overflow-hidden">
+        {children}
+      </div>
+    </div>
+  );
+}
 
 export default function VSLPlayer() {
   const youtubeId = extractYouTubeId(YOUTUBE_VIDEO_URL);
@@ -101,28 +105,24 @@ export default function VSLPlayer() {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [currentTime, setCurrentTime] = useState<number>(0);
-  const totalDuration = 135; // Total length of VSL
-  const progressPercent = (currentTime / totalDuration) * 100;
-  
+  const progressPercent = (currentTime / TOTAL_DURATION) * 100;
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Auto-play / update time ticker
   useEffect(() => {
-    if (youtubeId) return; // Skip simulated interval if using YouTube video
+    if (youtubeId) return; // com vídeo real, quem conta o tempo é o YouTube
     if (isPlaying) {
       timerRef.current = setInterval(() => {
         setCurrentTime((prev) => {
-          if (prev >= totalDuration) {
+          if (prev >= TOTAL_DURATION) {
             setIsPlaying(false);
-            return 0; // Reset
+            return 0;
           }
           return prev + 1;
         });
       }, 1000);
-    } else {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
+    } else if (timerRef.current) {
+      clearInterval(timerRef.current);
     }
 
     return () => {
@@ -132,27 +132,21 @@ export default function VSLPlayer() {
 
   if (youtubeId) {
     return (
-      <div className="w-full max-w-4xl mx-auto" id="vsl-module">
-        <div className="relative border border-zinc-800/80 rounded-2xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.85)] bg-black aspect-video group transition-all duration-500 hover:border-zinc-700/60">
-          <iframe
-            className="w-full h-full border-0"
-            src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=0`}
-            title="Vídeo de Apresentação"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowFullScreen
-          />
-        </div>
-      </div>
+      <PlayerFrame>
+        <iframe
+          className="w-full h-full border-0"
+          src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=0`}
+          title="Vídeo de Apresentação"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </PlayerFrame>
     );
   }
 
-  // Find active slide based on current time
-  const activeSlide = VSL_SLIDES.find(
-    (slide) => currentTime >= slide.timeStart && currentTime < slide.timeEnd
-  ) || VSL_SLIDES[0];
-
-  const togglePlay = () => setIsPlaying(!isPlaying);
-  const toggleMute = () => setIsMuted(!isMuted);
+  /* Fallback: sem link de YouTube configurado, a apresentação roda em texto. */
+  const activeSlide =
+    VSL_SLIDES.find((slide) => currentTime >= slide.timeStart && currentTime < slide.timeEnd) || VSL_SLIDES[0];
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -162,200 +156,76 @@ export default function VSLPlayer() {
 
   const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const clickX = e.clientX - rect.left;
-    const width = rect.width;
-    const newTime = Math.floor((clickX / width) * totalDuration);
-    setCurrentTime(Math.min(totalDuration, Math.max(0, newTime)));
+    const newTime = Math.floor(((e.clientX - rect.left) / rect.width) * TOTAL_DURATION);
+    setCurrentTime(Math.min(TOTAL_DURATION, Math.max(0, newTime)));
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto" id="vsl-module">
-      {/* Video Container Frame */}
-      <div className="relative border border-zinc-800/80 rounded-2xl overflow-hidden shadow-[0_30px_70px_rgba(0,0,0,0.85)] bg-black aspect-video flex flex-col justify-between group transition-all duration-500 hover:border-zinc-700/60">
-        
-        {/* Cinematic Backdrop with scanning grid overlay */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.03),rgba(0,255,0,0.01),rgba(0,0,255,0.03))] bg-[size:100%_4px,6px_100%] pointer-events-none z-10 opacity-20" />
+    <PlayerFrame>
+      <div className="absolute inset-0 flex flex-col">
 
-        {/* Ambient background styling based on active slide */}
-        <div className={`absolute inset-0 transition-all duration-1000 ${activeSlide.bgStyle} z-0`} />
-
-        {/* Top telemetry bar */}
-        <div className="relative z-10 px-5 py-4 bg-gradient-to-b from-black/90 to-transparent flex justify-between items-center text-[10px] font-mono tracking-widest text-zinc-500">
-          <div className="flex items-center gap-2.5">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-survival-red opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-survival-red"></span>
-            </span>
-            <span className="text-zinc-200 font-bold uppercase tracking-widest">{activeSlide.badge}</span>
-          </div>
-          <div className="flex items-center gap-5">
-            <span className="hidden sm:inline text-[9px] text-zinc-600 font-medium">SAT-INTEL: DECRYPTED_FILE // COD-771</span>
-            <div className="flex items-center gap-1.5 bg-zinc-950/90 border border-zinc-800/80 px-3 py-1 rounded-lg text-survival-amber shadow-sm">
-              <Clock className="w-3.5 h-3.5" />
-              <span className="font-semibold">{formatTime(currentTime)}</span>
-            </div>
-          </div>
+        <div className="flex justify-between items-center px-5 py-3 border-b border-hairline font-mono text-tag uppercase">
+          <span className="text-signal">[{activeSlide.badge}]</span>
+          <span className="text-outline tabular-nums">{formatTime(currentTime)} / {formatTime(TOTAL_DURATION)}</span>
         </div>
 
-        {/* Slide Content Area (VSL Video simulation) */}
-        <div className="relative z-10 flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-16 py-4">
+        <div className="flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-16">
           <AnimatePresence mode="wait">
             {!isPlaying && currentTime === 0 ? (
-              /* Play Button Hub */
-              <motion.div
+              <motion.button
                 key="play-prompt"
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.96 }}
-                className="cursor-pointer flex flex-col items-center justify-center group/play gap-5"
-                onClick={togglePlay}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsPlaying(true)}
+                className="flex flex-col items-center gap-5 cursor-pointer group"
                 id="play-overlay"
               >
-                <div className="w-22 h-22 rounded-full bg-gradient-to-br from-survival-light/20 to-survival-green/10 flex items-center justify-center border border-survival-light/40 shadow-[0_0_50px_rgba(34,197,94,0.15)] transition-all duration-500 group-hover/play:scale-105 group-hover/play:border-survival-light/80 group-hover/play:shadow-[0_0_60px_rgba(34,197,94,0.3)] relative">
-                  <div className="absolute inset-2 rounded-full bg-survival-light flex items-center justify-center text-black">
-                    <Play className="w-7 h-7 fill-current translate-x-0.5 text-black" />
-                  </div>
-                </div>
-                <div className="text-center max-w-lg space-y-1">
-                  <h3 className="text-white font-display text-lg sm:text-2xl font-black tracking-wider uppercase leading-tight">
-                    INICIAR TRANSMISSÃO EXCLUSIVA
-                  </h3>
-                  <p className="text-zinc-400 text-xs font-sans leading-relaxed max-w-sm mx-auto">
-                    Relatório estratégico confidencial sobre autonomia tática e contramedidas civis imediatas.
-                  </p>
-                </div>
-              </motion.div>
+                <span className="w-16 h-16 border border-signal flex items-center justify-center text-signal group-hover:bg-signal group-hover:text-black transition-colors">
+                  <Play className="w-6 h-6 fill-current translate-x-0.5" />
+                </span>
+                <span className="font-display text-subhead uppercase text-ink">Iniciar apresentação</span>
+              </motion.button>
             ) : (
-              /* Active Animated Slide Content */
               <motion.div
                 key={activeSlide.title}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="max-w-2xl flex flex-col items-center justify-center"
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.35 }}
+                className="max-w-2xl space-y-3"
               >
-                {/* Visual Audio Waveform Simulation */}
-                {isPlaying && (
-                  <div className="flex gap-1 h-6 items-end mb-5">
-                    {[...Array(16)].map((_, i) => {
-                      const heights = [8, 16, 24, 12, 18, 6, 22, 14, 20, 10, 16, 8, 18, 12, 22, 6];
-                      const delay = i * 0.08;
-                      return (
-                        <motion.div
-                          key={i}
-                          animate={isMuted ? { height: 2 } : { height: [4, heights[i], 4] }}
-                          transition={{
-                            repeat: Infinity,
-                            duration: 1.0,
-                            delay: delay,
-                            ease: "easeInOut"
-                          }}
-                          className={`w-1 rounded-full ${isMuted ? 'bg-zinc-700' : 'bg-survival-light'}`}
-                        />
-                      );
-                    })}
-                  </div>
-                )}
-
-                {/* Subtitle / Big Quote */}
-                <h2 className={`font-display text-xl sm:text-3xl font-black tracking-wider leading-tight uppercase transition-colors duration-500 ${activeSlide.accentColor} mb-2.5`}>
-                  {activeSlide.title}
-                </h2>
-                
-                <p className="text-sm sm:text-xl text-zinc-200 font-medium max-w-xl italic mb-3 leading-snug">
-                  "{activeSlide.subtitle}"
-                </p>
-
-                <p className="text-xs sm:text-sm text-zinc-400 max-w-md leading-relaxed font-sans font-medium">
-                  {activeSlide.copy}
-                </p>
+                <h3 className="font-display text-subhead uppercase text-signal">{activeSlide.title}</h3>
+                <p className="text-bodysm text-ink font-medium">{activeSlide.subtitle}</p>
+                <p className="text-tag sm:text-bodysm text-ink-dim leading-relaxed">{activeSlide.copy}</p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Dynamic Interactive Subtitle ticker at the bottom */}
-        {isPlaying && (
-          <div className="relative z-10 px-6 py-2.5 bg-black/85 border-t border-zinc-900/60 text-center min-h-[48px] flex items-center justify-center backdrop-blur-sm">
-            <p className="text-xs sm:text-sm font-mono text-zinc-300 tracking-wide max-w-2xl leading-normal">
-              <span className="text-survival-amber mr-1.5 font-bold">● VOICE NARRATION:</span>
-              {activeSlide.copy}
-            </p>
-          </div>
-        )}
-
-        {/* Control Bar */}
-        <div className="relative z-10 px-5 py-4 bg-gradient-to-t from-black via-black/95 to-black/80 flex flex-col gap-3 border-t border-zinc-900/60">
-          
-          {/* Progress Bar */}
-          <div 
-            className="h-1.5 w-full bg-zinc-800/80 rounded-full overflow-hidden cursor-pointer relative group/progress transition-all hover:h-2"
-            onClick={handleProgressBarClick}
-          >
-            <div 
-              className="h-full bg-survival-light rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(34,197,94,0.5)]"
-              style={{ width: `${progressPercent}%` }}
-            />
-            {/* Slide Markers */}
+        <div className="border-t border-hairline">
+          <div className="h-1 w-full bg-surface-high cursor-pointer relative" onClick={handleProgressBarClick}>
+            <div className="h-full bg-signal" style={{ width: `${progressPercent}%` }} />
             {VSL_SLIDES.map((slide) => (
-              <div 
+              <span
                 key={slide.timeStart}
-                className="absolute top-0 bottom-0 w-0.5 bg-black/40"
-                style={{ left: `${(slide.timeStart / totalDuration) * 100}%` }}
+                className="absolute top-0 bottom-0 w-px bg-void"
+                style={{ left: `${(slide.timeStart / TOTAL_DURATION) * 100}%` }}
               />
             ))}
           </div>
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <button 
-                onClick={togglePlay}
-                className="p-2 rounded-lg bg-zinc-950/80 hover:bg-zinc-900 text-zinc-200 border border-zinc-800/80 transition-colors cursor-pointer shadow-sm flex items-center justify-center"
-                title={isPlaying ? "Pausar" : "Reproduzir"}
-              >
-                {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-zinc-200" />}
-              </button>
-
-              <button 
-                onClick={toggleMute}
-                className="p-2 rounded-lg bg-zinc-950/80 hover:bg-zinc-900 text-zinc-200 border border-zinc-800/80 transition-colors cursor-pointer shadow-sm flex items-center justify-center"
-                title={isMuted ? "Desmutar" : "Mutar"}
-              >
-                {isMuted ? <VolumeX className="w-4 h-4 text-survival-red" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-
-              <span className="text-xs font-mono text-zinc-400 font-bold ml-1">
-                {formatTime(currentTime)} / {formatTime(totalDuration)}
-              </span>
-            </div>
-
-            <div className="flex items-center gap-3">
-              {isMuted && (
-                <span className="text-[10px] font-mono font-extrabold text-survival-amber animate-pulse bg-survival-amber/10 border border-survival-amber/20 px-2.5 py-1 rounded-lg hidden sm:inline-block">
-                  AUDIO MUTADO - CLIQUE NO BOTÃO DE SOM PARA OUVIR
-                </span>
-              )}
-              <div className="text-[10px] font-mono text-zinc-500 bg-zinc-950/80 px-3 py-1.5 border border-zinc-900/80 rounded-lg flex items-center gap-1.5 shadow-sm font-semibold">
-                <Activity className="w-3.5 h-3.5 text-survival-light animate-pulse" />
-                <span>STREAM LINK SECURE</span>
-              </div>
-            </div>
+          <div className="flex items-center gap-4 px-5 py-3">
+            <button onClick={() => setIsPlaying(!isPlaying)} className="text-ink hover:text-signal transition-colors cursor-pointer">
+              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+            </button>
+            <button onClick={() => setIsMuted(!isMuted)} className="text-ink hover:text-signal transition-colors cursor-pointer">
+              {isMuted ? <VolumeX className="w-4 h-4 text-alert" /> : <Volume2 className="w-4 h-4" />}
+            </button>
+            <span className="font-mono text-tag text-outline uppercase ml-auto">Stream seguro</span>
           </div>
-
         </div>
 
       </div>
-
-      {/* Floating Action Hint */}
-      {!isPlaying && (
-        <div className="text-center mt-4">
-          <span className="text-xs font-mono font-bold text-survival-amber border border-survival-amber/20 bg-survival-amber/10 px-4 py-2 rounded-xl inline-block shadow-sm animate-pulse tracking-wide">
-            ▲ CLIQUE NO REPRODUTOR ACIMA PARA INICIAR A APRESENTAÇÃO
-          </span>
-        </div>
-      )}
-    </div>
+    </PlayerFrame>
   );
 }
