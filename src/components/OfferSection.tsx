@@ -4,8 +4,8 @@ import { trackPixel } from '../pixel';
 import { ArrowUpRight, Check, ExternalLink, ShieldCheck, Zap } from 'lucide-react';
 
 const INCLUDED = [
-  { title: 'Acesso à Plataforma Completa', detail: 'Área de membros online, 24/7, no celular ou no computador' },
-  { title: 'Manual Completo de Sobrevivência Apocalíptica', detail: 'Em PDF, para baixar e consultar sem internet' },
+  { title: 'Plataforma completa do Método 5P', detail: 'O produto: área de membros online, 24/7, no celular ou no computador' },
+  { title: 'Manual Completo em PDF — brinde', detail: 'Vem junto sem custo, para baixar e consultar sem internet' },
   { title: 'Checklists e ferramentas práticas', detail: 'Reserva de água, kit médico e plano de evacuação, dentro da plataforma' },
   { title: 'Bônus 01 — Telecomunicações Resilientes', detail: 'Frequências, rádios amadores e comunicação off-grid' },
   { title: 'Bônus 02 — Protocolo de Evacuação de 72h', detail: 'O fluxograma do que fazer nas primeiras horas' },
@@ -25,14 +25,14 @@ export default function OfferSection() {
 
       <div className="max-w-3xl mx-auto text-center">
         <span className="inline-block font-mono text-tag font-bold uppercase bg-black text-signal px-4 py-1.5 mb-8">
-          Você não está comprando só um e-book
+          O produto é a plataforma. O e-book é brinde.
         </span>
         <h2 className="font-display text-display uppercase mb-6">
           Prepare-se antes do colapso.
         </h2>
         <p className="text-body font-medium text-black/75">
-          Acesso à plataforma completa + Manual em PDF + 3 bônus exclusivos.
-          Sem assinatura, sem mensalidade: paga uma vez e o acesso é vitalício.
+          Você leva a plataforma completa do Método 5P — e com ela o Manual em PDF e os 3 bônus,
+          de brinde. Sem assinatura, sem mensalidade: paga uma vez e o acesso é vitalício.
         </p>
       </div>
 

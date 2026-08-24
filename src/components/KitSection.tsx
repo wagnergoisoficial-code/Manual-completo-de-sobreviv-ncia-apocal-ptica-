@@ -54,14 +54,15 @@ export default function KitSection() {
 
       {/* Argumento */}
       <div className="order-1 md:order-2">
-        <span className="font-mono text-tag uppercase text-signal block mb-6">[ Kit tático de suporte ]</span>
+        <span className="font-mono text-tag uppercase text-signal block mb-6">[ O produto e o brinde ]</span>
         <h2 className="font-display text-display uppercase text-ink mb-8">
-          O manual impresso na sua tela.
+          A plataforma executa. O manual acompanha.
         </h2>
         <p className="text-body text-ink-dim mb-10">
-          O conteúdo do manual em PDF se integra à plataforma online: lá você marca checklists,
-          monta o plano de evacuação e acompanha o que já está pronto na sua casa. O PDF continua
-          no seu aparelho para o dia em que não houver internet nem energia.
+          O trabalho acontece na plataforma: é lá que você marca os checklists, monta o plano de
+          evacuação e acompanha o que já está pronto na sua casa. O manual em PDF é o brinde que
+          vem junto — o mesmo conteúdo no seu aparelho, para o dia em que não houver internet nem
+          energia para abrir plataforma alguma.
         </p>
 
         <ul className="mb-10">

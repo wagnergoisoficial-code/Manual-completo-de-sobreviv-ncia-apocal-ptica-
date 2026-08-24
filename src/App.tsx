@@ -11,7 +11,7 @@ import ModulesSection from './components/ModulesSection';
 import KitSection from './components/KitSection';
 import OfferSection from './components/OfferSection';
 import FAQ from './components/FAQ';
-import { ArrowRight } from 'lucide-react';
+import { AlertTriangle, ArrowRight } from 'lucide-react';
 import { KIWIFY_CHECKOUT_URL } from './data';
 import { trackPixel } from './pixel';
 
@@ -46,6 +46,16 @@ export default function App() {
 
       <Header />
 
+      {/* FAIXA DE ENTRADA — a primeira linha que a pessoa lê ao abrir a página */}
+      <div className="bg-ink text-void border-b border-hairline">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-center gap-3">
+          <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />
+          <p className="font-mono text-tag font-bold uppercase text-center">
+            Isto não é um e-book — é a plataforma completa do Método 5P. O manual em PDF vem de brinde.
+          </p>
+        </div>
+      </div>
+
       <main className="flex-1">
 
         {/* HERO */}
@@ -54,7 +64,7 @@ export default function App() {
 
             <span className="inline-flex items-center gap-2.5 px-3 py-1.5 border border-hairline mb-10">
               <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
-              <span className="font-mono text-tag uppercase text-alert">Acesso imediato</span>
+              <span className="font-mono text-tag uppercase text-alert">Método 5P · Acesso imediato</span>
             </span>
 
             <h1 className="font-display text-display uppercase max-w-5xl text-ink">
@@ -63,11 +73,31 @@ export default function App() {
               <span className="text-signal">Existe o que você preparou antes.</span>
             </h1>
 
-            <p className="text-body text-ink-dim max-w-3xl mt-8">
-              Você não está comprando um e-book avulso. Você entra na plataforma completa de
-              preparação — com checklists, ferramentas e novos módulos — e ainda leva o Manual
-              Completo em PDF para consultar offline, quando faltar internet.
-            </p>
+            {/* O reenquadramento: o produto é a plataforma, não o PDF */}
+            <div className="max-w-3xl mt-10 space-y-5">
+              <p className="text-body text-ink-dim">
+                O que quase todo mundo vende é um PDF de duzentas páginas. Você baixa, lê metade,
+                fecha — e continua exatamente tão despreparado quanto estava antes de comprar.
+              </p>
+              <p className="text-body text-ink">
+                Aqui é outra coisa. Você entra no <strong className="font-semibold text-signal">Método 5P</strong>:
+                a plataforma completa onde a preparação da sua casa vira um plano com passos
+                marcados, um a um — água, alimento, energia, saúde e segurança. Você não lê sobre
+                estar preparado. Você fica preparado.
+              </p>
+            </div>
+
+            {/* O brinde */}
+            <div className="w-full max-w-3xl mt-10 border-y border-hairline py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left">
+              <span className="font-mono text-tag font-bold uppercase text-signal border border-signal px-2.5 py-1.5 shrink-0">
+                Brinde incluso
+              </span>
+              <p className="text-bodysm text-ink-dim">
+                O <span className="text-ink font-semibold">Manual Completo em PDF</span> vem junto,
+                sem custo nenhum — para o dia em que não houver internet, energia, nem plataforma
+                alguma para abrir.
+              </p>
+            </div>
 
             <div className="w-full mt-14">
               <VSLPlayer />
@@ -84,9 +114,9 @@ export default function App() {
             </a>
 
             <p className="font-mono text-tag uppercase text-outline mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
-              <span>Plataforma online + manual em PDF</span>
+              <span>Plataforma Método 5P</span>
               <span className="hidden sm:inline text-outline-dim">/</span>
-              <span>Checklists, ferramentas e 3 bônus</span>
+              <span>Manual em PDF de brinde</span>
               <span className="hidden sm:inline text-outline-dim">/</span>
               <span>Garantia de 7 dias</span>
             </p>
