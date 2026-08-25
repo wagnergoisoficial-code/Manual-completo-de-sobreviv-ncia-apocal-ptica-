@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { QUIZ_QUESTIONS, KIWIFY_CHECKOUT_URL } from '../data';
+import { QUIZ_QUESTIONS } from '../data';
+import CheckoutLink from './CheckoutLink';
 import { trackPixel } from '../pixel';
 import { ArrowRight, RotateCcw } from 'lucide-react';
 import { motion } from 'motion/react';
@@ -169,15 +170,12 @@ export default function SurvivalQuiz() {
             <p className="text-bodysm text-ink-dim max-w-md">
               Cada frente acima tem um módulo correspondente dentro da plataforma, com o checklist pronto para executar — e tudo também no Manual Completo em PDF.
             </p>
-            <a
-              href={KIWIFY_CHECKOUT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Quiz' })}
+            <CheckoutLink
+              from="CTA Quiz"
               className="w-full sm:w-auto text-center bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
             >
               Corrigir minha matriz
-            </a>
+            </CheckoutLink>
           </div>
 
           <div className="px-6 sm:px-10 pb-8">

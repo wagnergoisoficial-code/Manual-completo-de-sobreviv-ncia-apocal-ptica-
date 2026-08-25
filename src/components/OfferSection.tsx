@@ -1,6 +1,5 @@
 import React from 'react';
-import { KIWIFY_CHECKOUT_URL } from '../data';
-import { trackPixel } from '../pixel';
+import CheckoutLink from './CheckoutLink';
 import { ArrowUpRight, Check, ExternalLink, ShieldCheck, Zap } from 'lucide-react';
 
 const INCLUDED = [
@@ -56,16 +55,13 @@ export default function OfferSection() {
 
       {/* Ação */}
       <div className="max-w-3xl mx-auto mt-16 flex flex-col items-center">
-        <a
-          href={KIWIFY_CHECKOUT_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Oferta' })}
+        <CheckoutLink
+          from="CTA Oferta"
           className="w-full md:w-auto inline-flex items-center justify-center gap-3 text-center bg-black hover:bg-surface-lowest text-signal font-display font-extrabold uppercase tracking-wide text-lg md:text-xl px-12 py-6 transition-colors"
         >
           Garantir meu acesso agora
           <ArrowUpRight className="w-5 h-5 shrink-0" strokeWidth={2.5} />
-        </a>
+        </CheckoutLink>
 
         <p className="mt-5 font-mono text-tag uppercase text-black/60 text-center max-w-md">
           Ao clicar, você vai para a Kiwify — a plataforma oficial onde a compra é finalizada.

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Shield } from 'lucide-react';
-import { KIWIFY_CHECKOUT_URL } from '../data';
-import { trackPixel } from '../pixel';
+import CheckoutLink from './CheckoutLink';
 
 const NAV_LINKS = [
   { label: 'Diagnóstico', href: '#diagnostico' },
@@ -58,16 +57,13 @@ export default function Header() {
           <span className="hidden xl:block font-mono text-tag text-outline tabular-nums">
             {utcTime}
           </span>
-          <a
-            href={KIWIFY_CHECKOUT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Topo' })}
+          <CheckoutLink
+            from="CTA Topo"
             className="bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-4 sm:px-6 py-3 transition-colors shrink-0"
           >
             <span className="sm:hidden">Acessar</span>
             <span className="hidden sm:inline">Acessar plataforma</span>
-          </a>
+          </CheckoutLink>
         </div>
 
       </div>

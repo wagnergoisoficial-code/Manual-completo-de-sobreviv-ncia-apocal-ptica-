@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Header from './components/Header';
 import VSLPlayer from './components/VSLPlayer';
 import SurvivalQuiz from './components/SurvivalQuiz';
@@ -11,9 +11,9 @@ import ModulesSection from './components/ModulesSection';
 import KitSection from './components/KitSection';
 import OfferSection from './components/OfferSection';
 import FAQ from './components/FAQ';
-import { AlertTriangle, ArrowRight } from 'lucide-react';
-import { KIWIFY_CHECKOUT_URL } from './data';
+import CheckoutLink from './components/CheckoutLink';
 import { trackPixel } from './pixel';
+import { AlertTriangle, ArrowRight } from 'lucide-react';
 
 const DATA_STRIP = [
   { value: '05', label: 'Módulos na plataforma' },
@@ -41,6 +41,12 @@ const AUDIENCE = [
 ];
 
 export default function App() {
+  // Quem abre a página viu a oferta. Este é o evento padrão que ESTA página pode
+  // reivindicar de verdade — o InitiateCheckout pertence à tela de pagamento da Kiwify.
+  useEffect(() => {
+    trackPixel('ViewContent', { content_name: 'Página de vendas — Método 5P' });
+  }, []);
+
   return (
     <div className="min-h-screen bg-void text-ink flex flex-col overflow-x-hidden grain" id="topo">
 
@@ -103,15 +109,12 @@ export default function App() {
               <VSLPlayer />
             </div>
 
-            <a
-              href={KIWIFY_CHECKOUT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Hero' })}
+            <CheckoutLink
+              from="CTA Hero"
               className="w-full md:w-auto mt-12 bg-signal hover:bg-signal-soft text-black font-display font-extrabold uppercase tracking-wide text-base md:text-lg px-10 py-5 transition-colors"
             >
               Quero acessar o Método 5P agora
-            </a>
+            </CheckoutLink>
 
             <p className="font-mono text-tag uppercase text-outline mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
               <span>Plataforma Método 5P</span>
@@ -237,16 +240,13 @@ export default function App() {
               </p>
             </div>
             <div className="md:col-span-5 md:flex md:justify-end">
-              <a
-                href={KIWIFY_CHECKOUT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackPixel('InitiateCheckout', { content_name: 'CTA Fechamento' })}
+              <CheckoutLink
+                from="CTA Fechamento"
                 className="w-full md:w-auto inline-flex items-center justify-center gap-3 border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-5 transition-colors"
               >
                 Quero a plataforma + o manual
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </CheckoutLink>
             </div>
           </div>
         </section>
