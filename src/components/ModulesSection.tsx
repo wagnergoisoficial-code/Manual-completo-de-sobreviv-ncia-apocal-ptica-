@@ -1,5 +1,6 @@
 import React from 'react';
 import { CHAPTERS } from '../data';
+import CheckoutLink from './CheckoutLink';
 
 export default function ModulesSection() {
   return (
@@ -67,6 +68,20 @@ export default function ModulesSection() {
         <span>O pilar do Planejamento vive nas ferramentas da plataforma</span>
         <span>Acesso vitalício · atualizações inclusas</span>
       </p>
+
+      {/* CTA intermediário: o visitante acabou de atravessar o bloco mais longo da página */}
+      <div className="mt-12 pt-10 border-t border-hairline flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+        <p className="text-bodysm text-ink-dim max-w-md">
+          Os cinco módulos ficam liberados de uma vez, assim que você entra. Não tem liberação
+          semanal nem espera.
+        </p>
+        <CheckoutLink
+          from="CTA Módulos"
+          className="w-full sm:w-auto text-center border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
+        >
+          Entrar na plataforma — R$ 39,90
+        </CheckoutLink>
+      </div>
 
     </div>
   );

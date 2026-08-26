@@ -219,6 +219,20 @@ export default function App() {
               ))}
             </div>
 
+            {/* CTA intermediário: logo depois de a pessoa se reconhecer num dos três perfis */}
+            <div className="mt-14 pt-10 border-t border-hairline flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
+              <p className="text-bodysm text-ink-dim max-w-md">
+                Se você se reconheceu em algum dos três, o próximo passo custa menos que um lanche
+                — e vem com 7 dias para desistir.
+              </p>
+              <CheckoutLink
+                from="CTA Para Quem"
+                className="w-full sm:w-auto text-center border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
+              >
+                Começar por R$ 39,90
+              </CheckoutLink>
+            </div>
+
           </div>
         </section>
 
