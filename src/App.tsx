@@ -15,11 +15,12 @@ import CheckoutLink from './components/CheckoutLink';
 import { trackPixel } from './pixel';
 import { AlertTriangle, ArrowRight } from 'lucide-react';
 
-const DATA_STRIP = [
-  { value: '05', label: 'Módulos na plataforma' },
-  { value: '03', label: 'Bônus inclusos' },
-  { value: '07', label: 'Dias de garantia', accent: true },
-  { value: '24/7', label: 'Acesso à plataforma' },
+const PILARES = [
+  { nome: 'Prevenção', texto: 'Enxergar a falha antes dela chegar: os sinais de que luz, água ou mercado vão faltar.' },
+  { nome: 'Planejamento', texto: 'O plano escrito da sua casa: quem faz o quê nas primeiras 72 horas, e por onde sair.' },
+  { nome: 'Provisão', texto: 'Água, comida e remédio suficientes — guardados do jeito certo, não empilhados.' },
+  { nome: 'Proteção', texto: 'Primeiros socorros, casa discreta e a família fora do caminho do problema.' },
+  { nome: 'Persistência', texto: 'Aguentar semanas, não dias: energia, comunicação e reposição do que acabou.' },
 ];
 
 const AUDIENCE = [
@@ -57,7 +58,7 @@ export default function App() {
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-center gap-3">
           <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />
           <p className="font-mono text-tag font-bold uppercase text-center">
-            Isto não é um e-book — é a plataforma completa do Método 5P. O manual em PDF vem de brinde.
+            Isto não é um e-book — é a plataforma completa do Método 5P. O manual em PDF vem incluído.
           </p>
         </div>
       </div>
@@ -70,7 +71,7 @@ export default function App() {
 
             <span className="inline-flex items-center gap-2.5 px-3 py-1.5 border border-hairline mb-10">
               <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
-              <span className="font-mono text-tag uppercase text-alert">Método 5P · Acesso imediato</span>
+              <span className="font-mono text-tag uppercase text-alert">Método 5P · Os 5 pilares da preparação</span>
             </span>
 
             <h1 className="font-display text-display uppercase max-w-5xl text-ink">
@@ -81,27 +82,32 @@ export default function App() {
 
             {/* O reenquadramento: o produto é a plataforma, não o PDF */}
             <div className="max-w-3xl mt-10 space-y-5">
+              <p className="text-body text-ink">
+                Em uma tarde, a sua casa fica pronta para os três primeiros dias sem luz, sem água
+                e sem mercado. Com um plano escrito — não com boa intenção.
+              </p>
               <p className="text-body text-ink-dim">
                 O que quase todo mundo vende é um PDF de duzentas páginas. Você baixa, lê metade,
                 fecha — e continua exatamente tão despreparado quanto estava antes de comprar.
               </p>
-              <p className="text-body text-ink">
-                Aqui é outra coisa. Você entra no <strong className="font-semibold text-signal">Método 5P</strong>:
-                a plataforma completa onde a preparação da sua casa vira um plano com passos
-                marcados, um a um — água, alimento, energia, saúde e segurança. Você não lê sobre
-                estar preparado. Você fica preparado.
+              <p className="text-body text-ink-dim">
+                O <strong className="font-semibold text-signal">Método 5P</strong> é uma plataforma.
+                Os cinco pilares — Prevenção, Planejamento, Provisão, Proteção e Persistência —
+                viram passos marcados, um a um, e você vê na tela o que já tem e o que ainda falta.
+                Você não lê sobre estar preparado. Você fica preparado.
               </p>
             </div>
 
-            {/* O brinde */}
+            {/* Preço e o que vem incluído */}
             <div className="w-full max-w-3xl mt-10 border-y border-hairline py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left">
               <span className="font-mono text-tag font-bold uppercase text-signal border border-signal px-2.5 py-1.5 shrink-0">
-                Brinde incluso
+                R$ 39,90
               </span>
               <p className="text-bodysm text-ink-dim">
-                O <span className="text-ink font-semibold">Manual Completo em PDF</span> vem junto,
-                sem custo nenhum — para o dia em que não houver internet, energia, nem plataforma
-                alguma para abrir.
+                <span className="text-ink font-semibold">Pagamento único, acesso vitalício.</span> Sem
+                assinatura e sem mensalidade. O <span className="text-ink font-semibold">Manual Completo
+                em PDF</span> e os 3 bônus vêm incluídos — o PDF é o seu seguro, para o dia em que não
+                houver internet, energia, nem plataforma alguma para abrir.
               </p>
             </div>
 
@@ -113,15 +119,15 @@ export default function App() {
               from="CTA Hero"
               className="w-full md:w-auto mt-12 bg-signal hover:bg-signal-soft text-black font-display font-extrabold uppercase tracking-wide text-base md:text-lg px-10 py-5 transition-colors"
             >
-              Quero acessar o Método 5P agora
+              Entrar na plataforma por R$ 39,90
             </CheckoutLink>
 
             <p className="font-mono text-tag uppercase text-outline mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
-              <span>Plataforma Método 5P</span>
+              <span>Pagamento único de R$ 39,90</span>
               <span className="hidden sm:inline text-outline-dim">/</span>
-              <span>Manual em PDF de brinde</span>
+              <span>Acesso imediato e vitalício</span>
               <span className="hidden sm:inline text-outline-dim">/</span>
-              <span>Garantia de 7 dias</span>
+              <span>7 dias de garantia</span>
             </p>
 
           </div>
@@ -139,9 +145,9 @@ export default function App() {
                 Descubra se você sobreviveria a um blackout de 7 dias
               </h2>
               <p className="text-body text-ink-dim mt-6">
-                Sua infraestrutura doméstica suportaria o corte completo de água e sinal de rede?
-                Faça o teste de 2 minutos para revelar suas maiores vulnerabilidades e ver
-                exatamente qual módulo da plataforma resolve cada uma delas.
+                Sua casa aguentaria o corte de água e de energia por uma semana? Responda cinco
+                perguntas e veja a sua nota em cada um dos cinco pilares — e exatamente qual
+                módulo da plataforma resolve cada falha que aparecer.
               </p>
             </div>
 
@@ -157,19 +163,25 @@ export default function App() {
           <ModulesSection />
         </section>
 
-        {/* FAIXA DE DADOS */}
-        <section className="border-y border-hairline bg-surface-lowest">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-2 md:grid-cols-4">
-            {DATA_STRIP.map((item, i) => (
+        {/* OS 5 PILARES — o método, nomeado */}
+        <section className="border-y border-hairline bg-surface-lowest" id="pilares">
+          <div className="max-w-[1440px] mx-auto px-6 sm:px-8 pt-10 md:pt-14">
+            <span className="font-mono text-tag uppercase text-signal">[ Método 5P · os 5 pilares da preparação ]</span>
+          </div>
+          <div className="max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
+            {PILARES.map((pilar, i) => (
               <div
-                key={item.label}
-                className={`px-6 sm:px-8 py-10 md:py-14 border-hairline ${i % 2 === 0 ? 'border-r' : ''} ${i < 2 ? 'border-b md:border-b-0' : ''} ${i === 2 ? 'md:border-r' : ''}`}
+                key={pilar.nome}
+                className={`px-6 sm:px-8 py-8 md:py-12 border-hairline border-b md:border-b-0 ${i < PILARES.length - 1 ? 'md:border-r' : ''}`}
               >
-                <span className={`font-display font-extrabold text-[40px] md:text-[56px] leading-none tracking-tighter block ${item.accent ? 'text-signal' : 'text-ink'}`}>
-                  {item.value}
+                <span className="font-mono text-tag text-outline-dim block mb-3 tabular-nums">
+                  {String(i + 1).padStart(2, '0')}
                 </span>
-                <span className="font-mono text-tag uppercase text-outline block mt-3">
-                  {item.label}
+                <span className="font-display font-extrabold text-[26px] md:text-[30px] leading-none tracking-tight text-ink block">
+                  {pilar.nome}
+                </span>
+                <span className="text-bodysm text-ink-dim block mt-4">
+                  {pilar.texto}
                 </span>
               </div>
             ))}
@@ -231,12 +243,13 @@ export default function App() {
             <div className="md:col-span-7">
               <span className="font-mono text-tag uppercase text-alert block mb-5">[ Última nota ]</span>
               <h2 className="font-display text-headline uppercase text-ink">
-                Você vai esperar a rede cair para aprender?
+                O risco é todo nosso, não seu
               </h2>
               <p className="text-body text-ink-dim mt-6 max-w-xl">
-                Quando a energia sumir e as redes caírem, ninguém entra em plataforma nenhuma nem
-                baixa PDF nenhum. Garanta agora o acesso vitalício e deixe o manual salvo no seu
-                celular enquanto a conectividade ainda existe.
+                Entre na plataforma, abra os cinco pilares, use os checklists e baixe o manual. Se
+                em sete dias você achar que não valeu, devolvemos os R$ 39,90 inteiros — sem
+                pergunta nenhuma. O que não dá para devolver é o tempo: quando a energia sumir e as
+                redes caírem, ninguém abre plataforma nem baixa PDF.
               </p>
             </div>
             <div className="md:col-span-5 md:flex md:justify-end">
@@ -244,7 +257,7 @@ export default function App() {
                 from="CTA Fechamento"
                 className="w-full md:w-auto inline-flex items-center justify-center gap-3 border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-5 transition-colors"
               >
-                Quero a plataforma + o manual
+                Entrar por R$ 39,90
                 <ArrowRight className="w-4 h-4" />
               </CheckoutLink>
             </div>
@@ -259,8 +272,9 @@ export default function App() {
           <div className="md:col-span-7">
             <span className="font-mono text-tag uppercase text-outline block mb-3">Aviso de responsabilidade</span>
             <p className="text-bodysm text-ink-dim max-w-2xl">
-              Os métodos descritos neste compêndio são de teor estritamente pedagógico e
-              informativo de resiliência civil.
+              O conteúdo desta plataforma é informativo e educacional, voltado à preparação
+              doméstica para emergências. Não substitui atendimento médico, socorro público nem
+              orientação profissional.
             </p>
           </div>
           <div className="md:col-span-5 flex flex-col md:items-end gap-4">

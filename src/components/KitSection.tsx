@@ -12,8 +12,8 @@ const CHECKLIST_PREVIEW = [
 
 const SPECS = [
   { key: 'Autor', value: 'Wagner Gois' },
-  { key: 'Acesso', value: 'Plataforma + PDF' },
-  { key: 'Edição', value: '2ª revisada' },
+  { key: 'Preço', value: 'R$ 39,90' },
+  { key: 'Acesso', value: 'Vitalício' },
   { key: 'Envio', value: 'Imediato' },
 ];
 
@@ -54,14 +54,15 @@ export default function KitSection() {
 
       {/* Argumento */}
       <div className="order-1 md:order-2">
-        <span className="font-mono text-tag uppercase text-signal block mb-6">[ O produto e o brinde ]</span>
+        <span className="font-mono text-tag uppercase text-signal block mb-6">[ O produto e o que vem junto ]</span>
         <h2 className="font-display text-display uppercase text-ink mb-8">
           A plataforma executa. O manual acompanha.
         </h2>
         <p className="text-body text-ink-dim mb-10">
           O trabalho acontece na plataforma: é lá que você marca os checklists, monta o plano de
-          evacuação e acompanha o que já está pronto na sua casa. O manual em PDF é o brinde que
-          vem junto — o mesmo conteúdo no seu aparelho, para o dia em que não houver internet nem
+          evacuação e acompanha o que já está pronto na sua casa. O pilar do Planejamento, aliás,
+          só existe ali dentro — plano nenhum se mantém vivo num PDF parado. O manual vem junto
+          como seguro: o mesmo conteúdo no seu aparelho, para o dia em que não houver internet nem
           energia para abrir plataforma alguma.
         </p>
 

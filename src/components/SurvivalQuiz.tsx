@@ -168,13 +168,13 @@ export default function SurvivalQuiz() {
           {/* Ação */}
           <div className="p-6 sm:p-10 mt-4 border-t border-hairline bg-surface flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
             <p className="text-bodysm text-ink-dim max-w-md">
-              Cada frente acima tem um módulo correspondente dentro da plataforma, com o checklist pronto para executar — e tudo também no Manual Completo em PDF.
+              Cada falha acima tem um módulo correspondente dentro da plataforma, com o checklist pronto para executar — e tudo também no Manual Completo em PDF. São R$ 39,90, uma vez só.
             </p>
             <CheckoutLink
               from="CTA Quiz"
               className="w-full sm:w-auto text-center bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
             >
-              Corrigir minha matriz
+              Corrigir minhas falhas — R$ 39,90
             </CheckoutLink>
           </div>
 

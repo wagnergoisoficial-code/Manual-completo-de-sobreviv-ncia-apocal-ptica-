@@ -9,10 +9,11 @@ export default function ModulesSection() {
         <span className="font-mono text-tag uppercase text-tactical block mb-5">
           [ 5 módulos liberados de uma vez ]
         </span>
-        <h2 className="font-display text-display uppercase text-ink">Conteúdo tático</h2>
+        <h2 className="font-display text-display uppercase text-ink">O que você vai saber fazer</h2>
         <p className="text-body text-ink-dim mt-8 max-w-2xl mx-auto">
-          Cada módulo fica disponível na plataforma, com os checklists e as ferramentas
-          correspondentes — e também no manual em PDF, para consultar sem internet.
+          Cada módulo corresponde a um dos cinco pilares e fica disponível na plataforma, com os
+          checklists e as ferramentas daquele pilar — e também no manual em PDF, para consultar
+          sem internet.
         </p>
       </div>
 
@@ -63,7 +64,7 @@ export default function ModulesSection() {
       </div>
 
       <p className="font-mono text-tag uppercase text-outline mt-8 flex flex-col sm:flex-row sm:justify-between gap-2">
-        <span>Disponível na plataforma online + PDF para download</span>
+        <span>O pilar do Planejamento vive nas ferramentas da plataforma</span>
         <span>Acesso vitalício · atualizações inclusas</span>
       </p>
 

@@ -3,7 +3,7 @@ import CheckoutLink from './CheckoutLink';
 import { ArrowUpRight, Check, ExternalLink, ShieldCheck, Zap } from 'lucide-react';
 
 const INCLUDED = [
-  { title: 'Plataforma completa do Método 5P', detail: 'O produto: área de membros online, 24/7, no celular ou no computador' },
+  { title: 'Plataforma completa do Método 5P', detail: 'O produto: os 5 pilares em passos marcados, no celular ou no computador, 24/7' },
   { title: 'Manual Completo em PDF — brinde', detail: 'Vem junto sem custo, para baixar e consultar sem internet' },
   { title: 'Checklists e ferramentas práticas', detail: 'Reserva de água, kit médico e plano de evacuação, dentro da plataforma' },
   { title: 'Bônus 01 — Telecomunicações Resilientes', detail: 'Frequências, rádios amadores e comunicação off-grid' },
@@ -14,8 +14,8 @@ const INCLUDED = [
 
 const TRUST = [
   { icon: ExternalLink, label: 'Compra na Kiwify' },
-  { icon: ShieldCheck, label: 'Garantia de 7 dias' },
-  { icon: Zap, label: 'Acesso imediato' },
+  { icon: ShieldCheck, label: '7 dias de garantia' },
+  { icon: Zap, label: 'Pagamento único' },
 ];
 
 export default function OfferSection() {
@@ -27,11 +27,11 @@ export default function OfferSection() {
           O produto é a plataforma. O e-book é brinde.
         </span>
         <h2 className="font-display text-display uppercase mb-6">
-          Prepare-se antes do colapso.
+          R$ 39,90, uma vez só.
         </h2>
         <p className="text-body font-medium text-black/75">
-          Você leva a plataforma completa do Método 5P — e com ela o Manual em PDF e os 3 bônus,
-          de brinde. Sem assinatura, sem mensalidade: paga uma vez e o acesso é vitalício.
+          É o preço de um lanche. Você leva a plataforma completa do Método 5P, o Manual em PDF e
+          os 3 bônus — sem assinatura, sem mensalidade, com acesso vitalício e 7 dias de garantia.
         </p>
       </div>
 
@@ -59,7 +59,7 @@ export default function OfferSection() {
           from="CTA Oferta"
           className="w-full md:w-auto inline-flex items-center justify-center gap-3 text-center bg-black hover:bg-surface-lowest text-signal font-display font-extrabold uppercase tracking-wide text-lg md:text-xl px-12 py-6 transition-colors"
         >
-          Garantir meu acesso agora
+          Garantir meu acesso por R$ 39,90
           <ArrowUpRight className="w-5 h-5 shrink-0" strokeWidth={2.5} />
         </CheckoutLink>
 

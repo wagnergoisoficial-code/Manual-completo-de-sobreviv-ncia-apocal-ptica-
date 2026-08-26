@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Shield } from 'lucide-react';
 import CheckoutLink from './CheckoutLink';
 
@@ -10,22 +10,6 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
-  const [utcTime, setUtcTime] = useState<string>('');
-
-  useEffect(() => {
-    const updateTime = () => {
-      const now = new Date();
-      const hh = String(now.getUTCHours()).padStart(2, '0');
-      const mm = String(now.getUTCMinutes()).padStart(2, '0');
-      const ss = String(now.getUTCSeconds()).padStart(2, '0');
-      setUtcTime(`${hh}:${mm}:${ss} UTC`);
-    };
-
-    updateTime();
-    const interval = setInterval(updateTime, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <header className="sticky top-0 z-50 bg-void/85 backdrop-blur-md border-b border-hairline">
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-6">
@@ -53,18 +37,13 @@ export default function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-5">
-          <span className="hidden xl:block font-mono text-tag text-outline tabular-nums">
-            {utcTime}
-          </span>
-          <CheckoutLink
-            from="CTA Topo"
-            className="bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-4 sm:px-6 py-3 transition-colors shrink-0"
-          >
-            <span className="sm:hidden">Acessar</span>
-            <span className="hidden sm:inline">Acessar plataforma</span>
-          </CheckoutLink>
-        </div>
+        <CheckoutLink
+          from="CTA Topo"
+          className="bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-4 sm:px-6 py-3 transition-colors shrink-0"
+        >
+          <span className="sm:hidden">Acessar</span>
+          <span className="hidden sm:inline">Acessar plataforma</span>
+        </CheckoutLink>
 
       </div>
     </header>

@@ -9,67 +9,67 @@ export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://p
 export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "https://www.youtube-nocookie.com/embed/JN376P1nCZY?rel=0&modestbranding=1";
 
 export const EBOOK_TITLE = "Manual Completo de Sobrevivência Apocalíptica";
-export const EBOOK_SUBTITLE = "O guia definitivo de autonomia tática e resiliência civil para mentes estratégicas contemporâneas.";
+export const EBOOK_SUBTITLE = "A plataforma que transforma a preparação da sua casa em um plano com passos marcados.";
 
 export const CHAPTERS: Chapter[] = [
   {
     number: 1,
-    tag: "INFRAESTRUTURA",
+    tag: "PREVENÇÃO",
     title: "O Colapso de Redes Complexas",
-    subtitle: "A Anatomia da Interrupção de Cadeia de Suprimentos",
-    description: "Uma análise analítica detalhada sobre como o efeito cascata derruba a rede elétrica (Grid-Down), o fornecimento de água potável e a distribuição logística alimentar em menos de 72 horas.",
+    subtitle: "Como a falta chega antes do aviso",
+    description: "Como um problema em um ponto só derruba luz, água e abastecimento em menos de 72 horas — e quais são os sinais que aparecem antes disso, enquanto ainda dá tempo de agir.",
     topics: [
-      "A teoria do caos aplicada às redes de energia hiperconectadas",
-      "O protocolo de isolamento térmico residencial imediato",
-      "Como identificar os primeiros 3 sinais invisíveis de desabastecimento urbano"
+      "Por que uma falha pequena vira apagão geral",
+      "Como manter a casa habitável nas primeiras horas sem energia",
+      "Os 3 sinais de desabastecimento que aparecem antes das prateleiras vazias"
     ]
   },
   {
     number: 2,
-    tag: "ÁGUA & NUTRIÇÃO",
+    tag: "PROVISÃO",
     title: "Autonomia Hídrica e Nutrição Pragmática",
-    subtitle: "Termodinâmica da Conservação Alimentar Sem Eletricidade",
-    description: "Métodos avançados de purificação molecular da água e conservação de macronutrientes sob condições climáticas adversas ou escassez absoluta de recursos industriais.",
+    subtitle: "Água e comida sem depender da rede",
+    description: "Como ter água potável em casa sem depender de galão, e como conservar comida quando a geladeira para de funcionar.",
     topics: [
-      "Filtração de múltiplos estágios por gravidade e carvão ativado ativado",
-      "A física da preservação calórica: secagem, salga e fermentação off-grid",
-      "Fontes alternativas de micronutrientes resilientes na flora urbana"
+      "Filtro de gravidade caseiro, montado em estágios com carvão ativado",
+      "Secagem, salga e fermentação: comida que dura sem geladeira",
+      "O que dá para comer do que já cresce perto de você"
     ]
   },
   {
     number: 3,
-    tag: "COMUNICAÇÕES",
-    title: "Criptografia Analógica e Redes Silenciosas",
-    subtitle: "Comunicações Resilientes com Rádios VHF/UHF e Ondas Curtas",
-    description: "Como estabelecer redes de comunicação privada com rádio amador (Baofeng, rádios de ondas curtas) e codificar dados em canais abertos contra monitoramento eletrônico.",
+    tag: "PERSISTÊNCIA",
+    title: "Comunicação Quando Tudo Sai do Ar",
+    subtitle: "Rádio e ondas curtas, começando do zero",
+    description: "Como continuar recebendo notícia e falando com a sua família quando o celular e a internet saírem do ar — com rádio barato, do jeito mais simples possível.",
     topics: [
-      "Configuração e calibração de antenas de emergência com fios comuns",
-      "O protocolo de comunicação por bursts e segurança de localização",
-      "Tabelas de frequências internacionais de resgate (HF/VHF/UHF)"
+      "Antena de emergência feita com fio comum",
+      "Como falar pelo rádio sem entregar onde você está",
+      "As frequências de resgate que valem a pena deixar anotadas"
     ]
   },
   {
     number: 4,
-    tag: "MÉDICO",
+    tag: "PROTEÇÃO · SAÚDE",
     title: "Farmácia de Emergência e Cirurgia de Campo",
-    subtitle: "Protocolos Clínicos de Linha de Frente sem Apoio Institucional",
-    description: "Gerenciamento de ferimentos graves, controle de infecções sem antibióticos convencionais e fitoterapia de espectro amplo fundamentada cientificamente.",
+    subtitle: "Primeiros socorros quando o socorro demora",
+    description: "O que fazer diante de um ferimento grave ou de uma infecção enquanto o socorro não chega — e o que vale a pena ter guardado em casa antes de precisar.",
     topics: [
-      "Estancamento de hemorragia severa e uso estratégico de torniquetes",
-      "Antibióticos alternativos veterinários e naturais: dosagem e espectro",
-      "Procedimentos estéreis em ambientes contaminados"
+      "Como estancar um sangramento grave e quando usar torniquete",
+      "O que vale ter na farmacinha de emergência e como armazenar",
+      "Como manter higiene mínima em ambiente sujo"
     ]
   },
   {
     number: 5,
-    tag: "DEFESA",
+    tag: "PROTEÇÃO · SEGURANÇA",
     title: "Psicologia de Massas e Defesa de Perímetro",
-    subtitle: "A Dinâmica Comportamental no Caos Sistêmico",
-    description: "Desenvolvimento de inteligência situacional, minimização de assinatura de calor/luz e estabelecimento de perímetros defensivos comunitários discretos.",
+    subtitle: "Segurança sem chamar atenção",
+    description: "Como não virar alvo: passar despercebido na rua, deixar a casa discreta e organizar a vizinhança antes que o clima esquente.",
     topics: [
-      "Doutrina do 'Homem Cinzento' (Gray Man) em centros metropolitanos",
-      "Sistemas de alerta passivos e fortificação furtiva de abrigos",
-      "Mediação de crises, liderança tática e coesão social comunitária"
+      "O 'homem cinzento': transitar sem chamar atenção",
+      "Proteger a casa sem transformá-la num alvo",
+      "Como organizar vizinhos e evitar conflito"
     ]
   }
 ];
@@ -153,8 +153,12 @@ export const BONUSES: Bonus[] = [
 
 export const FAQS = [
   {
+    question: "Quanto custa?",
+    answer: "R$ 39,90, pagamento único. Não é assinatura e não tem mensalidade: você paga uma vez e o acesso é vitalício. Nesse valor entra a plataforma completa do Método 5P, o Manual Completo em PDF para baixar e os 3 bônus — mais as atualizações e os novos módulos que entrarem depois, sem custo adicional. E você tem 7 dias de garantia: se não servir, devolvemos os R$ 39,90 integralmente."
+  },
+  {
     question: "Estou comprando apenas um e-book?",
-    answer: "Não. O e-book é só uma parte do que você leva. A compra libera o acesso à plataforma completa: uma área de membros com login e senha, onde ficam os 5 módulos, os checklists e as ferramentas para montar seu plano passo a passo — no celular ou no computador, a hora que quiser. Dentro dela você também baixa o Manual Completo em PDF, para consultar mesmo sem internet, e encontra os 3 bônus já liberados. Novos módulos e atualizações entram na sua conta sem você pagar de novo."
+    answer: "Não. O e-book é só uma parte do que você leva. Método 5P é o nome da plataforma, e os 5P são os cinco pilares da preparação: Prevenção, Planejamento, Provisão, Proteção e Persistência. A compra libera o acesso à plataforma completa: uma área de membros com login e senha, onde ficam os 5 módulos, os checklists e as ferramentas para montar seu plano passo a passo — no celular ou no computador, a hora que quiser. Dentro dela você também baixa o Manual Completo em PDF, para consultar mesmo sem internet, e encontra os 3 bônus já liberados. Novos módulos e atualizações entram na sua conta sem você pagar de novo."
   },
   {
     question: "Qual a diferença entre a plataforma e o manual em PDF?",
@@ -162,7 +166,7 @@ export const FAQS = [
   },
   {
     question: "O que exatamente eu vou aprender?",
-    answer: "A plataforma e o Manual Completo de Sobrevivência Apocalíptica ensinam um sistema integrado de auto-defesa e autossuficiência civil. Você aprenderá: 1) Purificação molecular de água contaminada sem filtros comerciais; 2) Preservação de calorias e macronutrientes em cenários de Grid-Down (rede elétrica desligada); 3) Comunicações analógicas criptografadas off-grid com rádios amadores de baixo custo; 4) Protocolos de APH tático, estancamento de hemorragia severa e controle cirúrgico de infecções sem hospitais; 5) A doutrina de ocultamento urbano 'Homem Cinzento' para transitar por zonas de conflito de forma invisível. É um plano tático pragmático, livre de teorias e focado em engenharia de sobrevivência pura."
+    answer: "A plataforma e o Manual Completo de Sobrevivência Apocalíptica ensinam um sistema integrado de auto-defesa e autossuficiência civil. Você aprenderá: 1) Deixar água potável em casa sem depender de galão; 2) Conservar comida quando a geladeira para; 3) Receber notícia e falar com a família quando celular e internet saem do ar; 4) Agir diante de um ferimento grave ou de uma infecção enquanto o socorro não chega; 5) Não virar alvo: casa discreta, rua sem chamar atenção e rota de saída pronta. Tudo passo a passo, com lista de compras e checklist — sem teoria e sem equipamento caro."
   },
   {
     question: "Como este manual resolve o problema do desabastecimento de água e comida?",
@@ -182,6 +186,6 @@ export const FAQS = [
   },
   {
     question: "E se eu sentir que o conteúdo é avançado demais ou não serve para mim?",
-    answer: "Oferecemos uma garantia incondicional de 7 dias. Entre na plataforma, abra os módulos, use os checklists e baixe o manual sem compromisso. Se em qualquer momento desses 7 dias você julgar que não elevam seu patamar de segurança e preparação, basta escrever para o nosso suporte por e-mail e receber o reembolso integral de 100% do seu investimento, de forma simples e rápida."
+    answer: "Oferecemos uma garantia incondicional de 7 dias. Entre na plataforma, abra os módulos, use os checklists e baixe o manual sem compromisso. Se em qualquer momento desses 7 dias você julgar que não elevam seu patamar de segurança e preparação, basta escrever para o nosso suporte por e-mail e receber os R$ 39,90 de volta, integralmente, de forma simples e rápida."
   }
 ];
