@@ -37,12 +37,14 @@ export default function Header() {
           ))}
         </nav>
 
+        {/* O preço sozinho lia como etiqueta, não como botão: no celular o verbo entra junto.
+            O espaço entre "R$" e o valor é inseparável, para o preço nunca quebrar de linha. */}
         <CheckoutLink
           from="CTA Topo"
-          className="bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-4 sm:px-6 py-3 transition-colors shrink-0"
+          className="bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase whitespace-nowrap px-3.5 sm:px-6 py-3 transition-colors shrink-0"
         >
-          <span className="sm:hidden">R$ 39,90</span>
-          <span className="hidden sm:inline">Entrar por R$ 39,90</span>
+          <span className="sm:hidden">R$&nbsp;39,90 · Entrar</span>
+          <span className="hidden sm:inline">Entrar por R$&nbsp;39,90</span>
         </CheckoutLink>
 
       </div>

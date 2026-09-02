@@ -79,7 +79,7 @@ export default function ModulesSection() {
           from="CTA Módulos"
           className="w-full sm:w-auto text-center border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
         >
-          Entrar na plataforma — R$ 39,90
+          Entrar na plataforma — R$&nbsp;39,90
         </CheckoutLink>
       </div>
 

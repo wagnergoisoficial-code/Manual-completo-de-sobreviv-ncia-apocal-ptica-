@@ -5,12 +5,14 @@ import { trackPixel } from '../pixel';
 import { ArrowRight, RotateCcw } from 'lucide-react';
 import { motion } from 'motion/react';
 
+// O `short` existe só para a largura do celular, onde o nome técnico completo não cabe
+// no cabeçalho do quiz e era cortado com reticências.
 const CATEGORIES = {
-  water_food: { name: 'Autonomia hídrica e alimentar', module: 'Módulo 02' },
-  energy: { name: 'Independência energética', module: 'Módulo 01' },
-  comm_info: { name: 'Inteligência eletromagnética', module: 'Módulo 03' },
-  medical: { name: 'Medicina de linha de frente', module: 'Módulo 04' },
-  tactical: { name: 'Infiltração e defesa de perímetro', module: 'Módulo 05' },
+  water_food: { name: 'Autonomia hídrica e alimentar', short: 'Água e comida', module: 'Módulo 02' },
+  energy: { name: 'Independência energética', short: 'Energia', module: 'Módulo 01' },
+  comm_info: { name: 'Inteligência eletromagnética', short: 'Comunicação', module: 'Módulo 03' },
+  medical: { name: 'Medicina de linha de frente', short: 'Saúde', module: 'Módulo 04' },
+  tactical: { name: 'Infiltração e defesa de perímetro', short: 'Segurança', module: 'Módulo 05' },
 } as const;
 
 export default function SurvivalQuiz() {
@@ -69,8 +71,13 @@ export default function SurvivalQuiz() {
 
           {/* Cabeçalho técnico */}
           <div className="flex justify-between items-baseline gap-4 border-b border-hairline pb-4 mb-8 font-mono text-tag uppercase">
-            <span className="text-signal truncate">
-              [Cenário {String(currentQuestionIndex + 1).padStart(2, '0')} / {CATEGORIES[activeQuestion.category].name}]
+            <span className="text-signal min-w-0">
+              {/* No celular o contador à direita já diz em que cenário a pessoa está, então
+                  o prefixo sai e sobra largura para o nome da frente aparecer inteiro. */}
+              <span className="hidden sm:inline">
+                [Cenário {String(currentQuestionIndex + 1).padStart(2, '0')} / {CATEGORIES[activeQuestion.category].name}]
+              </span>
+              <span className="sm:hidden">[{CATEGORIES[activeQuestion.category].short}]</span>
             </span>
             <span className="text-ink-dim tabular-nums shrink-0">
               {String(currentQuestionIndex + 1).padStart(2, '0')} / {String(QUIZ_QUESTIONS.length).padStart(2, '0')}
@@ -174,7 +181,7 @@ export default function SurvivalQuiz() {
               from="CTA Quiz"
               className="w-full sm:w-auto text-center bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
             >
-              Corrigir minhas falhas — R$ 39,90
+              Corrigir minhas falhas — R$&nbsp;39,90
             </CheckoutLink>
           </div>
 

@@ -8,6 +8,10 @@ export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://p
 // Exemplo: "export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "COLE_AQUI_SEU_LINK_DO_YOUTUBE";" ou apenas "SEU_CODIGO"
 export const YOUTUBE_VIDEO_URL = import.meta.env.VITE_YOUTUBE_URL || "https://www.youtube-nocookie.com/embed/JN376P1nCZY?rel=0&modestbranding=1";
 
+// Thumbnail da VSL. Vazio = usa o frame do próprio vídeo no YouTube; preencha com a URL
+// de uma imagem sua (ou VITE_VSL_POSTER) para trocar por um thumbnail feito à mão.
+export const VSL_POSTER_URL = import.meta.env.VITE_VSL_POSTER || "";
+
 export const EBOOK_TITLE = "Manual Completo de Sobrevivência Apocalíptica";
 export const EBOOK_SUBTITLE = "A plataforma que transforma a preparação da sua casa em um plano com passos marcados.";
 

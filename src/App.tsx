@@ -12,6 +12,7 @@ import KitSection from './components/KitSection';
 import OfferSection from './components/OfferSection';
 import FAQ from './components/FAQ';
 import CheckoutLink from './components/CheckoutLink';
+import MobileStickyCTA from './components/MobileStickyCTA';
 import { trackPixel } from './pixel';
 import { AlertTriangle, ArrowRight } from 'lucide-react';
 
@@ -66,10 +67,10 @@ export default function App() {
       <main className="flex-1">
 
         {/* HERO */}
-        <section className="px-4 sm:px-8 py-20 md:py-32">
+        <section className="px-4 sm:px-8 pt-10 pb-20 md:pt-32 md:pb-32">
           <div className="max-w-[1440px] mx-auto flex flex-col items-center text-center">
 
-            <span className="inline-flex items-center gap-2.5 px-3 py-1.5 border border-hairline mb-10">
+            <span className="inline-flex items-center gap-2.5 px-3 py-1.5 border border-hairline mb-6 md:mb-10">
               <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
               <span className="font-mono text-tag uppercase text-alert">Método 5P · Os 5 pilares da preparação</span>
             </span>
@@ -81,27 +82,39 @@ export default function App() {
             </h1>
 
             {/* O reenquadramento: o produto é a plataforma, não o PDF */}
-            <div className="max-w-3xl mt-10 space-y-5">
+            <div className="max-w-3xl mt-10">
               <p className="text-body text-ink">
                 Em uma tarde, a sua casa fica pronta para os três primeiros dias sem luz, sem água
                 e sem mercado. Com um plano escrito — não com boa intenção.
               </p>
-              <p className="text-body text-ink-dim">
-                O que quase todo mundo vende é um PDF de duzentas páginas. Você baixa, lê metade,
-                fecha — e continua exatamente tão despreparado quanto estava antes de comprar.
-              </p>
-              <p className="text-body text-ink-dim">
-                O <strong className="font-semibold text-signal">Método 5P</strong> é uma plataforma.
-                Os cinco pilares — Prevenção, Planejamento, Provisão, Proteção e Persistência —
-                viram passos marcados, um a um, e você vê na tela o que já tem e o que ainda falta.
-                Você não lê sobre estar preparado. Você fica preparado.
-              </p>
+
+              {/* Quem se convenceu já na headline decide aqui, sem precisar descer até o vídeo.
+                  O CTA do cabeçalho atende outra pessoa: a que chegou decidida. */}
+              <CheckoutLink
+                from="CTA Hero Headline"
+                className="w-full sm:w-auto mt-8 inline-flex items-center justify-center text-center bg-signal hover:bg-signal-soft text-black font-display font-extrabold uppercase tracking-wide text-base md:text-lg px-6 md:px-10 py-5 transition-colors"
+              >
+                Entrar na plataforma por R$&nbsp;39,90
+              </CheckoutLink>
+
+              <div className="mt-10 space-y-5">
+                <p className="text-body text-ink-dim">
+                  O que quase todo mundo vende é um PDF de duzentas páginas. Você baixa, lê metade,
+                  fecha — e continua exatamente tão despreparado quanto estava antes de comprar.
+                </p>
+                <p className="text-body text-ink-dim">
+                  O <strong className="font-semibold text-signal">Método 5P</strong> é uma plataforma.
+                  Os cinco pilares — Prevenção, Planejamento, Provisão, Proteção e Persistência —
+                  viram passos marcados, um a um, e você vê na tela o que já tem e o que ainda falta.
+                  Você não lê sobre estar preparado. Você fica preparado.
+                </p>
+              </div>
             </div>
 
             {/* Preço e o que vem incluído */}
             <div className="w-full max-w-3xl mt-10 border-y border-hairline py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left">
               <span className="font-mono text-tag font-bold uppercase text-signal border border-signal px-2.5 py-1.5 shrink-0">
-                R$ 39,90
+                R$&nbsp;39,90
               </span>
               <p className="text-bodysm text-ink-dim">
                 <span className="text-ink font-semibold">Pagamento único, acesso vitalício.</span> Sem
@@ -117,13 +130,13 @@ export default function App() {
 
             <CheckoutLink
               from="CTA Hero"
-              className="w-full md:w-auto mt-12 bg-signal hover:bg-signal-soft text-black font-display font-extrabold uppercase tracking-wide text-base md:text-lg px-10 py-5 transition-colors"
+              className="w-full md:w-auto mt-12 inline-flex items-center justify-center text-center bg-signal hover:bg-signal-soft text-black font-display font-extrabold uppercase tracking-wide text-base md:text-lg px-6 md:px-10 py-5 transition-colors"
             >
-              Entrar na plataforma por R$ 39,90
+              Entrar na plataforma por R$&nbsp;39,90
             </CheckoutLink>
 
             <p className="font-mono text-tag uppercase text-outline mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
-              <span>Pagamento único de R$ 39,90</span>
+              <span>Pagamento único de R$&nbsp;39,90</span>
               <span className="hidden sm:inline text-outline-dim">/</span>
               <span>Acesso imediato e vitalício</span>
               <span className="hidden sm:inline text-outline-dim">/</span>
@@ -134,7 +147,7 @@ export default function App() {
         </section>
 
         {/* DIAGNÓSTICO */}
-        <section id="diagnostico" className="px-4 sm:px-8 py-24 md:py-36 bg-surface-lowest border-y border-hairline">
+        <section id="diagnostico" className="px-4 sm:px-8 pt-12 pb-24 md:py-36 bg-surface-lowest border-y border-hairline">
           <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
 
             <div className="md:col-span-5 md:sticky md:top-28">
@@ -229,7 +242,7 @@ export default function App() {
                 from="CTA Para Quem"
                 className="w-full sm:w-auto text-center border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
               >
-                Começar por R$ 39,90
+                Começar por R$&nbsp;39,90
               </CheckoutLink>
             </div>
 
@@ -271,7 +284,7 @@ export default function App() {
                 from="CTA Fechamento"
                 className="w-full md:w-auto inline-flex items-center justify-center gap-3 border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-5 transition-colors"
               >
-                Entrar por R$ 39,90
+                Entrar por R$&nbsp;39,90
                 <ArrowRight className="w-4 h-4" />
               </CheckoutLink>
             </div>
@@ -281,7 +294,8 @@ export default function App() {
       </main>
 
       {/* RODAPÉ */}
-      <footer className="border-t border-hairline bg-surface-lowest px-4 sm:px-8 py-14">
+      {/* O pb extra no celular abre o espaço que a barra fixa ocupa sobre o rodapé. */}
+      <footer className="border-t border-hairline bg-surface-lowest px-4 sm:px-8 pt-14 pb-28 md:pb-14">
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10">
           <div className="md:col-span-7">
             <span className="font-mono text-tag uppercase text-outline block mb-3">Aviso de responsabilidade</span>
@@ -304,6 +318,8 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      <MobileStickyCTA />
 
     </div>
   );

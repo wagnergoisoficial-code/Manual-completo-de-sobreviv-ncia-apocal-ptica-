@@ -12,7 +12,7 @@ const CHECKLIST_PREVIEW = [
 
 const SPECS = [
   { key: 'Autor', value: 'Wagner Gois' },
-  { key: 'Preço', value: 'R$ 39,90' },
+  { key: 'Preço', value: 'R$\u00a039,90' },
   { key: 'Acesso', value: 'Vitalício' },
   { key: 'Envio', value: 'Imediato' },
 ];

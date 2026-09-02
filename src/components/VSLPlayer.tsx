@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
-import { YOUTUBE_VIDEO_URL } from '../data';
+import { YOUTUBE_VIDEO_URL, VSL_POSTER_URL } from '../data';
 
 interface VSLSlide {
   timeStart: number;
@@ -99,6 +99,109 @@ function PlayerFrame({ children }: { children: React.ReactNode }) {
   );
 }
 
+/**
+ * Fachada do vídeo: um thumbnail nosso que abre o player numa camada por cima da página.
+ *
+ * O iframe embutido direto no hero carregava junto o "Assista no YouTube" — um convite
+ * para sair da página de vendas bem no meio da decisão, e voltar dali é raro. Aqui o vídeo
+ * abre por cima; ao fechar, a pessoa continua exatamente onde parou, com o CTA logo abaixo.
+ */
+function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  // Nem todo vídeo tem versão maxres; o hqdefault existe sempre.
+  const [posterSrc, setPosterSrc] = useState<string>(VSL_POSTER_URL || `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setIsOpen(false);
+    };
+    // Sem isto a página rola atrás da camada enquanto o vídeo está aberto.
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen]);
+
+  return (
+    <>
+      <PlayerFrame>
+        <button
+          type="button"
+          onClick={() => setIsOpen(true)}
+          aria-label="Assistir à apresentação"
+          className="absolute inset-0 w-full h-full cursor-pointer group"
+        >
+          <img
+            src={posterSrc}
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            onError={() => setPosterSrc(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`)}
+            className="absolute inset-0 w-full h-full object-cover opacity-80 grayscale-[0.15] contrast-105 group-hover:opacity-95 transition-opacity"
+          />
+          <span className="absolute inset-0 bg-gradient-to-t from-void/95 via-void/45 to-void/20" />
+          <span className="relative h-full flex flex-col items-center justify-center gap-4 sm:gap-5 px-6 text-center">
+            <span className="w-14 h-14 sm:w-16 sm:h-16 border border-signal flex items-center justify-center text-signal group-hover:bg-signal group-hover:text-black transition-colors">
+              <Play className="w-6 h-6 fill-current translate-x-0.5" />
+            </span>
+            <span className="font-display text-subhead uppercase text-ink">Assistir à apresentação</span>
+            <span className="font-mono text-tag uppercase text-outline">Abre aqui mesmo · você não sai da página</span>
+          </span>
+        </button>
+      </PlayerFrame>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Apresentação em vídeo"
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 z-[70] bg-void/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
+          >
+            {/* O clique dentro do quadro não pode fechar o que a pessoa veio ver. */}
+            <div className="w-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
+              <div className="flex items-center justify-between gap-4 border border-b-0 border-hairline bg-surface-lowest px-4 py-2.5 font-mono text-tag uppercase">
+                <span className="flex items-center gap-2 text-ink-dim">
+                  <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
+                  Transmissão 01
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center gap-2 text-outline hover:text-signal transition-colors cursor-pointer"
+                >
+                  Fechar
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+              <div className="border border-hairline bg-black aspect-video">
+                <iframe
+                  className="w-full h-full border-0"
+                  src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=1&playsinline=1`}
+                  title="Vídeo de Apresentação"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}
+
 export default function VSLPlayer() {
   const youtubeId = extractYouTubeId(YOUTUBE_VIDEO_URL);
 
@@ -131,17 +234,7 @@ export default function VSLPlayer() {
   }, [isPlaying, youtubeId]);
 
   if (youtubeId) {
-    return (
-      <PlayerFrame>
-        <iframe
-          className="w-full h-full border-0"
-          src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=0`}
-          title="Vídeo de Apresentação"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        />
-      </PlayerFrame>
-    );
+    return <YouTubeFacade youtubeId={youtubeId} />;
   }
 
   /* Fallback: sem link de YouTube configurado, a apresentação roda em texto. */

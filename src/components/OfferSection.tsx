@@ -27,7 +27,7 @@ export default function OfferSection() {
           O produto é a plataforma. O e-book é brinde.
         </span>
         <h2 className="font-display text-display uppercase mb-6">
-          R$ 39,90, uma vez só.
+          R$&nbsp;39,90, uma vez só.
         </h2>
         <p className="text-body font-medium text-black/75">
           É o preço de um lanche. Você leva a plataforma completa do Método 5P, o Manual em PDF e
@@ -59,7 +59,7 @@ export default function OfferSection() {
           from="CTA Oferta"
           className="w-full md:w-auto inline-flex items-center justify-center gap-3 text-center bg-black hover:bg-surface-lowest text-signal font-display font-extrabold uppercase tracking-wide text-lg md:text-xl px-12 py-6 transition-colors"
         >
-          Garantir meu acesso por R$ 39,90
+          Garantir meu acesso por R$&nbsp;39,90
           <ArrowUpRight className="w-5 h-5 shrink-0" strokeWidth={2.5} />
         </CheckoutLink>
 
