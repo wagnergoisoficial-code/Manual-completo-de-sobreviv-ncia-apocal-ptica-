@@ -82,6 +82,33 @@ const VSL_SLIDES: VSLSlide[] = [
 const TOTAL_DURATION = 135;
 
 /**
+ * Domínios que o player do YouTube busca ao abrir. Conectar a eles no primeiro sinal de
+ * intenção — o mouse chegando no quadro, o dedo encostando — tira o handshake de TLS do
+ * caminho crítico: quando o clique acontece, a conexão já está de pé.
+ */
+const PLAYER_ORIGINS = [
+  'https://www.youtube-nocookie.com',
+  'https://www.google.com',
+  'https://googleads.g.doubleclick.net',
+  'https://static.doubleclick.net',
+];
+
+let hasWarmedUp = false;
+
+function warmUpPlayer(): void {
+  if (hasWarmedUp || typeof document === 'undefined') return;
+  hasWarmedUp = true;
+
+  for (const href of PLAYER_ORIGINS) {
+    const link = document.createElement('link');
+    link.rel = 'preconnect';
+    link.href = href;
+    link.crossOrigin = '';
+    document.head.appendChild(link);
+  }
+}
+
+/**
  * O quadro do vídeo: recorte de canto reto, sem cartão e sem sombra.
  *
  * A luz âmbar por trás é o que assenta a tela na fotografia do hero — sem ela o vídeo
@@ -119,6 +146,16 @@ function PlayDisc() {
  */
 function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isPlayerLoaded, setIsPlayerLoaded] = useState<boolean>(false);
+
+  // O hover não existe no celular, e é justamente lá que a espera dói mais. Depois que a
+  // página assenta, a conexão é aberta de qualquer jeito — o vídeo é o centro do hero,
+  // não um recurso secundário que talvez ninguém use.
+  useEffect(() => {
+    const timer = setTimeout(warmUpPlayer, 2500);
+    return () => clearTimeout(timer);
+  }, []);
+
   // Nem todo vídeo tem versão maxres; o hqdefault existe sempre.
   const [posterSrc, setPosterSrc] = useState<string>(VSL_POSTER_URL || `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`);
 
@@ -133,9 +170,15 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', handleKeyDown);
 
+    // Rede de segurança: se o onLoad do iframe nunca vier — conexão ruim, bloqueador,
+    // player recusado —, um spinner girando para sempre é pior do que a espera. Passados
+    // 8 segundos ele sai do caminho e entrega a tela ao YouTube, seja lá o que ele mostre.
+    const giveUp = setTimeout(() => setIsPlayerLoaded(true), 8000);
+
     return () => {
       document.body.style.overflow = previousOverflow;
       window.removeEventListener('keydown', handleKeyDown);
+      clearTimeout(giveUp);
     };
   }, [isOpen]);
 
@@ -144,7 +187,13 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
       <Screen>
         <button
           type="button"
-          onClick={() => setIsOpen(true)}
+          onClick={() => {
+            setIsPlayerLoaded(false);
+            setIsOpen(true);
+          }}
+          onPointerEnter={warmUpPlayer}
+          onFocus={warmUpPlayer}
+          onTouchStart={warmUpPlayer}
           aria-label="Assistir à apresentação"
           className="group absolute inset-0 h-full w-full cursor-pointer"
         >
@@ -152,7 +201,10 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
             src={posterSrc}
             alt=""
             aria-hidden="true"
-            loading="lazy"
+            /* O poster é a primeira imagem que a pessoa vê no hero: adiar a carga dele
+               atrasa justamente o que convence a clicar. */
+            loading="eager"
+            fetchPriority="high"
             onError={() => setPosterSrc(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`)}
             className="absolute inset-0 h-full w-full scale-[1.2] object-cover opacity-70 transition-opacity duration-300 group-hover:opacity-85"
           />
@@ -190,8 +242,15 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
                   <X className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <div className="aspect-video bg-black ring-1 ring-cream/12">
+              <div className="relative aspect-video bg-black ring-1 ring-cream/12">
+                {!isPlayerLoaded && (
+                  <span className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-black">
+                    <span className="h-9 w-9 animate-spin rounded-full border-2 border-cream/20 border-t-amber" />
+                    <span className="eyebrow text-faint">Carregando o vídeo</span>
+                  </span>
+                )}
                 <iframe
+                  onLoad={() => setIsPlayerLoaded(true)}
                   className="h-full w-full border-0"
                   src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=1&playsinline=1`}
                   title="Vídeo de Apresentação"
