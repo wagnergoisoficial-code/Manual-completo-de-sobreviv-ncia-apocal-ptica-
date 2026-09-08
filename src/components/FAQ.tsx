@@ -1,62 +1,55 @@
 import React, { useState } from 'react';
 import { FAQS } from '../data';
-import { Plus, Minus } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
+/**
+ * Quatro perguntas, sem moldura e sem ícone. A linha de base é a única separação: a
+ * pergunta aberta fica âmbar, e isso basta para dizer onde a pessoa está.
+ */
 export default function FAQ() {
   const [openIdx, setOpenIdx] = useState<number | null>(0);
 
   return (
-    <div className="max-w-4xl mx-auto" id="faq-module">
-
-      <div className="text-center mb-16">
-        <span className="font-mono text-tag uppercase text-outline block mb-5">[ Dúvidas críticas ]</span>
-        <h2 className="font-display text-headline uppercase text-ink">Protocolos e respostas</h2>
-      </div>
-
-      <div className="border-t border-hairline">
-        {FAQS.map((faq, idx) => {
-          const isOpen = openIdx === idx;
-          return (
-            <div key={idx} className="border-b border-hairline">
-              <button
-                onClick={() => setOpenIdx(isOpen ? null : idx)}
-                className="w-full py-6 flex items-start justify-between gap-6 text-left cursor-pointer group"
-                aria-expanded={isOpen}
+    <ul className="border-t border-cream/10" id="faq-module">
+      {FAQS.map((faq, idx) => {
+        const isOpen = openIdx === idx;
+        return (
+          <li key={idx} className="border-b border-cream/10">
+            <button
+              onClick={() => setOpenIdx(isOpen ? null : idx)}
+              aria-expanded={isOpen}
+              className="group flex w-full cursor-pointer items-center justify-between gap-6 py-5 text-left"
+            >
+              <span
+                className={`text-title transition-colors ${isOpen ? 'text-amber' : 'text-cream group-hover:text-amber'}`}
               >
-                <span className="flex items-baseline gap-4 min-w-0">
-                  <span className="font-mono text-tag text-outline-dim shrink-0 tabular-nums">
-                    {String(idx + 1).padStart(2, '0')}
-                  </span>
-                  <span className={`font-display font-bold uppercase tracking-tight text-[15px] md:text-[17px] leading-snug transition-colors ${isOpen ? 'text-signal' : 'text-ink group-hover:text-signal-soft'}`}>
-                    {faq.question}
-                  </span>
-                </span>
-                {isOpen
-                  ? <Minus className="w-4 h-4 text-signal shrink-0 mt-0.5" />
-                  : <Plus className="w-4 h-4 text-outline shrink-0 mt-0.5 group-hover:text-ink transition-colors" />}
-              </button>
+                {faq.question}
+              </span>
+              <span
+                aria-hidden="true"
+                className={`relative h-3 w-3 shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}
+              >
+                <span className={`absolute left-0 top-1/2 h-px w-3 -translate-y-1/2 ${isOpen ? 'bg-amber' : 'bg-faint'}`} />
+                <span className={`absolute left-1/2 top-0 h-3 w-px -translate-x-1/2 ${isOpen ? 'bg-amber' : 'bg-faint'}`} />
+              </span>
+            </button>
 
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.28, ease: 'easeOut' }}
-                    className="overflow-hidden"
-                  >
-                    <p className="text-bodysm text-ink-dim leading-relaxed pb-7 md:pl-10 md:pr-12">
-                      {faq.answer}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          );
-        })}
-      </div>
-
-    </div>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.26, ease: 'easeOut' }}
+                  className="overflow-hidden"
+                >
+                  <p className="max-w-2xl pb-6 text-small text-mist">{faq.answer}</p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

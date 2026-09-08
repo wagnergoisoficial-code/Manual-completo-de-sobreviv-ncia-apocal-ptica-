@@ -1,51 +1,44 @@
 import React from 'react';
-import { Shield } from 'lucide-react';
-import CheckoutLink from './CheckoutLink';
 
-const NAV_LINKS = [
-  { label: 'Diagnóstico', href: '#diagnostico' },
-  { label: 'Módulos', href: '#modulos' },
-  { label: 'O que inclui', href: '#kit' },
-  { label: 'FAQ', href: '#faq' },
-];
+/**
+ * Cabeçalho: marca à esquerda, uma frase à direita. Nada mais.
+ *
+ * Ele fica por cima da fotografia, sem fundo e sem barra — quem chegou vê primeiro a
+ * imagem e a headline, não uma faixa de navegação. Não há menu porque não há para onde
+ * ir: a página tem um destino só, e ele está a um toque no hero e na barra fixa do
+ * celular.
+ */
+
+/** A marca é um pico desenhado, não um ícone de biblioteca. */
+function PeakMark() {
+  return (
+    <svg viewBox="0 0 28 20" className="w-6 h-[1.05rem] shrink-0" aria-hidden="true">
+      <path
+        d="M1 19 L10.5 3 L15.8 11.4 L18.6 7.2 L27 19 Z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.6"
+        strokeLinejoin="round"
+      />
+      <path d="M7.4 8.3 L10.5 3 L13.6 8.3 Z" fill="currentColor" />
+    </svg>
+  );
+}
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-void/85 backdrop-blur-md border-b border-hairline">
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between gap-6">
+    <header className="absolute inset-x-0 top-0 z-40">
+      <div className="mx-auto max-w-[1240px] px-6 sm:px-10 lg:px-16 py-7 sm:py-9 flex items-center justify-between gap-6">
 
-        {/* Marca */}
-        <a href="#topo" className="flex items-center gap-3 min-w-0">
-          <span className="w-7 h-7 border border-hairline flex items-center justify-center shrink-0">
-            <Shield className="w-3.5 h-3.5 text-signal" strokeWidth={1.75} />
-          </span>
-          <span className="font-display font-bold uppercase tracking-tight text-[13px] sm:text-[15px] text-ink truncate">
-            Sobrevivência Apocalíptica
-          </span>
+        <a
+          href="#topo"
+          className="flex items-center gap-3.5 text-cream hover:text-amber transition-colors"
+        >
+          <PeakMark />
+          <span className="eyebrow">Sobrevivência Real</span>
         </a>
 
-        {/* Índice */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="font-mono text-tag uppercase text-ink-dim hover:text-ink hover:bg-surface-high px-3 py-2 transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        {/* O preço sozinho lia como etiqueta, não como botão: no celular o verbo entra junto.
-            O espaço entre "R$" e o valor é inseparável, para o preço nunca quebrar de linha. */}
-        <CheckoutLink
-          from="CTA Topo"
-          className="bg-signal hover:bg-signal-soft text-black font-mono text-tag font-bold uppercase whitespace-nowrap px-3.5 sm:px-6 py-3 transition-colors shrink-0"
-        >
-          <span className="sm:hidden">R$&nbsp;39,90 · Entrar</span>
-          <span className="hidden sm:inline">Entrar por R$&nbsp;39,90</span>
-        </CheckoutLink>
+        <p className="hidden sm:block text-small text-mist">Conhecimento é proteção.</p>
 
       </div>
     </header>

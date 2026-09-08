@@ -155,41 +155,26 @@ export const BONUSES: Bonus[] = [
   }
 ];
 
+/**
+ * As quatro perguntas que decidem a compra: preço, o que é, como chega e o que acontece
+ * se não servir. As demais foram cortadas — respondê-las aqui era repetir, em parágrafo,
+ * o que a página já mostra.
+ */
 export const FAQS = [
   {
     question: "Quanto custa?",
-    answer: "R$ 39,90, pagamento único. Não é assinatura e não tem mensalidade: você paga uma vez e o acesso é vitalício. Nesse valor entra a plataforma completa do Método 5P, o Manual Completo em PDF para baixar e os 3 bônus — mais as atualizações e os novos módulos que entrarem depois, sem custo adicional. E você tem 7 dias de garantia: se não servir, devolvemos os R$ 39,90 integralmente."
+    answer: "R$ 39,90, pagamento único. Não é assinatura e não tem mensalidade: você paga uma vez e o acesso é vitalício, com as atualizações e os novos módulos inclusos."
   },
   {
     question: "Estou comprando apenas um e-book?",
-    answer: "Não. O e-book é só uma parte do que você leva. Método 5P é o nome da plataforma, e os 5P são os cinco pilares da preparação: Prevenção, Planejamento, Provisão, Proteção e Persistência. A compra libera o acesso à plataforma completa: uma área de membros com login e senha, onde ficam os 5 módulos, os checklists e as ferramentas para montar seu plano passo a passo — no celular ou no computador, a hora que quiser. Dentro dela você também baixa o Manual Completo em PDF, para consultar mesmo sem internet, e encontra os 3 bônus já liberados. Novos módulos e atualizações entram na sua conta sem você pagar de novo."
-  },
-  {
-    question: "Qual a diferença entre a plataforma e o manual em PDF?",
-    answer: "O manual em PDF é o conteúdo para ler e guardar: ele fica no seu aparelho e funciona sem internet, sem energia na rede e sem depender de site nenhum. A plataforma é onde você coloca esse conteúdo em prática: é lá que estão os checklists para marcar o que já tem e o que falta, as ferramentas de plano de evacuação e de reserva de água e alimentos, e é lá que os novos módulos e atualizações aparecem primeiro. Um serve para aprender e consultar; o outro, para executar e manter seu plano vivo. Você recebe os dois."
-  },
-  {
-    question: "O que exatamente eu vou aprender?",
-    answer: "A plataforma e o Manual Completo de Sobrevivência Apocalíptica ensinam um sistema integrado de auto-defesa e autossuficiência civil. Você aprenderá: 1) Deixar água potável em casa sem depender de galão; 2) Conservar comida quando a geladeira para; 3) Receber notícia e falar com a família quando celular e internet saem do ar; 4) Agir diante de um ferimento grave ou de uma infecção enquanto o socorro não chega; 5) Não virar alvo: casa discreta, rua sem chamar atenção e rota de saída pronta. Tudo passo a passo, com lista de compras e checklist — sem teoria e sem equipamento caro."
-  },
-  {
-    question: "Como este manual resolve o problema do desabastecimento de água e comida?",
-    answer: "Em vez de sugerir estoques caros e vulneráveis, o manual ensina a física por trás dos recursos. Você aprenderá a construir um dessalinizador e filtro de gravidade de fluxo contínuo usando insumos descartáveis, e a dominar técnicas de desidratação e fermentação natural off-grid. Isso garante que você e sua família tenham água potável e nutrição estável infinitamente, mesmo que as distribuidoras colapsem por completo."
-  },
-  {
-    question: "Não entendo nada de rádio ou frequências. Vou conseguir me comunicar?",
-    answer: "Sim. O manual foi escrito com linguagem direta e passo a passo cirúrgico. Nós removemos a complexidade acadêmica e entregamos diagramas visuais prontos para uso. Você aprenderá exatamente quais botões apertar no seu rádio, quais antenas improvisadas esticar no telhado e quais frequências de ondas curtas sintonizar para receber notícias reais quando a internet e as redes celulares forem cortadas."
-  },
-  {
-    question: "O que fazer em caso de ferimentos graves ou infecções se os hospitais pararem?",
-    answer: "O manual dedica um módulo inteiro aos protocolos clínicos de linha de frente. Você aprenderá a improvisar torniquetes funcionais, estancar hemorragias arteriais sob extrema pressão, realizar suturas básicas e estocar/utilizar antibióticos de amplo espectro com segurança. É o escudo biológico que separa a vida da morte em um blackout institucional."
+    answer: "Não. Você recebe a plataforma completa do Método 5P — área de membros com os 5 módulos, checklists e ferramentas — e, dentro dela, o Manual Completo em PDF para baixar, além dos 3 bônus."
   },
   {
     question: "Como funciona o acesso depois que eu pago?",
-    answer: "O acesso é 100% digital, imediato e automatizado. A compra é finalizada no site da Kiwify, a plataforma oficial de pagamento — esta página apenas te leva até lá. Assim que a Kiwify confirmar o pagamento (PIX ou cartão de crédito), você recebe um e-mail com o login e a senha da plataforma. Ao entrar, já encontra os 5 módulos, os checklists, as ferramentas e os 3 bônus liberados, além do botão para baixar o Manual Completo em PDF. O acesso é vitalício: pode voltar quantas vezes quiser, de qualquer aparelho."
+    answer: "A compra é finalizada na Kiwify; esta página não recebe pagamentos. Assim que o pagamento é confirmado, você recebe por e-mail o login e a senha, com tudo já liberado."
   },
   {
-    question: "E se eu sentir que o conteúdo é avançado demais ou não serve para mim?",
-    answer: "Oferecemos uma garantia incondicional de 7 dias. Entre na plataforma, abra os módulos, use os checklists e baixe o manual sem compromisso. Se em qualquer momento desses 7 dias você julgar que não elevam seu patamar de segurança e preparação, basta escrever para o nosso suporte por e-mail e receber os R$ 39,90 de volta, integralmente, de forma simples e rápida."
+    question: "E se não servir para mim?",
+    answer: "Você tem 7 dias de garantia. Basta escrever para o nosso suporte por e-mail e devolvemos os R$ 39,90 integralmente."
   }
 ];

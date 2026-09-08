@@ -81,21 +81,32 @@ const VSL_SLIDES: VSLSlide[] = [
 
 const TOTAL_DURATION = 135;
 
-/** Moldura editorial: hairline de 1px, canto reto, zero sombra. */
-function PlayerFrame({ children }: { children: React.ReactNode }) {
+/**
+ * O quadro do vídeo: recorte de canto reto, sem cartão e sem sombra.
+ *
+ * A luz âmbar por trás é o que assenta a tela na fotografia do hero — sem ela o vídeo
+ * flutua como um bloco colado por cima da imagem.
+ */
+function Screen({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full max-w-4xl mx-auto" id="vsl-module">
-      <div className="flex items-center justify-between border border-b-0 border-hairline bg-surface-lowest px-4 py-2.5 font-mono text-tag uppercase">
-        <span className="flex items-center gap-2 text-ink-dim">
-          <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
-          Transmissão 01
-        </span>
-        <span className="hidden sm:inline text-outline">Assista antes de decidir</span>
-      </div>
-      <div className="relative border border-hairline bg-surface-lowest aspect-video overflow-hidden">
+    <div className="relative" id="vsl-module">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-8 sm:-inset-14 bg-[radial-gradient(ellipse_at_center,rgba(243,179,64,0.16),transparent_68%)] blur-2xl"
+      />
+      <div className="relative aspect-video w-full overflow-hidden bg-coal ring-1 ring-cream/12">
         {children}
       </div>
     </div>
+  );
+}
+
+/** O botão de play: círculo âmbar. A mesma pílula dos CTAs, fechada. */
+function PlayDisc() {
+  return (
+    <span className="flex h-16 w-16 sm:h-[4.5rem] sm:w-[4.5rem] items-center justify-center rounded-full bg-amber text-night transition-transform duration-300 group-hover:scale-105">
+      <Play className="h-6 w-6 translate-x-0.5 fill-current" />
+    </span>
   );
 }
 
@@ -130,12 +141,12 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
 
   return (
     <>
-      <PlayerFrame>
+      <Screen>
         <button
           type="button"
           onClick={() => setIsOpen(true)}
           aria-label="Assistir à apresentação"
-          className="absolute inset-0 w-full h-full cursor-pointer group"
+          className="group absolute inset-0 h-full w-full cursor-pointer"
         >
           <img
             src={posterSrc}
@@ -143,18 +154,15 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
             aria-hidden="true"
             loading="lazy"
             onError={() => setPosterSrc(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`)}
-            className="absolute inset-0 w-full h-full object-cover opacity-80 grayscale-[0.15] contrast-105 group-hover:opacity-95 transition-opacity"
+            className="absolute inset-0 h-full w-full scale-[1.2] object-cover opacity-70 transition-opacity duration-300 group-hover:opacity-85"
           />
-          <span className="absolute inset-0 bg-gradient-to-t from-void/95 via-void/45 to-void/20" />
-          <span className="relative h-full flex flex-col items-center justify-center gap-4 sm:gap-5 px-6 text-center">
-            <span className="w-14 h-14 sm:w-16 sm:h-16 border border-signal flex items-center justify-center text-signal group-hover:bg-signal group-hover:text-black transition-colors">
-              <Play className="w-6 h-6 fill-current translate-x-0.5" />
-            </span>
-            <span className="font-display text-subhead uppercase text-ink">Assistir à apresentação</span>
-            <span className="font-mono text-tag uppercase text-outline">Abre aqui mesmo · você não sai da página</span>
+          <span className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/25 to-night/45" />
+          <span className="relative flex h-full flex-col items-center justify-center gap-5 px-6">
+            <PlayDisc />
+            <span className="eyebrow text-cream/85">Assista antes de decidir</span>
           </span>
         </button>
-      </PlayerFrame>
+      </Screen>
 
       <AnimatePresence>
         {isOpen && (
@@ -167,27 +175,24 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
             aria-modal="true"
             aria-label="Apresentação em vídeo"
             onClick={() => setIsOpen(false)}
-            className="fixed inset-0 z-[70] bg-void/95 backdrop-blur-sm flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-night/96 p-4 backdrop-blur-sm sm:p-8"
           >
             {/* O clique dentro do quadro não pode fechar o que a pessoa veio ver. */}
             <div className="w-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
-              <div className="flex items-center justify-between gap-4 border border-b-0 border-hairline bg-surface-lowest px-4 py-2.5 font-mono text-tag uppercase">
-                <span className="flex items-center gap-2 text-ink-dim">
-                  <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
-                  Transmissão 01
-                </span>
+              <div className="mb-3 flex items-center justify-between gap-4">
+                <span className="eyebrow text-mist">Apresentação</span>
                 <button
                   type="button"
                   onClick={() => setIsOpen(false)}
-                  className="flex items-center gap-2 text-outline hover:text-signal transition-colors cursor-pointer"
+                  className="flex cursor-pointer items-center gap-2 rounded-full border border-cream/25 px-4 py-2 text-[0.8125rem] font-medium text-mist transition-colors hover:border-amber hover:text-amber"
                 >
                   Fechar
-                  <X className="w-4 h-4" />
+                  <X className="h-3.5 w-3.5" />
                 </button>
               </div>
-              <div className="border border-hairline bg-black aspect-video">
+              <div className="aspect-video bg-black ring-1 ring-cream/12">
                 <iframe
-                  className="w-full h-full border-0"
+                  className="h-full w-full border-0"
                   src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=1&playsinline=1`}
                   title="Vídeo de Apresentação"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -210,7 +215,7 @@ export default function VSLPlayer() {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const progressPercent = (currentTime / TOTAL_DURATION) * 100;
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (youtubeId) return; // com vídeo real, quem conta o tempo é o YouTube
@@ -254,15 +259,17 @@ export default function VSLPlayer() {
   };
 
   return (
-    <PlayerFrame>
+    <Screen>
       <div className="absolute inset-0 flex flex-col">
 
-        <div className="flex justify-between items-center px-5 py-3 border-b border-hairline font-mono text-tag uppercase">
-          <span className="text-signal">[{activeSlide.badge}]</span>
-          <span className="text-outline tabular-nums">{formatTime(currentTime)} / {formatTime(TOTAL_DURATION)}</span>
+        <div className="flex items-center justify-between px-5 py-3.5">
+          <span className="eyebrow text-amber">{activeSlide.badge}</span>
+          <span className="text-[0.75rem] tabular-nums text-faint">
+            {formatTime(currentTime)} / {formatTime(TOTAL_DURATION)}
+          </span>
         </div>
 
-        <div className="flex-1 flex flex-col items-center justify-center text-center px-6 sm:px-16">
+        <div className="flex flex-1 flex-col items-center justify-center px-6 text-center sm:px-14">
           <AnimatePresence mode="wait">
             {!isPlaying && currentTime === 0 ? (
               <motion.button
@@ -271,13 +278,11 @@ export default function VSLPlayer() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 onClick={() => setIsPlaying(true)}
-                className="flex flex-col items-center gap-5 cursor-pointer group"
+                className="group flex cursor-pointer flex-col items-center gap-5"
                 id="play-overlay"
               >
-                <span className="w-16 h-16 border border-signal flex items-center justify-center text-signal group-hover:bg-signal group-hover:text-black transition-colors">
-                  <Play className="w-6 h-6 fill-current translate-x-0.5" />
-                </span>
-                <span className="font-display text-subhead uppercase text-ink">Iniciar apresentação</span>
+                <PlayDisc />
+                <span className="eyebrow text-cream/85">Iniciar apresentação</span>
               </motion.button>
             ) : (
               <motion.div
@@ -288,37 +293,44 @@ export default function VSLPlayer() {
                 transition={{ duration: 0.35 }}
                 className="max-w-2xl space-y-3"
               >
-                <h3 className="font-display text-subhead uppercase text-signal">{activeSlide.title}</h3>
-                <p className="text-bodysm text-ink font-medium">{activeSlide.subtitle}</p>
-                <p className="text-tag sm:text-bodysm text-ink-dim leading-relaxed">{activeSlide.copy}</p>
+                <h3 className="text-title uppercase text-amber">{activeSlide.title}</h3>
+                <p className="text-small font-medium text-cream">{activeSlide.subtitle}</p>
+                <p className="hidden text-small text-mist sm:block">{activeSlide.copy}</p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        <div className="border-t border-hairline">
-          <div className="h-1 w-full bg-surface-high cursor-pointer relative" onClick={handleProgressBarClick}>
-            <div className="h-full bg-signal" style={{ width: `${progressPercent}%` }} />
+        <div>
+          <div className="relative h-1 w-full cursor-pointer bg-slate" onClick={handleProgressBarClick}>
+            <div className="h-full bg-amber" style={{ width: `${progressPercent}%` }} />
             {VSL_SLIDES.map((slide) => (
               <span
                 key={slide.timeStart}
-                className="absolute top-0 bottom-0 w-px bg-void"
+                className="absolute top-0 bottom-0 w-px bg-night"
                 style={{ left: `${(slide.timeStart / TOTAL_DURATION) * 100}%` }}
               />
             ))}
           </div>
-          <div className="flex items-center gap-4 px-5 py-3">
-            <button onClick={() => setIsPlaying(!isPlaying)} className="text-ink hover:text-signal transition-colors cursor-pointer">
-              {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 fill-current" />}
+          <div className="flex items-center gap-4 px-5 py-3.5">
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              aria-label={isPlaying ? 'Pausar' : 'Reproduzir'}
+              className="cursor-pointer text-cream transition-colors hover:text-amber"
+            >
+              {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 fill-current" />}
             </button>
-            <button onClick={() => setIsMuted(!isMuted)} className="text-ink hover:text-signal transition-colors cursor-pointer">
-              {isMuted ? <VolumeX className="w-4 h-4 text-alert" /> : <Volume2 className="w-4 h-4" />}
+            <button
+              onClick={() => setIsMuted(!isMuted)}
+              aria-label={isMuted ? 'Ativar som' : 'Silenciar'}
+              className="cursor-pointer text-cream transition-colors hover:text-amber"
+            >
+              {isMuted ? <VolumeX className="h-4 w-4 text-faint" /> : <Volume2 className="h-4 w-4" />}
             </button>
-            <span className="font-mono text-tag text-outline uppercase ml-auto">Stream seguro</span>
           </div>
         </div>
 
       </div>
-    </PlayerFrame>
+    </Screen>
   );
 }

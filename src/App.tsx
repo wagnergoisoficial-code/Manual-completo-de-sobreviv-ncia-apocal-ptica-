@@ -4,43 +4,81 @@
  */
 
 import React, { useEffect } from 'react';
+import { Lock } from 'lucide-react';
 import Header from './components/Header';
 import VSLPlayer from './components/VSLPlayer';
 import SurvivalQuiz from './components/SurvivalQuiz';
-import ModulesSection from './components/ModulesSection';
-import KitSection from './components/KitSection';
 import OfferSection from './components/OfferSection';
 import FAQ from './components/FAQ';
-import CheckoutLink from './components/CheckoutLink';
+import BuyButton from './components/BuyButton';
 import MobileStickyCTA from './components/MobileStickyCTA';
+import { HandArrow, HandNote, HandUnderline } from './components/Annotation';
 import { trackPixel } from './pixel';
-import { AlertTriangle, ArrowRight } from 'lucide-react';
+import { CHAPTERS } from './data';
+import manualCover from './assets/images/manual_cover_1783965348887.jpg';
 
-const PILARES = [
-  { nome: 'Prevenção', texto: 'Enxergar a falha antes dela chegar: os sinais de que luz, água ou mercado vão faltar.' },
-  { nome: 'Planejamento', texto: 'O plano escrito da sua casa: quem faz o quê nas primeiras 72 horas, e por onde sair.' },
-  { nome: 'Provisão', texto: 'Água, comida e remédio suficientes — guardados do jeito certo, não empilhados.' },
-  { nome: 'Proteção', texto: 'Primeiros socorros, casa discreta e a família fora do caminho do problema.' },
-  { nome: 'Persistência', texto: 'Aguentar semanas, não dias: energia, comunicação e reposição do que acabou.' },
-];
+/** A medida da página. Todo bloco começa e termina nestes limites. */
+const SHELL = 'mx-auto max-w-[1240px] px-6 sm:px-10 lg:px-16';
 
-const AUDIENCE = [
-  {
-    index: '01',
-    title: 'Quem tem uma família para proteger',
-    text: 'Na plataforma você monta, item por item, a reserva de água, de comida e o kit de primeiros socorros da sua casa — com checklist para marcar o que já tem e o que ainda falta.',
-  },
-  {
-    index: '02',
-    title: 'Quem mora em cidade grande',
-    text: 'Apagão, falta d’água, enchente ou greve de transporte param um centro urbano em horas. O protocolo das primeiras 72 horas e o plano de evacuação a pé ficam prontos dentro da sua conta.',
-  },
-  {
-    index: '03',
-    title: 'Quem começa do zero',
-    text: 'Cada módulo é passo a passo, com listas de compras, diagramas e checklists. Você não precisa de experiência prévia, terreno no interior nem equipamento caro — é só seguir a ordem que a plataforma indica.',
-  },
-];
+/** Seta de rolagem do hero — desenhada, não um ícone genérico de biblioteca. */
+function ScrollCue() {
+  return (
+    <a
+      href="#metodo"
+      className="group flex flex-col items-center gap-4 text-faint transition-colors hover:text-cream"
+    >
+      <span aria-hidden="true" className="h-12 w-px bg-gradient-to-b from-transparent to-cream/30" />
+      <svg viewBox="0 0 16 26" className="h-6 w-4" fill="none" aria-hidden="true">
+        <rect x="0.8" y="0.8" width="14.4" height="24.4" rx="7.2" stroke="currentColor" strokeWidth="1.3" />
+        <circle cx="8" cy="7.5" r="1.6" fill="currentColor">
+          <animate attributeName="cy" values="7.5;12;7.5" dur="2.2s" repeatCount="indefinite" />
+        </circle>
+      </svg>
+      <span className="eyebrow">Descubra mais</span>
+    </a>
+  );
+}
+
+/**
+ * O objeto: a capa tratada como produto físico, com perspectiva, lombada e a mesma luz
+ * quente que atravessa a página. Não é um mockup flutuando — está apoiado numa sombra.
+ */
+function BookObject() {
+  return (
+    <div className="relative mx-auto w-[68%] max-w-[340px] lg:w-[78%] lg:max-w-none">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -inset-16 bg-[radial-gradient(ellipse_at_50%_40%,rgba(243,179,64,0.20),transparent_66%)] blur-2xl"
+      />
+      <div className="relative [perspective:1600px]">
+        <div className="relative [transform:rotateY(-13deg)_rotateX(2deg)] [transform-style:preserve-3d]">
+          <img
+            src={manualCover}
+            alt="Capa do Manual Completo de Sobrevivência Apocalíptica"
+            className="relative block w-full shadow-[24px_36px_70px_rgba(0,0,0,0.7)]"
+            referrerPolicy="no-referrer"
+          />
+          {/* Lombada: a borda que transforma uma imagem plana num objeto. */}
+          <span
+            aria-hidden="true"
+            className="absolute inset-y-0 -left-[9px] w-[9px] bg-gradient-to-r from-night via-ash to-slate"
+            style={{ transform: 'rotateY(-72deg)', transformOrigin: 'right center' }}
+          />
+          {/* Brilho da luz âmbar batendo na capa pela direita. */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(102deg,rgba(0,0,0,0.42),transparent_38%,rgba(255,200,92,0.14))]"
+          />
+        </div>
+      </div>
+      {/* Chão: a sombra que apoia o objeto. */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-8 left-[6%] h-10 w-[88%] rounded-[50%] bg-black/55 blur-2xl"
+      />
+    </div>
+  );
+}
 
 export default function App() {
   // Quem abre a página viu a oferta. Este é o evento padrão que ESTA página pode
@@ -50,272 +88,254 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-void text-ink flex flex-col overflow-x-hidden grain" id="topo">
+    <div className="grain min-h-screen overflow-x-hidden bg-night text-cream">
 
-      <Header />
+      {/* ── HERO ─────────────────────────────────────────────────────────────────
+          A fotografia carrega a atmosfera, o vídeo carrega o argumento. O texto fica
+          à esquerda, na sombra, onde ele lê; a luz quente entra pela direita e assenta
+          a tela na cena, em vez de deixá-la colada por cima. */}
+      <section id="topo" className="relative overflow-hidden pt-28 pb-20 sm:pt-32 lg:flex lg:min-h-[88vh] lg:flex-col lg:justify-center lg:pt-32 lg:pb-28">
 
-      {/* FAIXA DE ENTRADA — a primeira linha que a pessoa lê ao abrir a página */}
-      <div className="bg-ink text-void border-b border-hairline">
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-center gap-3">
-          <AlertTriangle className="w-4 h-4 shrink-0" strokeWidth={2.5} />
-          <p className="font-mono text-tag font-bold uppercase text-center">
-            Isto não é um e-book — é a plataforma completa do Método 5P. O manual em PDF vem incluído.
-          </p>
+        <div aria-hidden="true" className="absolute inset-0">
+          <img
+            src={manualCover}
+            alt=""
+            className="h-full w-full scale-[1.55] object-cover object-[50%_60%] opacity-[0.46] blur-[3px]"
+            referrerPolicy="no-referrer"
+          />
+          {/* O sol da referência: a luz vem de um ponto, não de um degradê chapado. */}
+          <div className="absolute inset-0 bg-[radial-gradient(105%_80%_at_74%_34%,rgba(255,176,64,0.34),transparent_58%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(100deg,#0b0b0c_14%,rgba(11,11,12,0.9)_40%,rgba(11,11,12,0.52)_68%,rgba(11,11,12,0.8)_100%)]" />
+          <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-night via-night/75 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-night via-night/80 to-transparent" />
         </div>
-      </div>
 
-      <main className="flex-1">
+        <Header />
 
-        {/* HERO */}
-        <section className="px-4 sm:px-8 pt-10 pb-20 md:pt-32 md:pb-32">
-          <div className="max-w-[1440px] mx-auto flex flex-col items-center text-center">
+        <div className={`relative ${SHELL}`}>
+          <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-16 lg:gap-y-9">
 
-            <span className="inline-flex items-center gap-2.5 px-3 py-1.5 border border-hairline mb-6 md:mb-10">
-              <span className="w-1.5 h-1.5 bg-alert animate-pulse" />
-              <span className="font-mono text-tag uppercase text-alert">Método 5P · Os 5 pilares da preparação</span>
-            </span>
-
-            <h1 className="font-display text-display uppercase max-w-5xl text-ink">
-              Quando o sistema para, não existe tempo para aprender.{' '}
-              <br className="hidden md:block" />
-              <span className="text-signal">Existe o que você preparou antes.</span>
-            </h1>
-
-            {/* O reenquadramento: o produto é a plataforma, não o PDF */}
-            <div className="max-w-3xl mt-10">
-              <p className="text-body text-ink">
-                Em uma tarde, a sua casa fica pronta para os três primeiros dias sem luz, sem água
-                e sem mercado. Com um plano escrito — não com boa intenção.
-              </p>
-
-              {/* Quem se convenceu já na headline decide aqui, sem precisar descer até o vídeo.
-                  O CTA do cabeçalho atende outra pessoa: a que chegou decidida. */}
-              <CheckoutLink
-                from="CTA Hero Headline"
-                className="w-full sm:w-auto mt-8 inline-flex items-center justify-center text-center bg-signal hover:bg-signal-soft text-black font-display font-extrabold uppercase tracking-wide text-base md:text-lg px-6 md:px-10 py-5 transition-colors"
-              >
-                Entrar na plataforma por R$&nbsp;39,90
-              </CheckoutLink>
-
-              <div className="mt-10 space-y-5">
-                <p className="text-body text-ink-dim">
-                  O que quase todo mundo vende é um PDF de duzentas páginas. Você baixa, lê metade,
-                  fecha — e continua exatamente tão despreparado quanto estava antes de comprar.
-                </p>
-                <p className="text-body text-ink-dim">
-                  O <strong className="font-semibold text-signal">Método 5P</strong> é uma plataforma.
-                  Os cinco pilares — Prevenção, Planejamento, Provisão, Proteção e Persistência —
-                  viram passos marcados, um a um, e você vê na tela o que já tem e o que ainda falta.
-                  Você não lê sobre estar preparado. Você fica preparado.
-                </p>
-              </div>
+            {/* A — a promessa */}
+            <div className="lg:col-span-5 lg:col-start-1 lg:row-start-1">
+              <span className="eyebrow text-amber">Manual + plataforma</span>
+              <h1 className="mt-6 max-w-[19ch] text-hero text-cream">
+                Quando o sistema para, não existe tempo para aprender.{' '}
+                <span className="text-amber">Existe o que você preparou antes.</span>
+              </h1>
             </div>
 
-            {/* Preço e o que vem incluído */}
-            <div className="w-full max-w-3xl mt-10 border-y border-hairline py-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left">
-              <span className="font-mono text-tag font-bold uppercase text-signal border border-signal px-2.5 py-1.5 shrink-0">
-                R$&nbsp;39,90
-              </span>
-              <p className="text-bodysm text-ink-dim">
-                <span className="text-ink font-semibold">Pagamento único, acesso vitalício.</span> Sem
-                assinatura e sem mensalidade. O <span className="text-ink font-semibold">Manual Completo
-                em PDF</span> e os 3 bônus vêm incluídos — o PDF é o seu seguro, para o dia em que não
-                houver internet, energia, nem plataforma alguma para abrir.
-              </p>
-            </div>
-
-            <div className="w-full mt-14">
+            {/* B — o vídeo: o maior elemento da composição inicial */}
+            <div className="lg:col-span-7 lg:col-start-6 lg:row-span-2 lg:row-start-1">
               <VSLPlayer />
             </div>
 
-            <CheckoutLink
-              from="CTA Hero"
-              className="w-full md:w-auto mt-12 inline-flex items-center justify-center text-center bg-signal hover:bg-signal-soft text-black font-display font-extrabold uppercase tracking-wide text-base md:text-lg px-6 md:px-10 py-5 transition-colors"
-            >
-              Entrar na plataforma por R$&nbsp;39,90
-            </CheckoutLink>
-
-            <p className="font-mono text-tag uppercase text-outline mt-6 flex flex-wrap justify-center gap-x-6 gap-y-2">
-              <span>Pagamento único de R$&nbsp;39,90</span>
-              <span className="hidden sm:inline text-outline-dim">/</span>
-              <span>Acesso imediato e vitalício</span>
-              <span className="hidden sm:inline text-outline-dim">/</span>
-              <span>7 dias de garantia</span>
-            </p>
-
-          </div>
-        </section>
-
-        {/* DIAGNÓSTICO */}
-        <section id="diagnostico" className="px-4 sm:px-8 pt-12 pb-24 md:py-36 bg-surface-lowest border-y border-hairline">
-          <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 items-start">
-
-            <div className="md:col-span-5 md:sticky md:top-28">
-              <span className="inline-block font-mono text-tag uppercase text-outline border border-hairline px-3 py-1.5 mb-8">
-                Ferramenta tática
-              </span>
-              <h2 className="font-display text-headline uppercase text-ink">
-                Descubra se você sobreviveria a um blackout de 7 dias
-              </h2>
-              <p className="text-body text-ink-dim mt-6">
-                Sua casa aguentaria o corte de água e de energia por uma semana? Responda cinco
-                perguntas e veja a sua nota em cada um dos cinco pilares — e exatamente qual
-                módulo da plataforma resolve cada falha que aparecer.
+            {/* C — a decisão */}
+            <div className="lg:col-span-5 lg:col-start-1 lg:row-start-2">
+              <p className="max-w-[42ch] text-lead text-mist">
+                Em uma tarde, a sua casa fica pronta para os três primeiros dias sem luz, sem
+                água e sem mercado. Com um plano escrito — não com boa intenção.
+              </p>
+              <div className="mt-8">
+                <BuyButton from="CTA Hero" block>
+                  Quero meu acesso — R$&nbsp;39,90
+                </BuyButton>
+              </div>
+              <p className="mt-5 flex items-center gap-2.5 text-[0.8125rem] text-faint">
+                <Lock className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
+                Pagamento único · Acesso imediato · 7 dias de garantia
               </p>
             </div>
 
-            <div className="md:col-span-7">
+          </div>
+
+        </div>
+
+        <div className="absolute inset-x-0 bottom-9 hidden justify-center lg:flex">
+          <ScrollCue />
+        </div>
+      </section>
+
+      {/* ── O MÉTODO ────────────────────────────────────────────────────────────
+          O reenquadramento que decide a venda: não é um PDF, é uma plataforma. */}
+      <section id="metodo" className="bg-coal py-24 lg:py-32">
+        <div className={SHELL}>
+          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-12">
+
+            <div className="lg:col-span-5">
+              <span className="eyebrow text-faint">O que você vai encontrar</span>
+              <h2 className="mt-6 max-w-[16ch] text-section text-cream">
+                Você não lê sobre estar preparado.{' '}
+                <span className="text-amber">Você fica preparado.</span>
+              </h2>
+              <p className="mt-7 max-w-[46ch] text-lead text-mist">
+                O que quase todo mundo vende é um PDF de duzentas páginas: você baixa, lê metade
+                e fecha. O Método 5P é uma plataforma — os cinco pilares viram passos marcados, e
+                você vê na tela o que já tem e o que ainda falta.
+              </p>
+
+              <div className="relative mt-12 inline-block">
+                <HandNote tilt={-3} className="text-[1.6rem]">
+                  Porque o inesperado não avisa.
+                </HandNote>
+                <HandUnderline className="mt-1 h-2.5 w-[92%]" />
+              </div>
+            </div>
+
+            <div className="relative lg:col-span-6 lg:col-start-7 lg:pt-32">
+              {/* A anotação entra torta, por fora da grade, apontando para o objeto. */}
+              <div className="pointer-events-none absolute right-2 top-0 z-10 hidden w-56 lg:block">
+                <HandNote tilt={4} className="text-[1.45rem] leading-tight">
+                  Conhecimento também é uma arma.
+                </HandNote>
+                <HandArrow className="ml-8 mt-2 h-16 w-11 -scale-x-100 text-cream/70" />
+              </div>
+              <BookObject />
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── DECLARAÇÃO ──────────────────────────────────────────────────────────
+          Uma faixa de respiro entre dois blocos densos. Uma frase, nada mais. */}
+      <section className="relative overflow-hidden py-24 lg:py-32">
+        <div aria-hidden="true" className="absolute inset-0">
+          <img
+            src={manualCover}
+            alt=""
+            className="h-full w-full scale-[1.9] object-cover object-[50%_72%] opacity-[0.34] blur-[2px]"
+            referrerPolicy="no-referrer"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,#0b0b0c,rgba(11,11,12,0.55)_50%,#0b0b0c)]" />
+        </div>
+
+        <div className={`relative ${SHELL} text-center`}>
+          <p className="text-[clamp(0.95rem,1.7vw,1.3rem)] font-semibold uppercase leading-[1.7] tracking-[0.2em] text-cream">
+            Este não é apenas um ebook.
+            <br />
+            <span className="text-amber">É o seu plano de ação.</span>
+          </p>
+          <span aria-hidden="true" className="mx-auto mt-7 block h-px w-14 bg-amber" />
+        </div>
+      </section>
+
+      {/* ── OS CINCO PILARES ────────────────────────────────────────────────────
+          Os módulos e os pilares eram duas seções dizendo a mesma coisa. Agora são
+          cinco linhas: o pilar e, em uma frase, o que ele resolve. */}
+      <section id="modulos" className="bg-coal py-24 lg:py-32">
+        <div className={SHELL}>
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+
+            <div className="lg:sticky lg:top-16 lg:col-span-4 lg:self-start">
+              <span className="eyebrow text-amber">Os 5 pilares</span>
+              <h2 className="mt-6 max-w-[14ch] text-section text-cream">
+                O que você vai saber fazer
+              </h2>
+              <p className="mt-6 max-w-[38ch] text-small text-mist">
+                Os cinco módulos ficam liberados de uma vez, assim que você entra. Sem liberação
+                semanal e sem espera.
+              </p>
+              <div className="mt-9">
+                <BuyButton from="CTA Módulos" variant="ghost" block>
+                  Entrar por R$&nbsp;39,90
+                </BuyButton>
+              </div>
+            </div>
+
+            <ol className="border-t border-cream/10 lg:col-span-7 lg:col-start-6">
+              {CHAPTERS.map((chapter) => (
+                <li
+                  key={chapter.number}
+                  className="flex items-baseline gap-5 border-b border-cream/10 py-6 sm:gap-8"
+                >
+                  <span className="shrink-0 text-[0.8125rem] tabular-nums text-faint">
+                    {String(chapter.number).padStart(2, '0')}
+                  </span>
+                  <div className="min-w-0">
+                    <h3 className="eyebrow text-amber">{chapter.tag}</h3>
+                    <p className="mt-2.5 text-title text-cream">{chapter.subtitle}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ── DIAGNÓSTICO ─────────────────────────────────────────────────────────
+          A única peça interativa, e a única que dispara Lead. */}
+      <section id="diagnostico" className="py-24 lg:py-32">
+        <div className={SHELL}>
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+
+            <div className="lg:sticky lg:top-16 lg:col-span-4 lg:self-start">
+              <span className="eyebrow text-faint">Diagnóstico</span>
+              <h2 className="mt-6 max-w-[15ch] text-section text-cream">
+                Sua casa aguenta sete dias sem luz e sem água?
+              </h2>
+              <p className="mt-6 max-w-[38ch] text-small text-mist">
+                Cinco perguntas. No fim, a sua nota em cada pilar e qual módulo resolve cada
+                falha.
+              </p>
+            </div>
+
+            <div className="lg:col-span-7 lg:col-start-6">
               <SurvivalQuiz />
             </div>
 
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* MÓDULOS */}
-        <section id="modulos" className="px-4 sm:px-8 py-24 md:py-36">
-          <ModulesSection />
-        </section>
-
-        {/* OS 5 PILARES — o método, nomeado */}
-        <section className="border-y border-hairline bg-surface-lowest" id="pilares">
-          <div className="max-w-[1440px] mx-auto px-6 sm:px-8 pt-10 md:pt-14">
-            <span className="font-mono text-tag uppercase text-signal">[ Método 5P · os 5 pilares da preparação ]</span>
-          </div>
-          <div className="max-w-[1440px] mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
-            {PILARES.map((pilar, i) => (
-              <div
-                key={pilar.nome}
-                className={`px-6 sm:px-8 py-8 md:py-12 border-hairline border-b md:border-b-0 ${i < PILARES.length - 1 ? 'md:border-r' : ''}`}
-              >
-                <span className="font-mono text-tag text-outline-dim block mb-3 tabular-nums">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <span className="font-display font-extrabold text-[26px] md:text-[30px] leading-none tracking-tight text-ink block">
-                  {pilar.nome}
-                </span>
-                <span className="text-bodysm text-ink-dim block mt-4">
-                  {pilar.texto}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* PARA QUEM */}
-        <section className="px-4 sm:px-8 py-24 md:py-36">
-          <div className="max-w-[1440px] mx-auto">
-
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-end mb-16 md:mb-20">
-              <div className="md:col-span-7">
-                <span className="font-mono text-tag uppercase text-outline block mb-5">[ Para quem foi escrito ]</span>
-                <h2 className="font-display text-headline uppercase text-ink">
-                  Este manual é para quem prefere estar pronto
-                </h2>
-              </div>
-              <p className="md:col-span-5 text-body text-ink-dim">
-                Nada de teoria ou fanatismo de bunker. É um plano de contingência doméstico que
-                você executa passo a passo dentro da plataforma — e leva no PDF para consultar
-                mesmo sem internet.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-0 border-t border-hairline pt-10">
-              {AUDIENCE.map((item) => (
-                <div
-                  key={item.index}
-                  className="md:border-l md:border-hairline md:pl-8 md:pr-6 first:md:border-l-0 first:md:pl-0"
-                >
-                  <span className="font-mono text-tag text-signal block mb-4">{item.index}</span>
-                  <h3 className="font-display text-subhead uppercase text-ink mb-4">{item.title}</h3>
-                  <p className="text-bodysm text-ink-dim">{item.text}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* CTA intermediário: logo depois de a pessoa se reconhecer num dos três perfis */}
-            <div className="mt-14 pt-10 border-t border-hairline flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <p className="text-bodysm text-ink-dim max-w-md">
-                Se você se reconheceu em algum dos três, o próximo passo custa menos que um lanche
-                — e vem com 7 dias para desistir.
-              </p>
-              <CheckoutLink
-                from="CTA Para Quem"
-                className="w-full sm:w-auto text-center border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-4 transition-colors shrink-0"
-              >
-                Começar por R$&nbsp;39,90
-              </CheckoutLink>
-            </div>
-
-          </div>
-        </section>
-
-        {/* KIT TÁTICO */}
-        <section id="kit" className="px-4 sm:px-8 py-24 md:py-36 bg-surface-lowest border-y border-hairline overflow-hidden">
-          <KitSection />
-        </section>
-
-        {/* OFERTA */}
-        <section id="oferta" className="px-4 sm:px-8 py-24 md:py-32 bg-signal">
+      {/* ── OFERTA ──────────────────────────────────────────────────────────────
+          O id é o gatilho que recolhe a pílula fixa do celular. */}
+      <section id="oferta" className="relative overflow-hidden bg-coal py-24 lg:py-32">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_70%_at_18%_50%,rgba(243,179,64,0.10),transparent_62%)]"
+        />
+        <div className="relative">
           <OfferSection />
-        </section>
+        </div>
+      </section>
 
-        {/* FAQ */}
-        <section id="faq" className="px-4 sm:px-8 py-24 md:py-36">
-          <FAQ />
-        </section>
+      {/* ── PERGUNTAS ───────────────────────────────────────────────────────── */}
+      <section id="faq" className="py-24 lg:py-32">
+        <div className={SHELL}>
+          <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
 
-        {/* FECHAMENTO */}
-        <section className="px-4 sm:px-8 pb-24 md:pb-36">
-          <div className="max-w-[1440px] mx-auto border-t border-hairline pt-14 md:pt-20 grid grid-cols-1 md:grid-cols-12 gap-10 items-end">
-            <div className="md:col-span-7">
-              <span className="font-mono text-tag uppercase text-alert block mb-5">[ Última nota ]</span>
-              <h2 className="font-display text-headline uppercase text-ink">
-                O risco é todo nosso, não seu
-              </h2>
-              <p className="text-body text-ink-dim mt-6 max-w-xl">
-                Entre na plataforma, abra os cinco pilares, use os checklists e baixe o manual. Se
-                em sete dias você achar que não valeu, devolvemos os R$ 39,90 inteiros — sem
-                pergunta nenhuma. O que não dá para devolver é o tempo: quando a energia sumir e as
-                redes caírem, ninguém abre plataforma nem baixa PDF.
+            <div className="lg:sticky lg:top-16 lg:col-span-4 lg:self-start">
+              <span className="eyebrow text-faint">Antes de decidir</span>
+              <h2 className="mt-6 max-w-[12ch] text-section text-cream">Perguntas diretas</h2>
+              <div className="mt-9">
+                <BuyButton from="CTA Fechamento" block>
+                  Entrar por R$&nbsp;39,90
+                </BuyButton>
+              </div>
+              <p className="mt-5 max-w-[34ch] text-[0.8125rem] text-faint">
+                Pagamento único · Acesso imediato · 7 dias de garantia
               </p>
             </div>
-            <div className="md:col-span-5 md:flex md:justify-end">
-              <CheckoutLink
-                from="CTA Fechamento"
-                className="w-full md:w-auto inline-flex items-center justify-center gap-3 border border-signal text-signal hover:bg-signal hover:text-black font-mono text-tag font-bold uppercase px-8 py-5 transition-colors"
-              >
-                Entrar por R$&nbsp;39,90
-                <ArrowRight className="w-4 h-4" />
-              </CheckoutLink>
+
+            <div className="lg:col-span-7 lg:col-start-6">
+              <FAQ />
             </div>
-          </div>
-        </section>
 
-      </main>
+          </div>
+        </div>
+      </section>
 
-      {/* RODAPÉ */}
-      {/* O pb extra no celular abre o espaço que a barra fixa ocupa sobre o rodapé. */}
-      <footer className="border-t border-hairline bg-surface-lowest px-4 sm:px-8 pt-14 pb-28 md:pb-14">
-        <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-10">
-          <div className="md:col-span-7">
-            <span className="font-mono text-tag uppercase text-outline block mb-3">Aviso de responsabilidade</span>
-            <p className="text-bodysm text-ink-dim max-w-2xl">
-              O conteúdo desta plataforma é informativo e educacional, voltado à preparação
-              doméstica para emergências. Não substitui atendimento médico, socorro público nem
-              orientação profissional.
-            </p>
-          </div>
-          <div className="md:col-span-5 flex flex-col md:items-end gap-4">
-            <nav className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-tag uppercase text-outline">
-              <a href="#modulos" className="hover:text-ink transition-colors">Módulos</a>
-              <a href="#kit" className="hover:text-ink transition-colors">O que inclui</a>
-              <a href="#faq" className="hover:text-ink transition-colors">FAQ</a>
-              <a href="#topo" className="hover:text-ink transition-colors">Voltar ao topo</a>
-            </nav>
-            <span className="font-mono text-tag uppercase text-outline-dim md:text-right">
-              © {new Date().getFullYear()} Manual Completo de Sobrevivência Apocalíptica
-            </span>
-          </div>
+      {/* ── RODAPÉ ──────────────────────────────────────────────────────────── */}
+      <footer className="border-t border-cream/10 py-14">
+        <div className={`${SHELL} flex flex-col gap-8 md:flex-row md:items-start md:justify-between`}>
+          <p className="max-w-lg text-[0.8125rem] leading-relaxed text-faint">
+            Conteúdo informativo e educacional, voltado à preparação doméstica para emergências.
+            Não substitui atendimento médico, socorro público nem orientação profissional.
+          </p>
+          <p className="text-[0.8125rem] text-faint md:text-right">
+            © {new Date().getFullYear()} Manual Completo de Sobrevivência Apocalíptica
+          </p>
         </div>
       </footer>
 
