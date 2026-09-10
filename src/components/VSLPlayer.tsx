@@ -82,9 +82,14 @@ const VSL_SLIDES: VSLSlide[] = [
 const TOTAL_DURATION = 135;
 
 /**
- * Domínios que o player do YouTube busca ao abrir. Conectar a eles no primeiro sinal de
- * intenção — o mouse chegando no quadro, o dedo encostando — tira o handshake de TLS do
- * caminho crítico: quando o clique acontece, a conexão já está de pé.
+ * Domínios que o player do YouTube busca ao abrir. Conectar a eles enquanto a pessoa
+ * ainda lê a headline tira o handshake de TLS do caminho crítico.
+ *
+ * Isto já foi disparado no hover e no touchstart do quadro. Não é mais: em navegador de
+ * celular, o primeiro toque passa por uma fase de "hover" antes do clique, e alterar o
+ * DOM nessa fase é uma das formas conhecidas de o primeiro toque ser engolido. O ganho
+ * de alguns milissegundos não paga o risco — agora o aquecimento acontece sozinho, uma
+ * vez, depois que a página assenta, sem depender de nenhum gesto.
  */
 const PLAYER_ORIGINS = [
   'https://www.youtube-nocookie.com',
@@ -148,6 +153,20 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isPlayerLoaded, setIsPlayerLoaded] = useState<boolean>(false);
 
+  /**
+   * Quando o modal abriu.
+   *
+   * O fundo fecha ao ser clicado, e isso cria uma janela perigosa nos primeiros
+   * instantes: o clique fantasma que o celular dispara depois do toque, ou o segundo
+   * clique de quem ficou impaciente com o player carregando, aterrissa no fundo recém-
+   * montado e fecha o que acabou de abrir. Para quem está do outro lado, o vídeo
+   * simplesmente não abriu — e a pessoa clica de novo.
+   *
+   * Meio segundo de carência resolve sem tirar nada de ninguém: ninguém decide fechar
+   * um vídeo antes de ele aparecer.
+   */
+  const openedAtRef = useRef<number>(0);
+
   // O hover não existe no celular, e é justamente lá que a espera dói mais. Depois que a
   // página assenta, a conexão é aberta de qualquer jeito — o vídeo é o centro do hero,
   // não um recurso secundário que talvez ninguém use.
@@ -189,11 +208,9 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
           type="button"
           onClick={() => {
             setIsPlayerLoaded(false);
+            openedAtRef.current = Date.now();
             setIsOpen(true);
           }}
-          onPointerEnter={warmUpPlayer}
-          onFocus={warmUpPlayer}
-          onTouchStart={warmUpPlayer}
           aria-label="Assistir à apresentação"
           className="group absolute inset-0 h-full w-full cursor-pointer"
         >
@@ -213,7 +230,9 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
               O controle desce para o canto, sobre a vinheta — a arte fica inteira e o
               quadro todo continua clicável. */}
           <span className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-night/85 via-night/35 to-transparent" />
-          <span className="absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-amber py-2.5 pl-3.5 pr-5 text-night transition-transform duration-300 group-hover:scale-[1.04] sm:bottom-6 sm:left-6">
+          {/* O player leva um tempo para responder. O botão, não: ele encolhe no toque,
+              para a pessoa saber que foi registrado antes de qualquer coisa carregar. */}
+          <span className="absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-amber py-2.5 pl-3.5 pr-5 text-night transition-transform duration-200 group-hover:scale-[1.04] group-active:scale-95 sm:bottom-6 sm:left-6">
             <Play className="h-4 w-4 translate-x-[1px] fill-current" />
             <span className="text-[0.875rem] font-semibold tracking-[-0.01em]">Assistir</span>
           </span>
@@ -230,11 +249,15 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
             role="dialog"
             aria-modal="true"
             aria-label="Apresentação em vídeo"
-            onClick={() => setIsOpen(false)}
+            onClick={(event) => {
+              const isBackdropItself = event.target === event.currentTarget;
+              if (isBackdropItself && Date.now() - openedAtRef.current > 500) {
+                setIsOpen(false);
+              }
+            }}
             className="fixed inset-0 z-[70] flex items-center justify-center bg-night/96 p-4 backdrop-blur-sm sm:p-8"
           >
-            {/* O clique dentro do quadro não pode fechar o que a pessoa veio ver. */}
-            <div className="w-full max-w-5xl" onClick={(event) => event.stopPropagation()}>
+            <div className="w-full max-w-5xl">
               <div className="mb-3 flex items-center justify-between gap-4">
                 <span className="eyebrow text-mist">Apresentação</span>
                 <button

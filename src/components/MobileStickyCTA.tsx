@@ -51,10 +51,13 @@ export default function MobileStickyCTA() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 24, opacity: 0 }}
           transition={{ duration: 0.22, ease: 'easeOut' }}
-          className="fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-4 md:hidden"
+          /* O contêiner atravessa a tela inteira, mas só a pílula é visível. Sem
+             desligar o ponteiro nele, toda a faixa inferior — inclusive o vazio dos dois
+             lados do botão — engolia toques destinados ao que está por baixo. */
+          className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-4 md:hidden"
           style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
         >
-          <BuyButton from="CTA Barra Fixa" className="shadow-[0_8px_32px_rgba(0,0,0,0.55)]">
+          <BuyButton from="CTA Barra Fixa" className="pointer-events-auto shadow-[0_8px_32px_rgba(0,0,0,0.55)]">
             Entrar por R$&nbsp;39,90
           </BuyButton>
         </motion.div>
