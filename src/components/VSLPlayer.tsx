@@ -206,12 +206,16 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
             loading="eager"
             fetchPriority="high"
             onError={() => setPosterSrc(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`)}
-            className="absolute inset-0 h-full w-full scale-[1.2] object-cover opacity-70 transition-opacity duration-300 group-hover:opacity-85"
+            className="absolute inset-0 h-full w-full object-cover opacity-95 transition-opacity duration-300 group-hover:opacity-100"
           />
-          <span className="absolute inset-0 bg-gradient-to-t from-night/85 via-night/25 to-night/45" />
-          <span className="relative flex h-full flex-col items-center justify-center gap-5 px-6">
-            <PlayDisc />
-            <span className="eyebrow text-cream/85">Assista antes de decidir</span>
+          {/* O thumbnail é desenhado: headline, marca e composição próprias, e o centro
+              dele é onde mora a frase. Um disco no meio cobria justamente o "PLANO?".
+              O controle desce para o canto, sobre a vinheta — a arte fica inteira e o
+              quadro todo continua clicável. */}
+          <span className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-night/85 via-night/35 to-transparent" />
+          <span className="absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-amber py-2.5 pl-3.5 pr-5 text-night transition-transform duration-300 group-hover:scale-[1.04] sm:bottom-6 sm:left-6">
+            <Play className="h-4 w-4 translate-x-[1px] fill-current" />
+            <span className="text-[0.875rem] font-semibold tracking-[-0.01em]">Assistir</span>
           </span>
         </button>
       </Screen>
