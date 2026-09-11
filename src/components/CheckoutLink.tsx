@@ -1,6 +1,6 @@
 import React from 'react';
 import { buildCheckoutUrl } from '../checkout';
-import { trackCustomPixel } from '../pixel';
+import { trackPixel, trackCustomPixel } from '../pixel';
 
 interface CheckoutLinkProps {
   /** Nome do CTA, para saber depois qual botão trouxe a venda. */
@@ -10,13 +10,17 @@ interface CheckoutLinkProps {
 }
 
 /**
- * Todo caminho desta página para a Kiwify passa por aqui: um único lugar que monta a URL
- * com o fbclid e registra a saída.
+ * Todo caminho desta página para o pagamento passa por aqui: um único lugar que monta a
+ * URL do Stripe com o rastreio embutido e registra a saída.
  *
- * O evento é ClickCheckout, próprio nosso — e não o InitiateCheckout padrão. Quem dispara
- * InitiateCheckout é a Kiwify, quando a tela de pagamento abre de verdade. Sair um clique
- * daqui não é o mesmo que chegar lá, e tratar as duas coisas como o mesmo evento é o que
- * produz número impossível no relatório.
+ * Saem dois eventos no mesmo clique, de propósito:
+ *
+ *   InitiateCheckout  evento padrão do Meta, o que a campanha usa para otimizar. Ele
+ *                     nasce aqui porque o clique abre a tela de pagamento do Stripe, e
+ *                     lá dentro não é possível instalar pixel — se não sair daqui, não
+ *                     sai de lugar nenhum.
+ *   ClickCheckout     evento próprio, que já vinha sendo medido antes da troca de
+ *                     processador. Fica para a série histórica não se partir ao meio.
  */
 export default function CheckoutLink({ from, className, children }: CheckoutLinkProps) {
   return (
@@ -24,7 +28,14 @@ export default function CheckoutLink({ from, className, children }: CheckoutLink
       href={buildCheckoutUrl()}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={() => trackCustomPixel('ClickCheckout', { content_name: from })}
+      onClick={() => {
+        trackPixel('InitiateCheckout', {
+          content_name: from,
+          value: 39.9,
+          currency: 'BRL',
+        });
+        trackCustomPixel('ClickCheckout', { content_name: from });
+      }}
       className={className}
     >
       {children}

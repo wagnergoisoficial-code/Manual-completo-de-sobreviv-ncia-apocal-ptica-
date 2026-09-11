@@ -2,22 +2,24 @@
  * Meta Pixel — o script base (init + PageView) é carregado no <head> do index.html.
  * Este módulo dispara os eventos a partir dos componentes React.
  *
- * DIVISÃO DE RESPONSABILIDADE ENTRE OS DOIS DOMÍNIOS
+ * DE ONDE SAI CADA EVENTO
  *
- * Esta página (topo do funil):     PageView, ViewContent, Lead, ClickCheckout
- * Kiwify (fundo do funil):         InitiateCheckout, Purchase
+ * Esta página:         PageView, ViewContent, Lead, InitiateCheckout, ClickCheckout
+ * Checkout do Stripe:  nada — é impossível instalar pixel lá
+ * Webhook do Stripe:   Purchase, pela Conversions API do Meta
  *
- * O InitiateCheckout NÃO sai daqui de propósito. Ele significa "a pessoa chegou à tela
- * de pagamento", e isso acontece no domínio da Kiwify — se os dois lados disparassem o
- * mesmo evento com o mesmo Pixel ID, cada comprador seria contado duas vezes e a taxa de
- * conversão do funil ficaria impossível de ler.
+ * O InitiateCheckout sai do clique no botão de compra. Ele significa "a pessoa chegou à
+ * tela de pagamento", e o clique aqui leva direto a ela. Como o checkout é hospedado
+ * pelo Stripe e não aceita pixel, se o evento não sair daqui não sai de lugar nenhum —
+ * e a campanha perde o sinal que usa para otimizar.
  *
- * O clique no botão daqui vira ClickCheckout, um evento próprio (trackCustom). Ele mede
- * a taxa página → checkout sem contaminar o evento padrão que a campanha usa.
+ * O ClickCheckout sai no mesmo clique. São nomes diferentes, então não há inflação de
+ * métrica: o padrão alimenta a campanha, o próprio preserva a série histórica.
  *
- * O Purchase também não sai daqui: o pagamento acontece na Kiwify, e o mesmo Pixel ID
- * precisa estar configurado no painel dela — de preferência com a API de Conversões
- * ligada, para a venda por PIX não depender de o comprador voltar à tela de obrigado.
+ * O Purchase não pode nascer no navegador: o comprador termina a compra fora do nosso
+ * domínio e nunca mais volta. Ele é enviado pelo servidor, do webhook do Stripe. Para
+ * que o Meta consiga ligar essa venda ao anúncio que a gerou, o checkout.ts empacota os
+ * identificadores do clique no client_reference_id — é o que atravessa a fronteira.
  */
 
 declare global {
@@ -27,7 +29,7 @@ declare global {
 }
 
 /** Eventos padrão do Meta que esta página tem o direito de disparar. */
-type PixelEvent = 'ViewContent' | 'Lead';
+type PixelEvent = 'ViewContent' | 'Lead' | 'InitiateCheckout';
 
 /** Eventos próprios, fora do vocabulário padrão do Meta. */
 type CustomPixelEvent = 'ClickCheckout';

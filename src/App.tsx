@@ -81,8 +81,8 @@ function BookObject() {
 }
 
 export default function App() {
-  // Quem abre a página viu a oferta. Este é o evento padrão que ESTA página pode
-  // reivindicar de verdade — o InitiateCheckout pertence à tela de pagamento da Kiwify.
+  // Quem abre a página viu a oferta. O InitiateCheckout agora também sai daqui, no clique
+  // do botão de compra — ver pixel.ts para o porquê da mudança.
   useEffect(() => {
     trackPixel('ViewContent', { content_name: 'Página de vendas — Método 5P' });
   }, []);

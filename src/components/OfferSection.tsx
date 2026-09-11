@@ -42,7 +42,7 @@ export default function OfferSection() {
               Entrar na plataforma
             </BuyButton>
             <p className="mt-5 max-w-xs text-[0.8125rem] leading-relaxed text-faint">
-              A compra é finalizada na Kiwify. Esta página não recebe pagamentos.
+              Pagamento processado pelo Stripe, com Pix ou cartão. Esta página não recebe pagamentos.
             </p>
           </div>
         </div>

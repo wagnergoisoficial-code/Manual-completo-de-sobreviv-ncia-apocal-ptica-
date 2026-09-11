@@ -1,7 +1,8 @@
 import { QuizQuestion, Chapter, Bonus } from './types';
 
-// Link de Checkout Oficial da Kiwify - Pode ser configurado pela variável VITE_KIWIFY_URL
-export const KIWIFY_CHECKOUT_URL = import.meta.env.VITE_KIWIFY_URL || "https://pay.kiwify.com.br/jJXmZkl";
+// Link do checkout. Hoje é um Payment Link do Stripe; o nome da constante é genérico de
+// propósito, para que trocar de processador de novo não espalhe renomeação pelo código.
+export const CHECKOUT_URL = import.meta.env.VITE_CHECKOUT_URL || "https://buy.stripe.com/8x2fZiesE5Zteuy9tpgA800";
 
 // Link ou ID do Vídeo do YouTube para a VSL
 // VOCÊ PODE COLOCAR SEU LINK DO YOUTUBE DIRETAMENTE ENTRE AS ASPAS ABAIXO:
@@ -171,7 +172,7 @@ export const FAQS = [
   },
   {
     question: "Como funciona o acesso depois que eu pago?",
-    answer: "A compra é finalizada na Kiwify; esta página não recebe pagamentos. Assim que o pagamento é confirmado, você recebe por e-mail o login e a senha, com tudo já liberado."
+    answer: "O pagamento é processado pelo Stripe; esta página não recebe pagamentos. Assim que ele é confirmado, você recebe por e-mail o login e a senha, com tudo já liberado. No Pix a confirmação costuma ser em minutos."
   },
   {
     question: "E se não servir para mim?",

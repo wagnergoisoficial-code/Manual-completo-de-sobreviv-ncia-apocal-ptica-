@@ -1,6 +1,8 @@
 {
   "name": "Manual de Sobrevivência Apocalíptica - VSL",
-  "description": "Uma página de vendas de alta conversão (VSL) para o Manual de Sobrevivência Apocalíptica, projetada especificamente para pensadores revolucionários contemporâneos com vídeo de apresentação e quiz de prontidão. Não processa pagamentos: os CTAs levam ao checkout oficial da Kiwify.",
+  "description": "Uma página de vendas de alta conversão (VSL) para o Manual de Sobrevivência Apocalíptica, projetada especificamente para pensadores revolucionários contemporâneos com vídeo de apresentação e quiz de prontidão. Não processa pagamentos: os CTAs levam ao checkout do Stripe.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
