@@ -12,6 +12,7 @@ import OfferSection from './components/OfferSection';
 import FAQ from './components/FAQ';
 import BuyButton from './components/BuyButton';
 import MobileStickyCTA from './components/MobileStickyCTA';
+import Testimonials from './components/Testimonials';
 import { HandArrow, HandNote, HandUnderline } from './components/Annotation';
 import { trackPixel } from './pixel';
 import { CHAPTERS } from './data';
@@ -285,6 +286,21 @@ export default function App() {
             </div>
 
           </div>
+        </div>
+      </section>
+
+      {/* ── DEPOIMENTOS ─────────────────────────────────────────────────────────
+          Fica imediatamente antes do preço, e não no meio da página: a prova social
+          serve para atravessar a última dúvida, que é a que aparece na hora de pagar. */}
+      <section id="depoimentos" className="bg-coal py-24 lg:py-28">
+        <div className={SHELL}>
+          <div className="mb-16 max-w-[30ch]">
+            <span className="eyebrow text-amber">Quem já entrou</span>
+            <h2 className="mt-6 text-section text-cream">
+              O que chega depois da compra
+            </h2>
+          </div>
+          <Testimonials />
         </div>
       </section>
 
