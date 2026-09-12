@@ -94,9 +94,23 @@ export const handler = async (event) => {
     return { statusCode: 405, body: JSON.stringify({ error: "Método não permitido" }) };
   }
 
-  if (!SECRET_KEY || !PRICE_ID) {
-    console.error("Falta STRIPE_SECRET_KEY ou STRIPE_PRICE_ID.");
-    return { statusCode: 500, body: JSON.stringify({ error: "Checkout não configurado" }) };
+  // Dizer QUAL variável falta, e não apenas que algo falta.
+  //
+  // A primeira versão respondia só "não configurado", e diagnosticar isso de fora virou
+  // adivinhação: nome errado? escopo errado? site errado? Nomes de variável não são
+  // segredo — o valor é —, então listá-los transforma uma hora de tentativa e erro em
+  // uma resposta.
+  const faltando = [
+    !SECRET_KEY && "STRIPE_SECRET_KEY",
+    !PRICE_ID && "STRIPE_PRICE_ID",
+  ].filter(Boolean);
+
+  if (faltando.length) {
+    console.error("Configuração incompleta. Ausentes:", faltando.join(", "));
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Checkout não configurado", faltando }),
+    };
   }
 
   let corpo = {};
