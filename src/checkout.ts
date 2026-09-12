@@ -1,29 +1,21 @@
 /**
- * A ponte entre a página de vendas e a tela de pagamento.
+ * Os dados de atribuição da campanha, e para onde os botões de compra apontam.
  *
- * O pagamento agora acontece em /checkout, dentro do nosso próprio domínio, com o
- * formulário do Stripe embutido. Isso muda o problema de atribuição: antes o
- * identificador do clique no anúncio precisava atravessar para outro domínio espremido
- * em 200 caracteres; agora ele só precisa sobreviver a uma navegação interna.
- *
- * Os cookies do Pixel (_fbc e _fbp) são do nosso domínio, então continuam legíveis em
- * /checkout sem nenhum truque. O que NÃO sobrevive são os parâmetros da URL — e é por
- * isso que eles viajam explicitamente aqui.
+ * O pagamento acontece numa seção da própria página de vendas, com o formulário do
+ * Stripe embutido. Como ninguém navega para lugar nenhum, o problema que existia antes
+ * — fazer o identificador do clique no anúncio atravessar para outro domínio — deixou
+ * de existir: os cookies do Pixel e a query da URL continuam onde sempre estiveram, e
+ * o formulário os lê na hora de criar a sessão.
  */
 import { CHECKOUT_URL } from './data';
 
-/** Onde o pagamento acontece de verdade. */
-const ROTA_DO_CHECKOUT = '/checkout';
-
-/** O que precisa atravessar da página de vendas para a tela de pagamento. */
-const PARAMETROS_ENCAMINHADOS = [
-  'fbclid',
-  'utm_source',
-  'utm_medium',
-  'utm_campaign',
-  'utm_content',
-  'utm_term',
-];
+/**
+ * Onde o pagamento acontece: uma seção desta mesma página.
+ *
+ * Não há navegação nem parâmetro para encaminhar — o comprador não sai do lugar, então
+ * os cookies do Pixel e a query da URL continuam exatamente onde estavam.
+ */
+const ANCORA_DO_PAGAMENTO = '#pagamento';
 
 export function readCookie(name: string): string | null {
   const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
@@ -47,28 +39,9 @@ export function currentFbc(): string | null {
   return fbclid ? `fb.1.${Date.now()}.${fbclid}` : null;
 }
 
-/**
- * O endereço da tela de pagamento, com o rastreio da campanha junto.
- *
- * Se algo der errado ao montar, devolve a rota nua: perder o rastro é ruim, perder a
- * venda é pior.
- */
+/** O destino dos botões de compra: a seção de pagamento, nesta mesma página. */
 export function buildCheckoutUrl(): string {
-  if (typeof window === 'undefined') return ROTA_DO_CHECKOUT;
-
-  try {
-    const destino = new URL(ROTA_DO_CHECKOUT, window.location.origin);
-    const aqui = new URLSearchParams(window.location.search);
-
-    for (const chave of PARAMETROS_ENCAMINHADOS) {
-      const valor = aqui.get(chave);
-      if (valor) destino.searchParams.set(chave, valor);
-    }
-
-    return destino.pathname + destino.search;
-  } catch {
-    return ROTA_DO_CHECKOUT;
-  }
+  return ANCORA_DO_PAGAMENTO;
 }
 
 /**

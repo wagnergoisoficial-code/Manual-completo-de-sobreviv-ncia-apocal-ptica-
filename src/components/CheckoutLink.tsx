@@ -10,16 +10,11 @@ interface CheckoutLinkProps {
 }
 
 /**
- * Todo caminho desta página para o pagamento passa por aqui: um único lugar que monta a
- * URL de /checkout com o rastreio da campanha junto e registra a saída.
+ * Todos os botões de compra da página passam por aqui. Eles não levam a lugar nenhum:
+ * rolam até a seção de pagamento, que está nesta mesma página.
  *
- * Sai apenas o ClickCheckout. O InitiateCheckout mudou de lugar: ele agora nasce ao
- * abrir /checkout, que é onde a tela de pagamento realmente aparece. Clicar no botão e
- * chegar ao pagamento eram a mesma coisa enquanto o clique levava direto ao Stripe;
- * com a tela intermediária, não são mais — e o evento tem de significar o que promete.
- *
- * Sem target="_blank": o destino é uma rota nossa. Abrir o próprio site numa aba nova
- * duplicaria a página e deixaria a pessoa sem o botão "voltar".
+ * Sai apenas o ClickCheckout. O InitiateCheckout nasce quando o formulário entra em
+ * cena, e não no clique — clique é intenção, formulário à vista é chegada.
  */
 export default function CheckoutLink({ from, className, children }: CheckoutLinkProps) {
   return (
