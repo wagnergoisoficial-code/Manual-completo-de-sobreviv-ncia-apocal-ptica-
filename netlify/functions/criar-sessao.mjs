@@ -167,8 +167,26 @@ export const handler = async (event) => {
     const sessao = await resposta.json();
 
     if (!resposta.ok) {
-      console.error("Stripe recusou a criação da sessão:", sessao?.error?.message);
-      return { statusCode: 502, body: JSON.stringify({ error: "Não foi possível abrir o pagamento" }) };
+      // Devolvemos a mensagem do Stripe junto.
+      //
+      // Ela descreve um erro de configuração NOSSA — preço inexistente, permissão
+      // faltando na chave, modo indisponível — e é o que diz o que corrigir. Sem isso,
+      // o diagnóstico depende de abrir o log do Netlify, e quem está integrando nem
+      // sempre tem esse acesso à mão.
+      //
+      // Não há segredo aqui: o Stripe nunca ecoa a chave na mensagem de erro, e o
+      // corpo da requisição não sai daqui. O que vaza, no pior caso, é que algo está
+      // mal configurado — coisa que o 502 já denunciava.
+      const motivo = sessao?.error?.message;
+      console.error("Stripe recusou a criação da sessão:", motivo);
+      return {
+        statusCode: 502,
+        body: JSON.stringify({
+          error: "Não foi possível abrir o pagamento",
+          motivo,
+          codigo: sessao?.error?.code,
+        }),
+      };
     }
 
     return {
