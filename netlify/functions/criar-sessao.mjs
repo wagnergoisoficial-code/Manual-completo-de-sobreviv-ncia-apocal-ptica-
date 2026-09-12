@@ -25,7 +25,8 @@ const STRIPE_API = "https://api.stripe.com/v1/checkout/sessions";
 
 const SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const PRICE_ID = process.env.STRIPE_PRICE_ID;
-const SITE_URL = process.env.URL || "https://www.manualcompletodesobrevivencia.com";
+/** Último recurso, se nem o cabeçalho nem o ambiente disserem onde estamos. */
+const DOMINIO_PADRAO = "https://www.manualcompletodesobrevivencia.com";
 
 /**
  * Quem paga o IOF de 3,5% do Pix.
@@ -67,6 +68,22 @@ function ipDoComprador(headers) {
   return encadeado ? encadeado.split(",")[0].trim() : undefined;
 }
 
+/**
+ * Para onde o Stripe devolve o comprador depois de pagar.
+ *
+ * Tem de ser o MESMO domínio em que ele está agora. Se a pessoa entrou pelo domínio
+ * com acentos, ou por um deploy de teste, mandá-la para o domínio principal depois do
+ * pagamento troca o endereço na barra bem no momento em que ela mais precisa
+ * reconhecer onde está. O cabeçalho da própria requisição é a fonte mais confiável
+ * disso — melhor que qualquer variável de ambiente, que aponta sempre para o mesmo
+ * lugar independentemente de por onde a pessoa chegou.
+ */
+function origemDaRequisicao(headers) {
+  const host = headers["x-forwarded-host"] || headers.host;
+  if (host) return `https://${host}`;
+  return process.env.URL || DOMINIO_PADRAO;
+}
+
 /** Aceita só o que reconhecemos, com tamanho limitado. Nada do navegador entra cru. */
 function saneado(valor, limite = 255) {
   return typeof valor === "string" && valor.trim() ? valor.trim().slice(0, limite) : undefined;
@@ -98,7 +115,7 @@ export const handler = async (event) => {
   const parametros = {
     mode: "payment",
     ui_mode: "form",
-    return_url: `${SITE_URL}/obrigado?session_id={CHECKOUT_SESSION_ID}`,
+    return_url: `${origemDaRequisicao(event.headers || {})}/obrigado?session_id={CHECKOUT_SESSION_ID}`,
     integration_identifier: "embedded_web_0001",
     locale: "pt-BR",
     "line_items[0][price]": PRICE_ID,
