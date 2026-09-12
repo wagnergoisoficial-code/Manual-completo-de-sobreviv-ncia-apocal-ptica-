@@ -105,6 +105,22 @@ export const handler = async (event) => {
     !PRICE_ID && "STRIPE_PRICE_ID",
   ].filter(Boolean);
 
+  // Confusão fácil e cara: um produto pode ter varios precos, entao o Stripe nao aceita
+  // prod_ aqui — ele precisa saber QUAL valor cobrar. O erro que ele devolve nesse caso
+  // ("No such price") nao explica a diferenca, e o tempo perdido nisso e real.
+  if (PRICE_ID && !PRICE_ID.startsWith("price_")) {
+    console.error(`STRIPE_PRICE_ID recebeu "${PRICE_ID}", que nao e um ID de preco.`);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        error: "Checkout não configurado",
+        motivo:
+          `STRIPE_PRICE_ID está com "${PRICE_ID}". Isso é um ID de produto, não de preço. ` +
+          `O valor correto começa com "price_" e fica em Stripe > Produtos > (o produto) > tabela de preços.`,
+      }),
+    };
+  }
+
   if (faltando.length) {
     console.error("Configuração incompleta. Ausentes:", faltando.join(", "));
     return {
