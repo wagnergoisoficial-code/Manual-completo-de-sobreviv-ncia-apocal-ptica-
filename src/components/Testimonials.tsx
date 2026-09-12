@@ -34,16 +34,28 @@ const DEPOIMENTOS: Depoimento[] = [
   },
 ];
 
-export default function Testimonials() {
+interface TestimonialsProps {
+  /**
+   * A anotação manuscrita pede margem para existir.
+   *
+   * Na página de vendas ela tem a largura toda e funciona. Na coluna estreita do
+   * checkout ela cai por cima do print — e anotação que atropela o que comenta deixa
+   * de ser charme e vira defeito. Lá ela sai.
+   */
+  comAnotacao?: boolean;
+}
+
+export default function Testimonials({ comAnotacao = true }: TestimonialsProps) {
   return (
     <div className="relative">
-      {/* Anotação manuscrita: a mesma voz das outras margens da página. */}
-      <div className="pointer-events-none absolute -top-2 right-0 z-10 hidden w-48 lg:block">
-        <HandNote tilt={5} className="text-[1.4rem] leading-tight">
-          Gente de verdade, print sem retoque.
-        </HandNote>
-        <HandArrow className="ml-4 mt-1 h-16 w-11 text-cream/70" />
-      </div>
+      {comAnotacao && (
+        <div className="pointer-events-none absolute -top-2 right-0 z-10 hidden w-48 lg:block">
+          <HandNote tilt={5} className="text-[1.4rem] leading-tight">
+            Gente de verdade, print sem retoque.
+          </HandNote>
+          <HandArrow className="ml-4 mt-1 h-16 w-11 text-cream/70" />
+        </div>
+      )}
 
       <div className="flex flex-col items-center gap-12 lg:flex-row lg:flex-wrap lg:items-start lg:justify-center lg:gap-x-10 lg:gap-y-16">
         {DEPOIMENTOS.map((depoimento) => (

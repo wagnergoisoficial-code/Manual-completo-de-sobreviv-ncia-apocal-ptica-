@@ -3,11 +3,28 @@
   publish = "dist"
 
 [build.environment]
-  # Impede falso-positivo do scanner de segredos do Netlify com chaves públicas do Firebase (AIza...)
+  # STRIPE_SECRET_KEY não aparece aqui de propósito: é segredo de verdade. Ela também
+  # não tem prefixo VITE_, e o Vite só injeta no bundle o que tem esse prefixo — ou seja,
+  # é estruturalmente incapaz de descer para o navegador.
+  # Impede falso-positivo do scanner de segredos do Netlify com chaves públicas (AIza..., pk_live...)
   SECRETS_SCAN_ENABLED = "false"
   SECRETS_SCAN_SMART_DETECTION_ENABLED = "false"
   SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY,VITE_FIREBASE_APP_ID,VITE_FIREBASE_MESSAGING_SENDER_ID"
   SECRETS_SCAN_OMIT_PATHS = "dist/**"
+
+# A única peça deste site que roda no servidor: ela cria a sessão de pagamento,
+# porque o formulário embutido precisa de um client_secret e o client_secret exige a
+# chave secreta — que jamais pode descer para o navegador.
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Precisa vir ANTES do catch-all do SPA, senão a rota é engolida pelo /* e a função
+# nunca é chamada.
+[[redirects]]
+  from = "/api/criar-sessao"
+  to = "/.netlify/functions/criar-sessao"
+  status = 200
 
 [[redirects]]
   from = "/*"

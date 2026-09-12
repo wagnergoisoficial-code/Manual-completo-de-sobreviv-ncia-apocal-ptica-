@@ -1,6 +1,6 @@
 import React from 'react';
 import { buildCheckoutUrl } from '../checkout';
-import { trackPixel, trackCustomPixel } from '../pixel';
+import { trackCustomPixel } from '../pixel';
 
 interface CheckoutLinkProps {
   /** Nome do CTA, para saber depois qual botão trouxe a venda. */
@@ -11,31 +11,21 @@ interface CheckoutLinkProps {
 
 /**
  * Todo caminho desta página para o pagamento passa por aqui: um único lugar que monta a
- * URL do Stripe com o rastreio embutido e registra a saída.
+ * URL de /checkout com o rastreio da campanha junto e registra a saída.
  *
- * Saem dois eventos no mesmo clique, de propósito:
+ * Sai apenas o ClickCheckout. O InitiateCheckout mudou de lugar: ele agora nasce ao
+ * abrir /checkout, que é onde a tela de pagamento realmente aparece. Clicar no botão e
+ * chegar ao pagamento eram a mesma coisa enquanto o clique levava direto ao Stripe;
+ * com a tela intermediária, não são mais — e o evento tem de significar o que promete.
  *
- *   InitiateCheckout  evento padrão do Meta, o que a campanha usa para otimizar. Ele
- *                     nasce aqui porque o clique abre a tela de pagamento do Stripe, e
- *                     lá dentro não é possível instalar pixel — se não sair daqui, não
- *                     sai de lugar nenhum.
- *   ClickCheckout     evento próprio, que já vinha sendo medido antes da troca de
- *                     processador. Fica para a série histórica não se partir ao meio.
+ * Sem target="_blank": o destino é uma rota nossa. Abrir o próprio site numa aba nova
+ * duplicaria a página e deixaria a pessoa sem o botão "voltar".
  */
 export default function CheckoutLink({ from, className, children }: CheckoutLinkProps) {
   return (
     <a
       href={buildCheckoutUrl()}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={() => {
-        trackPixel('InitiateCheckout', {
-          content_name: from,
-          value: 39.9,
-          currency: 'BRL',
-        });
-        trackCustomPixel('ClickCheckout', { content_name: from });
-      }}
+      onClick={() => trackCustomPixel('ClickCheckout', { content_name: from })}
       className={className}
     >
       {children}

@@ -4,17 +4,17 @@
  *
  * DE ONDE SAI CADA EVENTO
  *
- * Esta página:         PageView, ViewContent, Lead, InitiateCheckout, ClickCheckout
- * Checkout do Stripe:  nada — é impossível instalar pixel lá
- * Webhook do Stripe:   Purchase, pela Conversions API do Meta
+ * Página de vendas:   PageView, ViewContent, Lead, ClickCheckout
+ * Tela /checkout:     InitiateCheckout
+ * Webhook do Stripe:  Purchase, pela Conversions API do Meta
  *
- * O InitiateCheckout sai do clique no botão de compra. Ele significa "a pessoa chegou à
- * tela de pagamento", e o clique aqui leva direto a ela. Como o checkout é hospedado
- * pelo Stripe e não aceita pixel, se o evento não sair daqui não sai de lugar nenhum —
- * e a campanha perde o sinal que usa para otimizar.
+ * O InitiateCheckout nasce ao abrir /checkout, e não no clique do botão. A diferença
+ * importa: o clique é intenção, a tela aberta é chegada. Medir os dois como a mesma
+ * coisa inflaria o evento com quem clicou e desistiu no caminho.
  *
- * O ClickCheckout sai no mesmo clique. São nomes diferentes, então não há inflação de
- * métrica: o padrão alimenta a campanha, o próprio preserva a série histórica.
+ * O ClickCheckout continua no clique. São nomes diferentes, então nada se sobrepõe: o
+ * padrão alimenta a campanha, o próprio preserva a série histórica e ainda revela
+ * quantas pessoas somem entre o botão e o formulário.
  *
  * O Purchase não pode nascer no navegador: o comprador termina a compra fora do nosso
  * domínio e nunca mais volta. Ele é enviado pelo servidor, do webhook do Stripe. Para
