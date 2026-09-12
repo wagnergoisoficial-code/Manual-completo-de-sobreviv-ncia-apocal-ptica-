@@ -23,6 +23,20 @@
 
 const STRIPE_API = "https://api.stripe.com/v1/checkout/sessions";
 
+/**
+ * Versão da API do Stripe, fixada nesta chamada.
+ *
+ * O ui_mode=form — o formulário embutido — só existe a partir desta versão, e a conta
+ * está numa anterior. Dava: "Invalid ui_mode: form. In order to use ui_mode: form, you
+ * must upgrade to Stripe API version 2026-03-25.dahlia."
+ *
+ * Fixar por requisição, e não mudar o padrão da conta no painel: o padrão vale para
+ * TUDO, inclusive o formato dos eventos que chegam no webhook da plataforma. Trocar
+ * aquilo para resolver isto aqui arriscaria quebrar a liberação de acesso — muito
+ * estrago para um problema que cabe num cabeçalho.
+ */
+const STRIPE_VERSION = "2026-03-25.dahlia";
+
 const SECRET_KEY = process.env.STRIPE_SECRET_KEY;
 const PRICE_ID = process.env.STRIPE_PRICE_ID;
 /** Último recurso, se nem o cabeçalho nem o ambiente disserem onde estamos. */
@@ -176,6 +190,7 @@ export const handler = async (event) => {
       headers: {
         Authorization: `Bearer ${SECRET_KEY}`,
         "Content-Type": "application/x-www-form-urlencoded",
+        "Stripe-Version": STRIPE_VERSION,
       },
       body: paraFormulario(parametros).toString(),
     });
