@@ -16,7 +16,7 @@ import Testimonials from './components/Testimonials';
 import { HandArrow, HandNote, HandUnderline } from './components/Annotation';
 import { trackPixel } from './pixel';
 import { CHAPTERS } from './data';
-import manualCover from './assets/images/manual_cover_1783965348887.jpg';
+import manualCover from './assets/images/capa-manual.jpg';
 
 /** A medida da página. Todo bloco começa e termina nestes limites. */
 const SHELL = 'mx-auto max-w-[1240px] px-6 sm:px-10 lg:px-16';
