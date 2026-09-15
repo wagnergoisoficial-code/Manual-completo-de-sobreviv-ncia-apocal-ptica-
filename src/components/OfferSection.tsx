@@ -2,6 +2,8 @@ import React from 'react';
 import { BONUSES } from '../data';
 import PaymentForm from './PaymentForm';
 import seloGarantia from '../assets/images/selo-garantia-7-dias.png';
+import bannerOferta from '../assets/images/banner-oferta.jpg';
+import bannerOfertaMobile from '../assets/images/banner-oferta-mobile.jpg';
 
 /**
  * A oferta e o pagamento, no mesmo lugar.
@@ -25,6 +27,33 @@ const INCLUDED = [
 export default function OfferSection() {
   return (
     <div className="mx-auto max-w-[1240px] px-6 sm:px-10 lg:px-16">
+
+      {/* O banner abre a oferta por cima das duas colunas.
+          Ele tem texto dentro da imagem, e isso decide o tratamento no celular: o
+          banner inteiro espremido em ~340px deixaria o título ilegível. Lá entra um
+          recorte da metade direita — título, frase e os três selos —, no tamanho em
+          que dá para ler. No computador aparece inteiro.
+          Mesmo acabamento do vídeo no topo da página: canto reto, fio claro e a luz
+          âmbar por trás, para a imagem pousar na seção em vez de parecer colada. */}
+      <figure className="relative mb-14 lg:mb-20">
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(243,179,64,0.16),transparent_70%)] blur-3xl sm:-inset-14"
+        />
+        <picture>
+          <source media="(min-width: 640px)" srcSet={bannerOferta} />
+          <img
+            src={bannerOfertaMobile}
+            alt="Método 5P — Manual Completo de Sobrevivência Apocalíptica, na plataforma pelo computador e pelo celular. Acesso vitalício, pagamento único e 7 dias de garantia."
+            width={1086}
+            height={724}
+            loading="lazy"
+            decoding="async"
+            className="relative block aspect-[3/2] w-full object-cover shadow-[0_30px_80px_rgba(0,0,0,0.6)] ring-1 ring-cream/10 sm:aspect-[3/1]"
+          />
+        </picture>
+      </figure>
+
       <div className="grid grid-cols-1 gap-14 lg:grid-cols-12 lg:gap-x-16">
 
         {/* A — o que sustenta a decisão */}
