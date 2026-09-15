@@ -163,8 +163,8 @@ export const BONUSES: Bonus[] = [
  */
 export const FAQS = [
   {
-    question: "Quanto custa?",
-    answer: "R$ 39,90, pagamento único. Não é assinatura e não tem mensalidade: você paga uma vez e o acesso é vitalício, com as atualizações e os novos módulos inclusos."
+    question: "É assinatura?",
+    answer: "Não. É pagamento único, sem mensalidade: você paga uma vez e o acesso é vitalício, com as atualizações e os novos módulos inclusos."
   },
   {
     question: "Estou comprando apenas um e-book?",
@@ -176,6 +176,6 @@ export const FAQS = [
   },
   {
     question: "E se não servir para mim?",
-    answer: "Você tem 7 dias de garantia. Basta escrever para o nosso suporte por e-mail e devolvemos os R$ 39,90 integralmente."
+    answer: "Você tem 7 dias de garantia. Basta escrever para o nosso suporte por e-mail e devolvemos o valor integralmente."
   }
 ];

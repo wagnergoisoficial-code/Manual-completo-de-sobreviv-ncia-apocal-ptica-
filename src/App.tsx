@@ -82,8 +82,8 @@ function BookObject() {
 }
 
 export default function App() {
-  // Quem abre a página viu a oferta. O InitiateCheckout agora também sai daqui, no clique
-  // do botão de compra — ver pixel.ts para o porquê da mudança.
+  // Quem abre a página viu a oferta. O InitiateCheckout não sai daqui: ele nasce quando
+  // o formulário de pagamento aparece — ver pixel.ts.
   useEffect(() => {
     trackPixel('ViewContent', { content_name: 'Página de vendas — Método 5P' });
   }, []);
@@ -138,7 +138,7 @@ export default function App() {
               </p>
               <div className="mt-8">
                 <BuyButton from="CTA Hero" block>
-                  Quero meu acesso — R$&nbsp;39,90
+                  Quero meu acesso
                 </BuyButton>
               </div>
               <p className="mt-5 flex items-center gap-2.5 text-[0.8125rem] text-faint">
@@ -238,7 +238,7 @@ export default function App() {
               </p>
               <div className="mt-9">
                 <BuyButton from="CTA Módulos" variant="ghost" block>
-                  Entrar por R$&nbsp;39,90
+                  Quero meu acesso
                 </BuyButton>
               </div>
             </div>
@@ -326,7 +326,7 @@ export default function App() {
               <h2 className="mt-6 max-w-[12ch] text-section text-cream">Perguntas diretas</h2>
               <div className="mt-9">
                 <BuyButton from="CTA Fechamento" block>
-                  Entrar por R$&nbsp;39,90
+                  Quero meu acesso
                 </BuyButton>
               </div>
               <p className="mt-5 max-w-[34ch] text-[0.8125rem] text-faint">

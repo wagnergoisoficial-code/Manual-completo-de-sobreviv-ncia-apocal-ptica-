@@ -4,11 +4,12 @@
  *
  * DE ONDE SAI CADA EVENTO
  *
- * Página de vendas:   PageView, ViewContent, Lead, ClickCheckout
- * Tela /checkout:     InitiateCheckout
- * Webhook do Stripe:  Purchase, pela Conversions API do Meta
+ * Página de vendas:     PageView, ViewContent, Lead, ClickCheckout
+ * Formulário à vista:   InitiateCheckout
+ * Webhook do Stripe:    Purchase, pela Conversions API do Meta
  *
- * O InitiateCheckout nasce ao abrir /checkout, e não no clique do botão. A diferença
+ * O InitiateCheckout nasce quando o formulário de pagamento entra na tela, e não no
+ * clique do botão. A diferença
  * importa: o clique é intenção, a tela aberta é chegada. Medir os dois como a mesma
  * coisa inflaria o evento com quem clicou e desistiu no caminho.
  *
@@ -16,10 +17,10 @@
  * padrão alimenta a campanha, o próprio preserva a série histórica e ainda revela
  * quantas pessoas somem entre o botão e o formulário.
  *
- * O Purchase não pode nascer no navegador: o comprador termina a compra fora do nosso
- * domínio e nunca mais volta. Ele é enviado pelo servidor, do webhook do Stripe. Para
- * que o Meta consiga ligar essa venda ao anúncio que a gerou, o checkout.ts empacota os
- * identificadores do clique no client_reference_id — é o que atravessa a fronteira.
+ * O Purchase sai do servidor, do webhook do Stripe, e não do navegador: só o webhook
+ * tem a confirmação de que o dinheiro entrou — no Pix ela chega minutos depois, com a
+ * página possivelmente já fechada. Para o Meta ligar a venda ao anúncio, a função que
+ * cria a sessão grava fbc, fbp, IP e user-agent do comprador nos metadados dela.
  */
 
 declare global {

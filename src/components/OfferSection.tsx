@@ -1,14 +1,15 @@
 import React from 'react';
-import { ShieldCheck } from 'lucide-react';
 import { BONUSES } from '../data';
 import PaymentForm from './PaymentForm';
+import seloGarantia from '../assets/images/selo-garantia-7-dias.png';
 
 /**
  * A oferta e o pagamento, no mesmo lugar.
  *
  * Os campos do cartão e do Pix ficam aqui dentro, na própria página de vendas: quem
  * decidiu comprar não é mandado para lugar nenhum. À esquerda fica o que sustenta a
- * decisão — preço, o que está incluído, garantia; à direita, o formulário.
+ * decisão — preço e o que está incluído; à direita, o formulário e, colado nele, o
+ * selo de garantia.
  *
  * O fundo não é âmbar chapado: o âmbar da página significa ação, e um bloco inteiro
  * dessa cor tiraria do botão de pagar a única coisa que o distingue.
@@ -51,10 +52,6 @@ export default function OfferSection() {
             ))}
           </ul>
 
-          <p className="mt-8 flex items-start gap-3 text-small text-cream">
-            <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-amber" strokeWidth={2} />
-            7 dias de garantia. Se não servir, devolvemos os R$&nbsp;39,90 integralmente.
-          </p>
         </div>
 
         {/* B — o pagamento, aqui mesmo. No celular ele vem logo depois do preço, antes
@@ -68,7 +65,30 @@ export default function OfferSection() {
           <div className="mt-7">
             <PaymentForm />
           </div>
-          <p className="mt-6 text-[0.8125rem] leading-relaxed text-faint">
+
+          {/* O selo fica colado no botão de pagar, e não perto do preço: a dúvida que
+              ele responde — "e se eu me arrepender?" — aparece no instante em que a
+              pessoa vai confirmar, não quando ela lê o valor. */}
+          <div className="mt-10 flex items-center gap-6 border-t border-cream/10 pt-8">
+            <img
+              src={seloGarantia}
+              alt="Selo de 7 dias de garantia"
+              width={120}
+              height={120}
+              loading="lazy"
+              decoding="async"
+              className="h-24 w-24 shrink-0 drop-shadow-[0_10px_24px_rgba(0,0,0,0.55)] sm:h-28 sm:w-28"
+            />
+            <div>
+              <p className="text-title text-cream">Risco zero por 7 dias</p>
+              <p className="mt-2 text-small text-mist">
+                Entre, use a plataforma e baixe o manual. Se não servir, é só pedir e
+                devolvemos o valor integralmente — sem precisar justificar.
+              </p>
+            </div>
+          </div>
+
+          <p className="mt-8 text-[0.8125rem] leading-relaxed text-faint">
             Processado pelo Stripe, com Pix ou cartão. Os dados do seu cartão são
             enviados direto para eles e não passam por esta página. No extrato do Pix o
             recebedor aparece como <span className="text-mist">Ebanx</span>, o parceiro

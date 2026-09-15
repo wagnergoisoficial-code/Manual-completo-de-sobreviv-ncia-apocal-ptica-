@@ -7,7 +7,7 @@ import BuyButton from './BuyButton';
  *
  * Ela não aparece de cara: enquanto o hero está na tela, o botão âmbar grande já está à
  * mão e a barra seria só ruído sobre a headline. Assim que a pessoa rola e deixa esse botão
- * para trás, o preço volta a ficar a um toque de distância pelo resto da página.
+ * para trás, o caminho até o pagamento volta a ficar a um toque pelo resto da página.
  *
  * É uma pílula flutuante, não uma faixa colada na borda: a página inteira usa a pílula
  * para dizer "ação", e uma barra chapada de ponta a ponta esconderia o rodapé sob um
@@ -58,7 +58,7 @@ export default function MobileStickyCTA() {
           style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
         >
           <BuyButton from="CTA Barra Fixa" className="pointer-events-auto shadow-[0_8px_32px_rgba(0,0,0,0.55)]">
-            Entrar por R$&nbsp;39,90
+            Quero meu acesso
           </BuyButton>
         </motion.div>
       )}

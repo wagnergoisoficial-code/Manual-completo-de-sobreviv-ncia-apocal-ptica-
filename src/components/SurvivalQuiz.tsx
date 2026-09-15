@@ -96,7 +96,7 @@ export default function SurvivalQuiz() {
         </ul>
 
         <div className="mt-10 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <BuyButton from="CTA Quiz">Corrigir minhas falhas — R$&nbsp;39,90</BuyButton>
+          <BuyButton from="CTA Quiz">Corrigir minhas falhas</BuyButton>
           <button
             onClick={restartQuiz}
             className="inline-flex cursor-pointer items-center gap-2 text-[0.8125rem] text-faint transition-colors hover:text-cream"
