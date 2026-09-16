@@ -154,6 +154,20 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
   const [isPlayerLoaded, setIsPlayerLoaded] = useState<boolean>(false);
 
   /**
+   * No celular o vídeo toca no próprio quadro, sem camada por cima.
+   *
+   * O modal custava dois toques: um para abrir a camada e outro no play do YouTube,
+   * porque o navegador do celular não deixa um vídeo com som começar sozinho — a não
+   * ser que o iframe nasça DENTRO do toque da pessoa. É exatamente isso que acontece
+   * aqui: o toque troca o thumbnail pelo iframe, e o gesto vale como permissão.
+   *
+   * No computador o modal continua: lá a tela é grande e ver o vídeo do tamanho da
+   * janela vale a camada — e o problema dos dois toques não existe, porque o navegador
+   * de computador deixa o som começar.
+   */
+  const [tocandoAqui, setTocandoAqui] = useState<boolean>(false);
+
+  /**
    * Quando o modal abriu.
    *
    * O fundo fecha ao ser clicado, e isso cria uma janela perigosa nos primeiros
@@ -201,15 +215,48 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
     };
   }, [isOpen]);
 
+  if (tocandoAqui) {
+    return (
+      <Screen>
+        {/* O thumbnail continua atrás enquanto o player carrega: sem ele, o quadro
+            piscaria preto no meio do gesto. */}
+        <img
+          src={posterSrc}
+          alt=""
+          aria-hidden="true"
+          className="absolute inset-0 h-full w-full object-cover opacity-95"
+        />
+        <iframe
+          className="absolute inset-0 h-full w-full border-0"
+          src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=1&playsinline=1`}
+          title="Vídeo de Apresentação"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+        />
+      </Screen>
+    );
+  }
+
   return (
     <>
       <Screen>
         <button
           type="button"
           onClick={() => {
-            setIsPlayerLoaded(false);
-            openedAtRef.current = Date.now();
-            setIsOpen(true);
+            // A decisão é tomada no clique, e não no render: assim uma troca de
+            // orientação ou um redimensionamento não deixa o componente num modo
+            // que não combina mais com a tela.
+            const telaGrande =
+              typeof window !== 'undefined' &&
+              window.matchMedia('(min-width: 1024px)').matches;
+
+            if (telaGrande) {
+              setIsPlayerLoaded(false);
+              openedAtRef.current = Date.now();
+              setIsOpen(true);
+              return;
+            }
+            setTocandoAqui(true);
           }}
           aria-label="Assistir à apresentação"
           className="group absolute inset-0 h-full w-full cursor-pointer"
