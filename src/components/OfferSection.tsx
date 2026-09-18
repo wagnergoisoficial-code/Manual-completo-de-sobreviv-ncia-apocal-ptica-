@@ -100,8 +100,13 @@ export default function OfferSection() {
             <BuyButton from="CTA Oferta" block>
               Quero meu acesso
             </BuyButton>
-            <p className="mt-5 text-[0.8125rem] text-faint">
-              Você vai para a página segura do Stripe para concluir.
+            {/* Avisar quais campos vêm pela frente.
+                O Pix exige CPF e nome — é do sistema, não dá para desligar. Quem não
+                esperava por isso interpreta como burocracia e desiste; quem foi avisado
+                preenche. O aviso não remove a fricção, remove a surpresa. */}
+            <p className="mt-5 text-[0.8125rem] leading-relaxed text-faint">
+              Você vai para a página segura do Stripe. No Pix são pedidos e-mail, nome e
+              CPF — o padrão para o banco identificar o pagamento.
             </p>
           </div>
 
