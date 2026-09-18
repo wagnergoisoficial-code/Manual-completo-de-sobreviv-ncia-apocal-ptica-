@@ -1,14 +1,14 @@
 /**
  * A ponte entre esta página e o checkout do Stripe.
  *
- * O pagamento voltou a acontecer fora daqui, na página hospedada pelo Stripe. Isso traz
- * de volta o problema que o formulário embutido tinha resolvido: o comprador atravessa
- * para outro domínio, e cookie não atravessa domínio. Sem ajuda, o Meta recebe a venda
- * pelo webhook sem saber de que anúncio ela veio.
+ * O pagamento acontece em /checkout, uma página nossa com o formulário do Stripe
+ * embutido. Como a navegação é interna, os cookies do Pixel continuam legíveis lá e a
+ * atribuição não depende de truque nenhum: a própria página lê fbc e fbp na hora de
+ * criar a sessão, e ainda manda IP e navegador reais do comprador.
  *
- * O Stripe oferece exatamente um canal para carregar algo nosso até lá: o
- * `client_reference_id`, devolvido no evento `checkout.session.completed`. É o que este
- * módulo monta — e é por isso que ele existe.
+ * O empacotamento em `client_reference_id` que existe aqui serve à rede de segurança —
+ * o link hospedado do Stripe, usado só se a criação da sessão falhar. Lá o comprador
+ * atravessa para outro domínio, e cookie não atravessa domínio.
  *
  * REGRAS DO STRIPE QUE MOLDARAM ESTE CÓDIGO (verificadas na documentação)
  *
@@ -36,6 +36,9 @@ const UTM_PARAMS = [
  * o prefixo muda junto e o servidor continua sabendo ler o formato antigo.
  */
 const REF_FORMAT = 'fb1';
+
+/** Onde o pagamento acontece: uma página nossa, não a tela branca do Stripe. */
+const ROTA_DO_CHECKOUT = '/checkout';
 
 export function readCookie(name: string): string | null {
   const match = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
@@ -94,12 +97,17 @@ function buildClientReference(): string | null {
   return value.length <= 200 ? value : null;
 }
 
-/** O destino dos botões de compra: a página de pagamento do Stripe. */
-export function buildCheckoutUrl(base: string = CHECKOUT_URL): string {
-  if (typeof window === 'undefined') return base;
+/**
+ * O destino dos botões de compra: a nossa página de pagamento.
+ *
+ * Os cookies do Pixel são do nosso domínio e sobrevivem à navegação interna sozinhos.
+ * Os parâmetros da URL, não — por isso eles viajam explicitamente.
+ */
+export function buildCheckoutUrl(): string {
+  if (typeof window === 'undefined') return ROTA_DO_CHECKOUT;
 
   try {
-    const url = new URL(base);
+    const url = new URL(ROTA_DO_CHECKOUT, window.location.origin);
     const here = new URLSearchParams(window.location.search);
 
     for (const key of UTM_PARAMS) {
@@ -107,17 +115,27 @@ export function buildCheckoutUrl(base: string = CHECKOUT_URL): string {
       if (value) url.searchParams.set(key, value);
     }
 
-    // O checkout do Stripe abre em inglês por padrão, inclusive o preço (R$39.90 em vez
-    // de R$ 39,90). Para quem está comprando em português, isso é um tranco de confiança
-    // bem no último passo.
-    url.searchParams.set('locale', 'pt-BR');
+    const fbclid = here.get('fbclid');
+    if (fbclid) url.searchParams.set('fbclid', fbclid);
 
-    const clientReference = buildClientReference();
-    if (clientReference) url.searchParams.set('client_reference_id', clientReference);
-
-    return url.toString();
+    return url.pathname + url.search;
   } catch {
     // Nenhum erro de rastreamento pode derrubar o botão de compra.
-    return base;
+    return ROTA_DO_CHECKOUT;
   }
+}
+
+/**
+ * O checkout hospedado do Stripe, usado só como rede de segurança.
+ *
+ * Se a criação da sessão falhar — função fora do ar, chave errada, Stripe instável —,
+ * este link continua funcionando como sempre funcionou. Nenhuma venda pode morrer por
+ * causa de um soluço nosso.
+ */
+export function hostedCheckoutUrl(): string {
+  const url = new URL(CHECKOUT_URL);
+  url.searchParams.set('locale', 'pt-BR');
+  const clientReference = buildClientReference();
+  if (clientReference) url.searchParams.set('client_reference_id', clientReference);
+  return url.toString();
 }

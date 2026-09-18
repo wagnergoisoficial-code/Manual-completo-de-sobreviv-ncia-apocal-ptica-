@@ -11,11 +11,10 @@ import bannerOfertaMobile from '../assets/images/banner-oferta-mobile.jpg';
  * À esquerda fica o que sustenta a decisão — preço e o que está incluído; à direita, o
  * botão que leva ao pagamento e, colado nele, o selo de garantia.
  *
- * O pagamento acontece na página hospedada pelo Stripe, fora daqui. Já esteve embutido
- * nesta seção; a volta ao link foi uma decisão de negócio, não uma limitação técnica.
- * O que ela custou está registrado no checkout.ts: sem sessão criada pelo nosso
- * servidor, não há como absorver o IOF de 3,5% do Pix, e o comprador brasileiro vê no
- * banco um valor maior do que o anunciado aqui.
+ * O pagamento acontece em /checkout, uma página nossa com o formulário do Stripe
+ * embutido. Já esteve aqui dentro, nesta seção; separar foi decisão de negócio. O que
+ * importa é que continua sendo página nossa: o comprador não cai numa tela branca, e a
+ * sessão criada pelo nosso servidor mantém a atribuição e o controle sobre o IOF.
  *
  * O fundo não é âmbar chapado: o âmbar da página significa ação, e um bloco inteiro
  * dessa cor tiraria do botão de pagar a única coisa que o distingue.
@@ -100,13 +99,8 @@ export default function OfferSection() {
             <BuyButton from="CTA Oferta" block>
               Quero meu acesso
             </BuyButton>
-            {/* Avisar quais campos vêm pela frente.
-                O Pix exige CPF e nome — é do sistema, não dá para desligar. Quem não
-                esperava por isso interpreta como burocracia e desiste; quem foi avisado
-                preenche. O aviso não remove a fricção, remove a surpresa. */}
             <p className="mt-5 text-[0.8125rem] leading-relaxed text-faint">
-              Você vai para a página segura do Stripe. No Pix são pedidos e-mail, nome e
-              CPF — o padrão para o banco identificar o pagamento.
+              Pagamento com Pix ou cartão, em uma página segura.
             </p>
           </div>
 
