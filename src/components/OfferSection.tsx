@@ -1,6 +1,6 @@
 import React from 'react';
 import { BONUSES } from '../data';
-import PaymentForm from './PaymentForm';
+import BuyButton from './BuyButton';
 import seloGarantia from '../assets/images/selo-garantia-7-dias.png';
 import bannerOferta from '../assets/images/banner-oferta.jpg';
 import bannerOfertaMobile from '../assets/images/banner-oferta-mobile.jpg';
@@ -8,10 +8,14 @@ import bannerOfertaMobile from '../assets/images/banner-oferta-mobile.jpg';
 /**
  * A oferta e o pagamento, no mesmo lugar.
  *
- * Os campos do cartão e do Pix ficam aqui dentro, na própria página de vendas: quem
- * decidiu comprar não é mandado para lugar nenhum. À esquerda fica o que sustenta a
- * decisão — preço e o que está incluído; à direita, o formulário e, colado nele, o
- * selo de garantia.
+ * À esquerda fica o que sustenta a decisão — preço e o que está incluído; à direita, o
+ * botão que leva ao pagamento e, colado nele, o selo de garantia.
+ *
+ * O pagamento acontece na página hospedada pelo Stripe, fora daqui. Já esteve embutido
+ * nesta seção; a volta ao link foi uma decisão de negócio, não uma limitação técnica.
+ * O que ela custou está registrado no checkout.ts: sem sessão criada pelo nosso
+ * servidor, não há como absorver o IOF de 3,5% do Pix, e o comprador brasileiro vê no
+ * banco um valor maior do que o anunciado aqui.
  *
  * O fundo não é âmbar chapado: o âmbar da página significa ação, e um bloco inteiro
  * dessa cor tiraria do botão de pagar a única coisa que o distingue.
@@ -90,9 +94,15 @@ export default function OfferSection() {
           id="pagamento"
           className="scroll-mt-8 lg:col-span-6 lg:col-start-7 lg:row-start-1"
         >
-          <span className="eyebrow text-faint">Pagamento</span>
+          <span className="eyebrow text-faint">Finalizar</span>
+
           <div className="mt-7">
-            <PaymentForm />
+            <BuyButton from="CTA Oferta" block>
+              Quero meu acesso
+            </BuyButton>
+            <p className="mt-5 text-[0.8125rem] text-faint">
+              Você vai para a página segura do Stripe para concluir.
+            </p>
           </div>
 
           {/* O selo fica colado no botão de pagar, e não perto do preço: a dúvida que
@@ -118,10 +128,9 @@ export default function OfferSection() {
           </div>
 
           <p className="mt-8 text-[0.8125rem] leading-relaxed text-faint">
-            Processado pelo Stripe, com Pix ou cartão. Os dados do seu cartão são
-            enviados direto para eles e não passam por esta página. No extrato do Pix o
-            recebedor aparece como <span className="text-mist">Ebanx</span>, o parceiro
-            do Stripe no Brasil.
+            Pagamento processado pelo Stripe, com Pix ou cartão — esta página não recebe
+            dados de pagamento. No extrato do Pix o recebedor aparece como{' '}
+            <span className="text-mist">Ebanx</span>, o parceiro do Stripe no Brasil.
           </p>
         </div>
 

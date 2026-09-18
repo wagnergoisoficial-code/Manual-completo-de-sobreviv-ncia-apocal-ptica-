@@ -4,18 +4,18 @@
  *
  * DE ONDE SAI CADA EVENTO
  *
- * Página de vendas:     PageView, ViewContent, Lead, ClickCheckout
- * Formulário à vista:   InitiateCheckout
+ * Página de vendas:     PageView, ViewContent, Lead, InitiateCheckout, ClickCheckout
+ * Checkout do Stripe:   nada — é impossível instalar pixel lá
  * Webhook do Stripe:    Purchase, pela Conversions API do Meta
  *
- * O InitiateCheckout nasce quando o formulário de pagamento entra na tela, e não no
- * clique do botão. A diferença
- * importa: o clique é intenção, a tela aberta é chegada. Medir os dois como a mesma
- * coisa inflaria o evento com quem clicou e desistiu no caminho.
+ * O InitiateCheckout voltou para o clique no botão, porque o pagamento saiu da página:
+ * o clique leva direto à tela do Stripe, e lá não é possível instalar pixel. Se o
+ * evento não sair daqui, não sai de lugar nenhum — e a campanha perde o sinal que usa
+ * para otimizar.
  *
- * O ClickCheckout continua no clique. São nomes diferentes, então nada se sobrepõe: o
- * padrão alimenta a campanha, o próprio preserva a série histórica e ainda revela
- * quantas pessoas somem entre o botão e o formulário.
+ * Enquanto o formulário esteve embutido, ele nascia da rolagem até a seção de pagamento.
+ * Aquilo media alcance de rolagem, não intenção, e inflava o evento com quem só passou
+ * os olhos. O clique é mais honesto.
  *
  * O Purchase sai do servidor, do webhook do Stripe, e não do navegador: só o webhook
  * tem a confirmação de que o dinheiro entrou — no Pix ela chega minutos depois, com a
