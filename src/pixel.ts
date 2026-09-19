@@ -5,7 +5,8 @@
  * DE ONDE SAI CADA EVENTO
  *
  * Página de vendas:   PageView, ViewContent, Lead, ClickCheckout
- * Página /checkout:   InitiateCheckout
+ * Página /checkout:   InitiateCheckout, AddPaymentInfo e, quando o pagamento é
+ *                     aprovado com a pessoa ainda na tela, Purchase
  * Webhook do Stripe:  Purchase, pela Conversions API do Meta
  *
  * O InitiateCheckout nasce ao abrir /checkout. É o significado exato do evento — "a
@@ -16,10 +17,14 @@
  * sobrepõe: o padrão alimenta a campanha, o próprio revela quantas pessoas somem entre
  * o botão e a tela de pagamento.
  *
- * O Purchase sai do servidor, do webhook do Stripe, e não do navegador: só o webhook
- * tem a confirmação de que o dinheiro entrou — no Pix ela chega minutos depois, com a
- * página possivelmente já fechada. Para o Meta ligar a venda ao anúncio, a função que
- * cria a sessão grava fbc, fbp, IP e user-agent do comprador nos metadados dela.
+ * O PURCHASE SAI DE DOIS LUGARES, E ISSO É DE PROPÓSITO
+ *
+ * O webhook é a fonte que não falha: o dinheiro entrou, então a venda existe mesmo que
+ * o comprador feche o navegador. O navegador é a fonte rica: leva os cookies do Pixel
+ * e a sessão real da pessoa, o que o Meta usa para casar a venda com o anúncio.
+ *
+ * Os dois mandam o MESMO event_id — o id do PaymentIntent do Stripe. É assim que o
+ * Meta reconhece um único evento em vez de contar a venda duas vezes.
  */
 
 declare global {
@@ -29,14 +34,27 @@ declare global {
 }
 
 /** Eventos padrão do Meta que esta página tem o direito de disparar. */
-type PixelEvent = 'ViewContent' | 'Lead' | 'InitiateCheckout';
+type PixelEvent = 'ViewContent' | 'Lead' | 'InitiateCheckout' | 'AddPaymentInfo' | 'Purchase';
+
+/**
+ * A chave de desduplicação. Só faz sentido no Purchase, que também sai do servidor:
+ * mesmo event_id nos dois lados, uma venda contada uma vez só.
+ */
+interface PixelOptions {
+  eventID: string;
+}
 
 /** Eventos próprios, fora do vocabulário padrão do Meta. */
 type CustomPixelEvent = 'ClickCheckout';
 
-export function trackPixel(event: PixelEvent, params?: Record<string, unknown>): void {
+export function trackPixel(
+  event: PixelEvent,
+  params?: Record<string, unknown>,
+  options?: PixelOptions,
+): void {
   // O fbq pode não existir se um bloqueador de anúncios travar o script base.
-  window.fbq?.('track', event, params);
+  if (options) window.fbq?.('track', event, params, options);
+  else window.fbq?.('track', event, params);
 }
 
 export function trackCustomPixel(event: CustomPixelEvent, params?: Record<string, unknown>): void {

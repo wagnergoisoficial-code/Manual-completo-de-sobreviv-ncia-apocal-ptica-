@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Caveat:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Caveat:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
 /*
@@ -119,5 +119,57 @@
     pointer-events: none;
     opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/*
+  A PÁGINA DE CHECKOUT
+
+  /checkout tem desenho próprio — outro projeto, outra fonte (Plus Jakarta Sans), outra
+  paleta (a escala slate padrão do Tailwind, com âmbar e esmeralda). Ela não usa nada
+  dos tokens acima, e isso é de propósito: a página de vendas convence, a de pagamento
+  tranquiliza, e cada uma tem a sua linguagem.
+
+  O que falta ali são estas duas animações, que o desenho usa pelo nome e o Tailwind
+  não conhece.
+*/
+@layer utilities {
+  .animate-fade-in {
+    animation: checkout-fade-in 0.35s ease-out both;
+  }
+
+  .animate-bounce-short {
+    animation: checkout-bounce-short 0.9s ease-out 1;
+  }
+}
+
+@keyframes checkout-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes checkout-bounce-short {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in,
+  .animate-bounce-short {
+    animation: none;
   }
 }

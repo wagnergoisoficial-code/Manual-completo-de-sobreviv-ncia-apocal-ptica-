@@ -1,7 +1,7 @@
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
-import Checkout from './pages/Checkout.tsx';
+import Checkout from './pages/checkout/index.tsx';
 import Obrigado from './pages/Obrigado.tsx';
 import './index.css';
 

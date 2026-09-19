@@ -12,9 +12,8 @@
   SECRETS_SCAN_OMIT_KEYS = "VITE_FIREBASE_API_KEY,VITE_FIREBASE_APP_ID,VITE_FIREBASE_MESSAGING_SENDER_ID"
   SECRETS_SCAN_OMIT_PATHS = "dist/**"
 
-# A única peça deste site que roda no servidor: ela cria a sessão de pagamento,
-# porque o formulário embutido precisa de um client_secret e o client_secret exige a
-# chave secreta — que jamais pode descer para o navegador.
+# A única peça deste site que roda no servidor: ela lê o preço no Stripe e cria a
+# cobrança, porque isso exige a chave secreta — que jamais pode descer para o navegador.
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
@@ -22,8 +21,8 @@
 # Precisa vir ANTES do catch-all do SPA, senão a rota é engolida pelo /* e a função
 # nunca é chamada.
 [[redirects]]
-  from = "/api/criar-sessao"
-  to = "/.netlify/functions/criar-sessao"
+  from = "/api/pagamento"
+  to = "/.netlify/functions/pagamento"
   status = 200
 
 [[redirects]]

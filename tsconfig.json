@@ -22,5 +22,10 @@
     },
     "allowImportingTsExtensions": true,
     "noEmit": true
-  }
+  },
+  // O repositório do desenho do checkout foi clonado aqui dentro e tem as próprias
+  // dependências (Mercado Pago, firebase-functions). O que importava dele já vive em
+  // src/pages/checkout — deixá-lo fora daqui impede que erros de um projeto que não é
+  // este apareçam na verificação de tipos deste.
+  "exclude": ["node_modules", "dist", "Check-out-manual"]
 }
