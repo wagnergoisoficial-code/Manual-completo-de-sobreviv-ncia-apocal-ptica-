@@ -4,7 +4,7 @@ import { Lock, ShieldCheck } from "lucide-react";
 export const Header: React.FC = () => {
   return (
     <header className="w-full bg-[#020617] border-b border-slate-800/80 sticky top-0 z-30 backdrop-blur-md">
-      <div className="max-w-xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="max-w-xl lg:max-w-6xl mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
         {/* Identificação do Produto */}
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 font-black text-sm">

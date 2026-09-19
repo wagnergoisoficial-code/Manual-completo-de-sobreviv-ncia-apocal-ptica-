@@ -12,4 +12,15 @@ import { loadStripe } from "@stripe/stripe-js";
  */
 const CHAVE_PUBLICA = import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY || "";
 
-export const stripePromise = CHAVE_PUBLICA ? loadStripe(CHAVE_PUBLICA) : null;
+/**
+ * PORTUGUÊS SEMPRE, NÃO O IDIOMA DO APARELHO
+ *
+ * Sem este locale o Stripe.js usa a língua do navegador de quem está comprando. Quem
+ * tem o celular em inglês — e é mais gente do que parece — via "Card number" e
+ * "Payment failed" no meio de uma página inteira em português. Fixar aqui vale para
+ * tudo que o Stripe desenha ou escreve: os campos do cartão e também as mensagens de
+ * erro que devolvemos para a tela.
+ */
+export const stripePromise = CHAVE_PUBLICA
+  ? loadStripe(CHAVE_PUBLICA, { locale: "pt-BR" })
+  : null;

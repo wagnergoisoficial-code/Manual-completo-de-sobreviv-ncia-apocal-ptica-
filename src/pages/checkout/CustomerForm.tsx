@@ -169,7 +169,9 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
           )}
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        {/* Lado a lado só onde cabe. No computador estes dois campos vivem na coluna
+            estreita do pagamento, e ali o rótulo do CPF não entra em meia largura. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
           {/* WhatsApp para suporte */}
           <div>
             <label htmlFor="customer-phone" className="block text-xs font-semibold text-slate-300 mb-1">

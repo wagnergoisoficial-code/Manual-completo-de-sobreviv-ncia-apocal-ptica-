@@ -203,7 +203,9 @@ export const PaymentSection: React.FC<PaymentSectionProps> = ({
         >
           <Zap className="w-4 h-4 text-emerald-400 fill-emerald-400/20" />
           <span>PIX</span>
-          <span className="hidden sm:inline-block text-[10px] bg-emerald-950/80 text-emerald-300 px-1.5 py-0.2 rounded border border-emerald-800">
+          {/* Na coluna estreita do computador esta etiqueta quebrava em duas linhas e
+              desalinhava a aba. A mesma informação aparece logo abaixo, em verde. */}
+          <span className="hidden sm:inline-block lg:hidden text-[10px] bg-emerald-950/80 text-emerald-300 px-1.5 py-0.2 rounded border border-emerald-800">
             Aprovação Imediata
           </span>
         </button>

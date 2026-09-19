@@ -9,7 +9,7 @@ interface FooterProps {
 export const Footer: React.FC<FooterProps> = ({ onOpenTerms, onOpenPrivacy }) => {
   return (
     <footer className="w-full border-t border-slate-800/80 bg-slate-950/90 text-slate-400 text-xs mt-8 py-8">
-      <div className="max-w-xl mx-auto px-4 space-y-5">
+      <div className="max-w-xl lg:max-w-6xl mx-auto px-4 lg:px-8 space-y-5">
         {/* Como pedir reembolso */}
         <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-3.5 space-y-1.5">
           <div className="flex items-center gap-1.5 text-slate-200 font-semibold text-xs">

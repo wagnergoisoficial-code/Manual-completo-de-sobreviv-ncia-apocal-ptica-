@@ -317,65 +317,90 @@ export default function CheckoutPage() {
       {/* a) Topo sem menu ou links de saída */}
       <Header />
 
-      <main className="flex-1 w-full max-w-xl mx-auto px-4 py-5 sm:py-6">
+      <main className="flex-1 w-full mx-auto max-w-xl px-4 py-5 sm:py-6 lg:max-w-6xl lg:px-8 lg:py-10">
         {step === "checkout" && (
-          <div className="space-y-5 animate-fade-in">
-            {/* Primeiro contêiner acima da página de checkout: Poster Visual Oficial do Bundle */}
-            <VisualBundleHero />
+          /*
+            DUAS LARGURAS, DOIS COMPORTAMENTOS
 
-            {/* b) Resumo Compacto da Oferta */}
-            <ProductSummary price={PRECO_EM_REAIS} />
+            No celular é uma coluna só, na ordem em que a decisão acontece: o produto
+            convence, o preço fecha, o formulário e o pagamento executam, as dúvidas
+            aparecem por último para quem ainda hesita.
 
-            {/* c) Formulário com dados essenciais */}
-            <CustomerForm
-              data={customer}
-              onChange={handleCustomerChange}
-              errors={errors}
-              onOpenPrivacy={() => setLegalModal("privacy")}
-            />
+            No computador a mesma tela vira duas colunas. Aquela coluna estreita no meio
+            de uma tela larga parecia um aplicativo de celular espremido — e o pior:
+            obrigava a rolar para achar onde pagar. Lado a lado, o que convence fica à
+            esquerda e o que executa fica à direita, tudo visível de uma vez.
 
-            {/* d) Pagamento em 2 abas (PIX e CARTÃO), selos de segurança e garantia */}
-            <PaymentSection
-              customer={customer}
-              amountInCents={amountInCents}
-              onGeneratePix={handleGeneratePix}
-              onCriarCobranca={criarCobranca}
-              onCardApproved={handleCardApproved}
-              isProcessing={isProcessing}
-              onValidateForm={validateForm}
-            />
+            A ordem no código já é a ordem do celular, e empilhada ela continua certa —
+            por isso a grade não precisa reposicionar nada.
+          */
+          <div className="animate-fade-in space-y-5 lg:grid lg:grid-cols-12 lg:items-start lg:gap-8 lg:space-y-0">
 
-            {/* Rede de segurança: se o pagamento desta página não abrir — função fora do
-                ar, chave errada, Stripe instável —, a compra ainda tem por onde sair.
-                Nenhuma venda pode morrer por causa de um soluço nosso. */}
-            {pagamentoQuebrado && (
-              <div className="bg-slate-900/60 border border-amber-500/40 rounded-2xl p-4 text-xs text-slate-300 space-y-3">
-                <p className="leading-relaxed">
-                  O pagamento não abriu aqui nesta página. Você pode concluir a compra com
-                  segurança direto no Stripe:
-                </p>
-                <a
-                  href={hostedCheckoutUrl()}
-                  className="w-full py-3 px-5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center justify-center transition-colors"
-                >
-                  Continuar para o pagamento
-                </a>
-              </div>
-            )}
+            {/* A — o que convence: o pôster do produto e o resumo da oferta */}
+            <div className="space-y-5 lg:col-span-7 lg:space-y-6">
+              {/* Primeiro contêiner acima da página de checkout: Poster Visual Oficial do Bundle */}
+              <VisualBundleHero />
 
-            {/* e) FAQ curto (acordeão) para sanar as principais dúvidas */}
-            <CheckoutFaq />
+              {/* b) Resumo Compacto da Oferta */}
+              <ProductSummary price={PRECO_EM_REAIS} />
+            </div>
+
+            {/* B — o que executa: os dados, o pagamento e, logo abaixo, as dúvidas que
+                aparecem justamente na hora de pagar */}
+            <div className="space-y-5 lg:col-span-5 lg:space-y-6">
+              {/* c) Formulário com dados essenciais */}
+              <CustomerForm
+                data={customer}
+                onChange={handleCustomerChange}
+                errors={errors}
+                onOpenPrivacy={() => setLegalModal("privacy")}
+              />
+
+              {/* d) Pagamento em 2 abas (PIX e CARTÃO), selos de segurança e garantia */}
+              <PaymentSection
+                customer={customer}
+                amountInCents={amountInCents}
+                onGeneratePix={handleGeneratePix}
+                onCriarCobranca={criarCobranca}
+                onCardApproved={handleCardApproved}
+                isProcessing={isProcessing}
+                onValidateForm={validateForm}
+              />
+
+              {/* Rede de segurança: se o pagamento desta página não abrir — função fora do
+                  ar, chave errada, Stripe instável —, a compra ainda tem por onde sair.
+                  Nenhuma venda pode morrer por causa de um soluço nosso. */}
+              {pagamentoQuebrado && (
+                <div className="bg-slate-900/60 border border-amber-500/40 rounded-2xl p-4 text-xs text-slate-300 space-y-3">
+                  <p className="leading-relaxed">
+                    O pagamento não abriu aqui nesta página. Você pode concluir a compra com
+                    segurança direto no Stripe:
+                  </p>
+                  <a
+                    href={hostedCheckoutUrl()}
+                    className="w-full py-3 px-5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center justify-center transition-colors"
+                  >
+                    Continuar para o pagamento
+                  </a>
+                </div>
+              )}
+
+              {/* e) FAQ curto (acordeão) para sanar as principais dúvidas */}
+              <CheckoutFaq />
+            </div>
           </div>
         )}
 
+        {/* O QR Code e a confirmação não viram duas colunas: são uma coisa só para ler e
+            executar, e espalhá-las numa tela larga só afastaria o código do olho. */}
         {step === "pix_screen" && activeTransaction && (
-          <div className="animate-fade-in">
+          <div className="animate-fade-in mx-auto max-w-xl">
             <PixScreen transaction={activeTransaction} onCancel={() => setStep("checkout")} />
           </div>
         )}
 
         {step === "thank_you" && activeTransaction && (
-          <div className="animate-fade-in">
+          <div className="animate-fade-in mx-auto max-w-xl">
             <ThankYouScreen transaction={activeTransaction} />
           </div>
         )}
