@@ -10,15 +10,29 @@ import { motion } from 'motion/react';
  * Lead. Por isso ele sobrevive ao enxugamento, mas sem a moldura, o cabeçalho técnico e
  * a tabela de laudos que tinha antes: pergunta, três respostas e uma nota. O texto longo
  * de cada vulnerabilidade saiu; quem quer o detalhe entra na plataforma.
+ *
+ * As perguntas e o resultado falam a língua de uma família comum: situações da própria
+ * casa, respostas que a pessoa diria em voz alta, e nenhum termo técnico.
  */
 
+/** O nome de cada área no resultado — o assunto da pergunta, dito do jeito mais simples. */
 const CATEGORIES = {
-  water_food: { name: 'Água e comida', module: 'Módulo 02' },
-  energy: { name: 'Energia', module: 'Módulo 01' },
-  comm_info: { name: 'Comunicação', module: 'Módulo 03' },
-  medical: { name: 'Saúde', module: 'Módulo 04' },
-  tactical: { name: 'Segurança', module: 'Módulo 05' },
+  water_food: { name: 'Água' },
+  energy: { name: 'Luz e comida' },
+  comm_info: { name: 'Notícias e contato' },
+  medical: { name: 'Primeiros socorros' },
+  tactical: { name: 'Plano de saída' },
 } as const;
+
+/**
+ * Em vez de nota de 0 a 100, uma palavra. "40/100" pede uma conta; "Em parte" a pessoa
+ * entende na hora — e é o que a faz querer fechar o que falta.
+ */
+function situacao(points: number) {
+  if (points >= 100) return 'Pronto';
+  if (points > 10) return 'Em parte';
+  return 'Falta';
+}
 
 export default function SurvivalQuiz() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
@@ -52,10 +66,10 @@ export default function SurvivalQuiz() {
 
   const diagnosis =
     totalScore <= 150
-      ? { title: 'Vulnerabilidade crítica', text: 'Sua casa depende inteiramente das redes públicas. Acima de 72 horas sem elas, não há plano B.' }
+      ? { title: 'Sua casa ainda depende de tudo funcionar', text: 'Se a luz ou a água faltarem por mais de um dia, vocês ficam sem plano. O essencial dá para resolver em uma tarde.' }
       : totalScore <= 350
-        ? { title: 'Autonomia parcial', text: 'Suas reservas resolvem dias, não semanas — e uma emergência médica colocaria tudo sob estresse.' }
-        : { title: 'Autonomia avançada', text: 'O essencial está de pé. O que falta são os detalhes finos: redundância e mobilidade.' };
+        ? { title: 'Sua casa está no meio do caminho', text: 'Vocês aguentam alguns dias, mas ainda há buracos — e são eles que pesam quando a falta dura mais.' }
+        : { title: 'Sua casa está bem preparada', text: 'O essencial já existe. O plano ajuda a conferir o que falta e a manter tudo em dia.' };
 
   if (showResults) {
     return (
@@ -87,8 +101,8 @@ export default function SurvivalQuiz() {
                     style={{ width: `${points}%` }}
                   />
                 </span>
-                <span className="w-16 shrink-0 text-right text-[0.8125rem] tabular-nums text-faint">
-                  {points <= 40 ? category.module : `${points}/100`}
+                <span className="w-16 shrink-0 text-right text-[0.8125rem] text-faint">
+                  {situacao(points)}
                 </span>
               </li>
             );
@@ -96,7 +110,7 @@ export default function SurvivalQuiz() {
         </ul>
 
         <div className="mt-10 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <BuyButton from="CTA Quiz">Corrigir minhas falhas</BuyButton>
+          <BuyButton from="CTA Quiz">Ver o plano completo — R$ 39,90</BuyButton>
           <button
             onClick={restartQuiz}
             className="inline-flex cursor-pointer items-center gap-2 text-[0.8125rem] text-faint transition-colors hover:text-cream"

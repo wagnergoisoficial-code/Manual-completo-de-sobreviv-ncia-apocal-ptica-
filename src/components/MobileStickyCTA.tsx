@@ -57,8 +57,13 @@ export default function MobileStickyCTA() {
           className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center px-4 pb-4 md:hidden"
           style={{ paddingBottom: 'calc(1rem + env(safe-area-inset-bottom))' }}
         >
-          <BuyButton from="CTA Barra Fixa" className="pointer-events-auto shadow-[0_8px_32px_rgba(0,0,0,0.55)]">
-            Quero meu acesso
+          {/* O preço vai junto: é a única coisa que a pessoa ainda não sabe quando chega aqui
+              rolando a página, e é a que ela mais quer saber antes de tocar.
+              Com o preço o texto fica longo, e nos 360px dos Android mais vendidos no Brasil
+              a pílula quebrava em duas linhas. Menos margem interna aqui resolve sem mudar a
+              forma. */}
+          <BuyButton from="CTA Barra Fixa" className="pointer-events-auto px-5! shadow-[0_8px_32px_rgba(0,0,0,0.55)]">
+            R$ 39,90 · Quero preparar minha casa
           </BuyButton>
         </motion.div>
       )}

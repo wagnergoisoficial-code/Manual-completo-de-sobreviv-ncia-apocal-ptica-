@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Header } from "./Header";
-import { ProductSummary } from "./ProductSummary";
-import { VisualBundleHero } from "./VisualBundleHero";
+import { ResumoCompacto, OfertaCompleta } from "./Oferta";
 import { CustomerForm } from "./CustomerForm";
 import { PaymentSection } from "./PaymentSection";
-import { CheckoutFaq } from "./CheckoutFaq";
+import { Garantia } from "./Garantia";
+import FAQ from "../../components/FAQ";
 import { PixScreen } from "./PixScreen";
 import { ThankYouScreen } from "./ThankYouScreen";
 import { Footer } from "./Footer";
@@ -178,9 +178,11 @@ export default function CheckoutPage() {
       newErrors.email = "Informe um e-mail válido para receber o acesso.";
     }
 
+    // O WhatsApp é opcional. Só vale conferir se a pessoa começou a digitar — aí um número
+    // pela metade é engano, e é melhor avisar do que guardar um contato que não funciona.
     const cleanPhone = customer.phone.replace(/\D/g, "");
-    if (!cleanPhone || cleanPhone.length < 10) {
-      newErrors.phone = "Informe um WhatsApp válido com DDD (ex: 11 99999-9999).";
+    if (cleanPhone && cleanPhone.length < 10) {
+      newErrors.phone = "Confira o WhatsApp com DDD (ex: 11 99999-9999), ou deixe em branco.";
     }
 
     const cleanCpf = customer.document.replace(/\D/g, "");
@@ -191,6 +193,25 @@ export default function CheckoutPage() {
     }
 
     setErrors(newErrors);
+
+    // No celular o botão fica abaixo dos campos. Sem isto, quem aperta "Gerar Pix" com um
+    // campo errado não vê o aviso — para ela o botão simplesmente não fez nada. A tela vai
+    // até o primeiro campo com problema e o cursor já fica nele.
+    const ordemDosCampos: [keyof CustomerData, string][] = [
+      ["name", "customer-name"],
+      ["email", "customer-email"],
+      ["document", "customer-cpf"],
+      ["phone", "customer-phone"],
+    ];
+    const primeiroComErro = ordemDosCampos.find(([campo]) => newErrors[campo]);
+    if (primeiroComErro) {
+      requestAnimationFrame(() => {
+        const campo = document.getElementById(primeiroComErro[1]);
+        campo?.scrollIntoView({ block: "center", behavior: "smooth" });
+        campo?.focus({ preventScroll: true });
+      });
+    }
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -313,42 +334,31 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#020617] text-slate-100 flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950 font-['Plus_Jakarta_Sans',sans-serif]">
-      {/* a) Topo sem menu ou links de saída */}
+    <div className="grain flex min-h-screen flex-col bg-night text-cream">
+      {/* Topo sem menu nem links de saída: a marca da página de vendas e nada para clicar. */}
       <Header />
 
-      <main className="flex-1 w-full mx-auto max-w-xl px-4 py-5 sm:py-6 lg:max-w-6xl lg:px-8 lg:py-10">
+      <main className="mx-auto w-full max-w-[1160px] flex-1 px-6 pb-20 pt-6 sm:px-10 sm:pt-10 lg:pt-16">
         {step === "checkout" && (
           /*
-            DUAS LARGURAS, DOIS COMPORTAMENTOS
+            CELULAR PRIMEIRO
 
-            No celular é uma coluna só, na ordem em que a decisão acontece: o produto
-            convence, o preço fecha, o formulário e o pagamento executam, as dúvidas
-            aparecem por último para quem ainda hesita.
+            A maior parte de quem chega aqui está no celular, e mais de 90% saía antes de
+            gerar o Pix. Por isso a ordem no celular é: um resumo de uma linha (capa, nome,
+            preço), o formulário, o botão — e só depois a garantia, a lista do que vem no
+            pacote e as dúvidas. Quem já decidiu não rola nada para achar onde pagar.
 
-            No computador a mesma tela vira duas colunas. Aquela coluna estreita no meio
-            de uma tela larga parecia um aplicativo de celular espremido — e o pior:
-            obrigava a rolar para achar onde pagar. Lado a lado, o que convence fica à
-            esquerda e o que executa fica à direita, tudo visível de uma vez.
-
-            A ordem no código já é a ordem do celular, e empilhada ela continua certa —
-            por isso a grade não precisa reposicionar nada.
+            No computador a mesma tela vira duas colunas: a oferta à esquerda, com o livro
+            e a lista, e o formulário à direita. A ordem no código é a do celular; a do
+            computador vem da grade, que põe cada bloco na sua coluna.
           */
-          <div className="animate-fade-in space-y-5 lg:grid lg:grid-cols-12 lg:items-start lg:gap-8 lg:space-y-0">
+          <div className="animate-fade-in lg:grid lg:grid-cols-12 lg:gap-x-16">
 
-            {/* A — o que convence: o pôster do produto e o resumo da oferta */}
-            <div className="space-y-5 lg:col-span-7 lg:space-y-6">
-              {/* Primeiro contêiner acima da página de checkout: Poster Visual Oficial do Bundle */}
-              <VisualBundleHero />
+            {/* Resumo do topo — só no celular. */}
+            <ResumoCompacto />
 
-              {/* b) Resumo Compacto da Oferta */}
-              <ProductSummary price={PRECO_EM_REAIS} />
-            </div>
-
-            {/* B — o que executa: os dados, o pagamento e, logo abaixo, as dúvidas que
-                aparecem justamente na hora de pagar */}
-            <div className="space-y-5 lg:col-span-5 lg:space-y-6">
-              {/* c) Formulário com dados essenciais */}
+            {/* Dados, pagamento e garantia — a coluna da direita no computador. */}
+            <div className="mt-7 space-y-8 lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:mt-0">
               <CustomerForm
                 data={customer}
                 onChange={handleCustomerChange}
@@ -356,7 +366,6 @@ export default function CheckoutPage() {
                 onOpenPrivacy={() => setLegalModal("privacy")}
               />
 
-              {/* d) Pagamento em 2 abas (PIX e CARTÃO), selos de segurança e garantia */}
               <PaymentSection
                 customer={customer}
                 amountInCents={amountInCents}
@@ -371,23 +380,38 @@ export default function CheckoutPage() {
                   ar, chave errada, Stripe instável —, a compra ainda tem por onde sair.
                   Nenhuma venda pode morrer por causa de um soluço nosso. */}
               {pagamentoQuebrado && (
-                <div className="bg-slate-900/60 border border-amber-500/40 rounded-2xl p-4 text-xs text-slate-300 space-y-3">
-                  <p className="leading-relaxed">
+                <div className="border border-amber/40 p-5">
+                  <p className="text-small text-mist">
                     O pagamento não abriu aqui nesta página. Você pode concluir a compra com
                     segurança direto no Stripe:
                   </p>
                   <a
                     href={hostedCheckoutUrl()}
-                    className="w-full py-3 px-5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm flex items-center justify-center transition-colors"
+                    className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-amber px-8 py-4 text-[0.9375rem] font-semibold text-night transition-colors hover:bg-amber-bright"
                   >
                     Continuar para o pagamento
                   </a>
                 </div>
               )}
 
-              {/* e) FAQ curto (acordeão) para sanar as principais dúvidas */}
-              <CheckoutFaq />
+              <Garantia />
             </div>
+
+            {/* A oferta — a coluna da esquerda no computador, fixa enquanto o formulário rola.
+                No celular aparece abaixo da garantia, só com a lista do que vem no pacote. */}
+            <div className="mt-14 lg:sticky lg:top-12 lg:col-span-5 lg:col-start-1 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:self-start">
+              <OfertaCompleta />
+            </div>
+
+            {/* As dúvidas, com as mesmas respostas da página de vendas. */}
+            <section className="mt-14 lg:col-span-6 lg:col-start-7 lg:row-start-2 lg:mt-16" aria-labelledby="duvidas-titulo">
+              <h2 id="duvidas-titulo" className="eyebrow text-faint">
+                Dúvidas frequentes
+              </h2>
+              <div className="mt-5">
+                <FAQ />
+              </div>
+            </section>
           </div>
         )}
 
@@ -406,13 +430,13 @@ export default function CheckoutPage() {
         )}
       </main>
 
-      {/* f) Rodapé legal (Decreto 7.962/2013) */}
+      {/* Rodapé legal (Decreto 7.962/2013) */}
       <Footer
         onOpenTerms={() => setLegalModal("terms")}
         onOpenPrivacy={() => setLegalModal("privacy")}
       />
 
-      {/* Modais Legais in-page (sem tirar da página) */}
+      {/* Termos e privacidade abrem por cima, sem tirar a pessoa da compra. */}
       <LegalModals modalType={legalModal} onClose={() => setLegalModal(null)} />
     </div>
   );

@@ -9,8 +9,13 @@ import React from 'react';
  * celular.
  */
 
-/** A marca é um pico desenhado, não um ícone de biblioteca. */
-function PeakMark() {
+/**
+ * A marca é um pico desenhado, não um ícone de biblioteca.
+ *
+ * Exportada porque o checkout usa exatamente este desenho: quem clica em comprar tem de
+ * reconhecer na página seguinte a mesma marca que acabou de ver.
+ */
+export function PeakMark() {
   return (
     <svg viewBox="0 0 28 20" className="w-6 h-[1.05rem] shrink-0" aria-hidden="true">
       <path

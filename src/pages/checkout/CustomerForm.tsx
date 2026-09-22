@@ -1,6 +1,13 @@
 import React, { useState } from "react";
-import { User, Mail, Phone, CreditCard, AlertCircle, Sparkles } from "lucide-react";
 import { CustomerData } from "./types";
+
+/**
+ * Os dados de quem compra.
+ *
+ * Só o que é preciso para entregar e cobrar: nome, e-mail — para onde vai o acesso — e
+ * CPF, que o Banco Central exige para emitir o Pix. O WhatsApp é opcional: cada campo
+ * obrigatório a mais é uma chance a mais de a pessoa desistir antes do botão.
+ */
 
 interface CustomerFormProps {
   data: CustomerData;
@@ -9,12 +16,27 @@ interface CustomerFormProps {
   onOpenPrivacy: () => void;
 }
 
-export const CustomerForm: React.FC<CustomerFormProps> = ({
-  data,
-  onChange,
-  errors,
-  onOpenPrivacy,
-}) => {
+const CAMPO =
+  "w-full rounded-[10px] border bg-coal px-4 py-3 text-[16px] text-cream " +
+  "placeholder:text-faint transition-colors focus:outline-none";
+
+const estadoDoCampo = (erro?: string) =>
+  erro ? "border-red-400/70 focus:border-red-400" : "border-cream/12 focus:border-amber";
+
+const Rotulo: React.FC<{ htmlFor: string; children: React.ReactNode }> = ({ htmlFor, children }) => (
+  <label htmlFor={htmlFor} className="mb-2 block text-[0.8125rem] font-medium text-cream">
+    {children}
+  </label>
+);
+
+const Erro: React.FC<{ id: string; mensagem?: string }> = ({ id, mensagem }) =>
+  mensagem ? (
+    <p id={id} role="alert" className="mt-1.5 text-[0.8125rem] text-red-400">
+      {mensagem}
+    </p>
+  ) : null;
+
+export const CustomerForm: React.FC<CustomerFormProps> = ({ data, onChange, errors, onOpenPrivacy }) => {
   const [emailSuggestion, setEmailSuggestion] = useState<string | null>(null);
 
   // Máscara para WhatsApp
@@ -34,7 +56,8 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
     return `${raw.slice(0, 3)}.${raw.slice(3, 6)}.${raw.slice(6, 9)}-${raw.slice(9)}`;
   };
 
-  // Verificação de erro de digitação comum em domínios de e-mail
+  // Um domínio digitado errado é um acesso que nunca chega. Melhor oferecer a correção
+  // agora do que descobrir pelo suporte depois.
   const checkEmailTypo = (emailVal: string) => {
     const email = emailVal.trim().toLowerCase();
     const parts = email.split("@");
@@ -55,14 +78,9 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
       "outlok.com": "outlook.com",
       "outloo.com": "outlook.com",
       "yaho.com": "yahoo.com",
-      "yahoo.com.br": "yahoo.com.br",
     };
 
-    if (commonTypos[domain]) {
-      setEmailSuggestion(`${user}@${commonTypos[domain]}`);
-    } else {
-      setEmailSuggestion(null);
-    }
+    setEmailSuggestion(commonTypos[domain] ? `${user}@${commonTypos[domain]}` : null);
   };
 
   const applyEmailSuggestion = () => {
@@ -73,182 +91,120 @@ export const CustomerForm: React.FC<CustomerFormProps> = ({
   };
 
   return (
-    <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
-      <div className="border-b border-slate-800/80 pb-2">
-        <h2 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-          <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xs flex items-center justify-center">
-            1
-          </span>
-          Dados para Acesso e Envio
-        </h2>
-        <p className="text-[11px] text-slate-400 mt-0.5">
-          O acesso ao workbook e ao manual será enviado para o e-mail informado abaixo.
-        </p>
-      </div>
+    <section aria-labelledby="dados-titulo">
+      <h2 id="dados-titulo" className="eyebrow text-faint">
+        Seus dados
+      </h2>
 
-      <div className="space-y-3.5">
-        {/* Nome Completo */}
+      <div className="mt-5 space-y-4">
         <div>
-          <label htmlFor="customer-name" className="block text-xs font-semibold text-slate-300 mb-1">
-            Nome Completo
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
-              <User className="w-4 h-4" />
-            </div>
-            <input
-              id="customer-name"
-              type="text"
-              name="name"
-              autoComplete="name"
-              placeholder="Ex: Carlos Silva"
-              value={data.name}
-              onChange={(e) => onChange("name", e.target.value)}
-              className={`w-full pl-9 pr-3 py-2.5 bg-slate-950/80 border rounded-xl text-white placeholder-slate-500 text-[16px] focus:outline-none focus:ring-2 transition-all ${
-                errors.name
-                  ? "border-rose-500/80 focus:ring-rose-500/30"
-                  : "border-slate-800 focus:border-amber-500/60 focus:ring-amber-500/20"
-              }`}
-            />
-          </div>
-          {errors.name && (
-            <p className="text-[11px] text-rose-400 mt-1 flex items-center gap-1 font-medium">
-              <AlertCircle className="w-3 h-3" /> {errors.name}
-            </p>
-          )}
+          <Rotulo htmlFor="customer-name">Nome completo</Rotulo>
+          <input
+            id="customer-name"
+            type="text"
+            name="name"
+            autoComplete="name"
+            placeholder="Como está no seu documento"
+            value={data.name}
+            onChange={(e) => onChange("name", e.target.value)}
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? "erro-nome" : undefined}
+            className={`${CAMPO} ${estadoDoCampo(errors.name)}`}
+          />
+          <Erro id="erro-nome" mensagem={errors.name} />
         </div>
 
-        {/* E-mail */}
         <div>
-          <label htmlFor="customer-email" className="block text-xs font-semibold text-slate-300 mb-1">
-            Seu Melhor E-mail (para envio do acesso imediato)
-          </label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
-              <Mail className="w-4 h-4" />
-            </div>
-            <input
-              id="customer-email"
-              type="email"
-              name="email"
-              inputMode="email"
-              autoComplete="email"
-              placeholder="Ex: carlos@gmail.com"
-              value={data.email}
-              onChange={(e) => {
-                onChange("email", e.target.value);
-                checkEmailTypo(e.target.value);
-              }}
-              onBlur={() => checkEmailTypo(data.email)}
-              className={`w-full pl-9 pr-3 py-2.5 bg-slate-950/80 border rounded-xl text-white placeholder-slate-500 text-[16px] focus:outline-none focus:ring-2 transition-all ${
-                errors.email
-                  ? "border-rose-500/80 focus:ring-rose-500/30"
-                  : "border-slate-800 focus:border-amber-500/60 focus:ring-amber-500/20"
-              }`}
-            />
-          </div>
-
-          {/* Sugestão de correção em caso de erro comum */}
-          {emailSuggestion && (
+          <Rotulo htmlFor="customer-email">E-mail</Rotulo>
+          <input
+            id="customer-email"
+            type="email"
+            name="email"
+            inputMode="email"
+            autoComplete="email"
+            placeholder="voce@email.com"
+            value={data.email}
+            onChange={(e) => {
+              onChange("email", e.target.value);
+              checkEmailTypo(e.target.value);
+            }}
+            onBlur={() => checkEmailTypo(data.email)}
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? "erro-email" : "apoio-email"}
+            className={`${CAMPO} ${estadoDoCampo(errors.email)}`}
+          />
+          {emailSuggestion ? (
             <button
               type="button"
               onClick={applyEmailSuggestion}
-              className="mt-1.5 inline-flex items-center gap-1.5 text-xs bg-amber-500/10 border border-amber-500/30 text-amber-300 px-2.5 py-1 rounded-lg hover:bg-amber-500/20 transition-colors text-left"
+              className="mt-1.5 text-left text-[0.8125rem] text-amber underline underline-offset-2 hover:text-amber-bright"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-              <span>
-                Você quis dizer <strong className="underline">{emailSuggestion}</strong>? Clique para corrigir.
-              </span>
+              Você quis dizer {emailSuggestion}? Toque para corrigir.
             </button>
+          ) : (
+            !errors.email && (
+              <p id="apoio-email" className="mt-1.5 text-[0.8125rem] text-faint">
+                O seu acesso chega neste e-mail.
+              </p>
+            )
           )}
-
-          {errors.email && (
-            <p className="text-[11px] text-rose-400 mt-1 flex items-center gap-1 font-medium">
-              <AlertCircle className="w-3 h-3" /> {errors.email}
-            </p>
-          )}
+          <Erro id="erro-email" mensagem={errors.email} />
         </div>
 
-        {/* Lado a lado só onde cabe. No computador estes dois campos vivem na coluna
-            estreita do pagamento, e ali o rótulo do CPF não entra em meia largura. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3">
-          {/* WhatsApp para suporte */}
-          <div>
-            <label htmlFor="customer-phone" className="block text-xs font-semibold text-slate-300 mb-1">
-              WhatsApp (para suporte imediato)
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
-                <Phone className="w-4 h-4" />
-              </div>
-              <input
-                id="customer-phone"
-                type="tel"
-                name="tel"
-                inputMode="tel"
-                autoComplete="tel"
-                placeholder="(11) 99999-9999"
-                value={data.phone}
-                onChange={(e) => onChange("phone", formatPhone(e.target.value))}
-                className={`w-full pl-9 pr-3 py-2.5 bg-slate-950/80 border rounded-xl text-white placeholder-slate-500 text-[16px] focus:outline-none focus:ring-2 transition-all ${
-                  errors.phone
-                    ? "border-rose-500/80 focus:ring-rose-500/30"
-                    : "border-slate-800 focus:border-amber-500/60 focus:ring-amber-500/20"
-                }`}
-              />
-            </div>
-            {errors.phone && (
-              <p className="text-[11px] text-rose-400 mt-1 flex items-center gap-1 font-medium">
-                <AlertCircle className="w-3 h-3" /> {errors.phone}
-              </p>
-            )}
-          </div>
+        <div>
+          <Rotulo htmlFor="customer-cpf">CPF</Rotulo>
+          <input
+            id="customer-cpf"
+            type="text"
+            name="cpf"
+            inputMode="numeric"
+            autoComplete="off"
+            placeholder="000.000.000-00"
+            value={data.document}
+            onChange={(e) => onChange("document", formatCpf(e.target.value))}
+            aria-invalid={!!errors.document}
+            aria-describedby={errors.document ? "erro-cpf" : "apoio-cpf"}
+            className={`${CAMPO} ${estadoDoCampo(errors.document)}`}
+          />
+          {!errors.document && (
+            <p id="apoio-cpf" className="mt-1.5 text-[0.8125rem] text-faint">
+              Usado só para gerar o seu Pix.
+            </p>
+          )}
+          <Erro id="erro-cpf" mensagem={errors.document} />
+        </div>
 
-          {/* CPF (Necessário para emissão do PIX e Cartão no Mercado Pago) */}
-          <div>
-            <label htmlFor="customer-cpf" className="block text-xs font-semibold text-slate-300 mb-1">
-              CPF (exigência do Banco Central para emissão do Pix)
-            </label>
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-500">
-                <CreditCard className="w-4 h-4" />
-              </div>
-              <input
-                id="customer-cpf"
-                type="text"
-                name="cpf"
-                inputMode="numeric"
-                autoComplete="off"
-                placeholder="000.000.000-00"
-                value={data.document}
-                onChange={(e) => onChange("document", formatCpf(e.target.value))}
-                className={`w-full pl-9 pr-3 py-2.5 bg-slate-950/80 border rounded-xl text-white placeholder-slate-500 text-[16px] focus:outline-none focus:ring-2 transition-all ${
-                  errors.document
-                    ? "border-rose-500/80 focus:ring-rose-500/30"
-                    : "border-slate-800 focus:border-amber-500/60 focus:ring-amber-500/20"
-                }`}
-              />
-            </div>
-            {errors.document && (
-              <p className="text-[11px] text-rose-400 mt-1 flex items-center gap-1 font-medium">
-                <AlertCircle className="w-3 h-3" /> {errors.document}
-              </p>
-            )}
-          </div>
+        <div>
+          <Rotulo htmlFor="customer-phone">
+            WhatsApp <span className="font-normal text-faint">(opcional)</span>
+          </Rotulo>
+          <input
+            id="customer-phone"
+            type="tel"
+            name="tel"
+            inputMode="tel"
+            autoComplete="tel"
+            placeholder="(11) 99999-9999"
+            value={data.phone}
+            onChange={(e) => onChange("phone", formatPhone(e.target.value))}
+            aria-invalid={!!errors.phone}
+            aria-describedby={errors.phone ? "erro-telefone" : undefined}
+            className={`${CAMPO} ${estadoDoCampo(errors.phone)}`}
+          />
+          <Erro id="erro-telefone" mensagem={errors.phone} />
         </div>
       </div>
 
-      {/* Aviso LGPD sem link de saída externo */}
-      <div className="pt-2 border-t border-slate-800/80 text-[11px] text-slate-400 flex items-center justify-between">
-        <span>Seus dados estão protegidos sob a LGPD (Lei 13.709/2018).</span>
+      <p className="mt-4 text-[0.8125rem] text-faint">
+        Seus dados ficam protegidos pela LGPD.{" "}
         <button
           type="button"
           onClick={onOpenPrivacy}
-          className="text-amber-400/90 hover:text-amber-300 underline font-medium cursor-pointer"
+          className="text-mist underline underline-offset-2 hover:text-cream"
         >
-          Ver Política
+          Ver política
         </button>
-      </div>
-    </div>
+      </p>
+    </section>
   );
 };

@@ -15,8 +15,9 @@ import MobileStickyCTA from './components/MobileStickyCTA';
 import Testimonials from './components/Testimonials';
 import { HandArrow, HandNote, HandUnderline } from './components/Annotation';
 import { trackPixel } from './pixel';
-import { CHAPTERS } from './data';
+import { CHAPTERS, JA_ACONTECEU } from './data';
 import manualCover from './assets/images/capa-manual.jpg';
+import BookObject from './components/BookObject';
 
 /** A medida da página. Todo bloco começa e termina nestes limites. */
 const SHELL = 'mx-auto max-w-[1240px] px-6 sm:px-10 lg:px-16';
@@ -25,7 +26,7 @@ const SHELL = 'mx-auto max-w-[1240px] px-6 sm:px-10 lg:px-16';
 function ScrollCue() {
   return (
     <a
-      href="#metodo"
+      href="#ja-aconteceu"
       className="group flex flex-col items-center gap-4 text-faint transition-colors hover:text-cream"
     >
       <span aria-hidden="true" className="h-12 w-px bg-gradient-to-b from-transparent to-cream/30" />
@@ -37,47 +38,6 @@ function ScrollCue() {
       </svg>
       <span className="eyebrow">Descubra mais</span>
     </a>
-  );
-}
-
-/**
- * O objeto: a capa tratada como produto físico, com perspectiva, lombada e a mesma luz
- * quente que atravessa a página. Não é um mockup flutuando — está apoiado numa sombra.
- */
-function BookObject() {
-  return (
-    <div className="relative mx-auto w-[68%] max-w-[340px] lg:w-[78%] lg:max-w-none">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -inset-16 bg-[radial-gradient(ellipse_at_50%_40%,rgba(243,179,64,0.20),transparent_66%)] blur-2xl"
-      />
-      <div className="relative [perspective:1600px]">
-        <div className="relative [transform:rotateY(-13deg)_rotateX(2deg)] [transform-style:preserve-3d]">
-          <img
-            src={manualCover}
-            alt="Capa do Manual Completo de Sobrevivência Apocalíptica"
-            className="relative block w-full shadow-[24px_36px_70px_rgba(0,0,0,0.7)]"
-            referrerPolicy="no-referrer"
-          />
-          {/* Lombada: a borda que transforma uma imagem plana num objeto. */}
-          <span
-            aria-hidden="true"
-            className="absolute inset-y-0 -left-[9px] w-[9px] bg-gradient-to-r from-night via-ash to-slate"
-            style={{ transform: 'rotateY(-72deg)', transformOrigin: 'right center' }}
-          />
-          {/* Brilho da luz âmbar batendo na capa pela direita. */}
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(102deg,rgba(0,0,0,0.42),transparent_38%,rgba(255,200,92,0.14))]"
-          />
-        </div>
-      </div>
-      {/* Chão: a sombra que apoia o objeto. */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-8 left-[6%] h-10 w-[88%] rounded-[50%] bg-black/55 blur-2xl"
-      />
-    </div>
   );
 }
 
@@ -118,10 +78,10 @@ export default function App() {
 
             {/* A — a promessa */}
             <div className="lg:col-span-5 lg:col-start-1 lg:row-start-1">
-              <span className="eyebrow text-amber">Manual + plataforma</span>
+              <span className="eyebrow text-amber">Manual + Plataforma Método 5P</span>
               <h1 className="mt-6 max-w-[19ch] text-hero text-cream">
-                Quando o sistema para, não existe tempo para aprender.{' '}
-                <span className="text-amber">Existe o que você preparou antes.</span>
+                Em uma tarde, sua casa fica pronta{' '}
+                <span className="text-amber">para 3 dias sem luz, sem água e sem mercado.</span>
               </h1>
             </div>
 
@@ -133,17 +93,17 @@ export default function App() {
             {/* C — a decisão */}
             <div className="lg:col-span-5 lg:col-start-1 lg:row-start-2">
               <p className="max-w-[42ch] text-lead text-mist">
-                Em uma tarde, a sua casa fica pronta para os três primeiros dias sem luz, sem
-                água e sem mercado. Com um plano escrito — não com boa intenção.
+                O manual diz o que fazer. A plataforma mostra, item por item, o que você já tem
+                e o que ainda falta.
               </p>
               <div className="mt-8">
                 <BuyButton from="CTA Hero" block>
-                  Quero meu acesso
+                  Quero preparar minha casa
                 </BuyButton>
               </div>
               <p className="mt-5 flex items-center gap-2.5 text-[0.8125rem] text-faint">
                 <Lock className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
-                Pagamento único · Acesso imediato · 7 dias de garantia
+                R$ 39,90 · pagamento único · acesso imediato · 7 dias de garantia
               </p>
             </div>
 
@@ -156,8 +116,37 @@ export default function App() {
         </div>
       </section>
 
+      {/* ── JÁ ACONTECEU ─────────────────────────────────────────────────────────
+          O título que abria a página mora aqui agora, com a prova que ele pedia: não é
+          hipótese, é o que o Brasil já viveu. Três fatos, sem adjetivo — para uma família
+          comum, a calma convence mais do que o susto. */}
+      <section id="ja-aconteceu" className="py-24 lg:py-32">
+        <div className={SHELL}>
+          <span className="eyebrow text-faint">Já aconteceu no Brasil</span>
+          <h2 className="mt-6 max-w-[24ch] text-section text-cream">
+            Quando o sistema para, não existe tempo para aprender.{' '}
+            <span className="text-amber">Existe o que você preparou antes.</span>
+          </h2>
+
+          <ul className="mt-14 grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8">
+            {JA_ACONTECEU.map(({ quando, oQue }) => (
+              <li key={quando} className="border-t border-cream/10 pt-6">
+                <span className="eyebrow text-amber">{quando}</span>
+                <p className="mt-4 text-title text-cream">{oQue}</p>
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-14 max-w-[46ch] text-lead text-pretty text-mist lg:max-w-none">
+            Ninguém escolhe o dia.{' '}
+            <span className="text-cream">Dá para escolher o quanto a sua casa está pronta.</span>
+          </p>
+        </div>
+      </section>
+
       {/* ── O MÉTODO ────────────────────────────────────────────────────────────
-          O reenquadramento que decide a venda: não é um PDF, é uma plataforma. */}
+          O reenquadramento que decide a venda: não é só um PDF. O manual e a plataforma
+          trabalham juntos — um para consultar, o outro para fazer. */}
       <section id="metodo" className="bg-coal py-24 lg:py-32">
         <div className={SHELL}>
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-12 lg:gap-12">
@@ -169,9 +158,9 @@ export default function App() {
                 <span className="text-amber">Você fica preparado.</span>
               </h2>
               <p className="mt-7 max-w-[46ch] text-lead text-mist">
-                O que quase todo mundo vende é um PDF de duzentas páginas: você baixa, lê metade
-                e fecha. O Método 5P é uma plataforma — os cinco pilares viram passos marcados, e
-                você vê na tela o que já tem e o que ainda falta.
+                Manual sozinho a gente lê, concorda e guarda. Por isso o Método 5P vem em duas
+                partes: o Manual Completo, para consultar quando precisar, até sem internet, e a
+                plataforma, onde cada capítulo vira uma tarefa para marcar.
               </p>
 
               <div className="relative mt-12 inline-block">
@@ -186,7 +175,7 @@ export default function App() {
               {/* A anotação entra torta, por fora da grade, apontando para o objeto. */}
               <div className="pointer-events-none absolute right-2 top-0 z-10 hidden w-56 lg:block">
                 <HandNote tilt={4} className="text-[1.45rem] leading-tight">
-                  Conhecimento também é uma arma.
+                  Conhecimento também protege.
                 </HandNote>
                 <HandArrow className="ml-8 mt-2 h-16 w-11 -scale-x-100 text-cream/70" />
               </div>
@@ -238,7 +227,7 @@ export default function App() {
               </p>
               <div className="mt-9">
                 <BuyButton from="CTA Módulos" variant="ghost" block>
-                  Quero meu acesso
+                  Quero preparar minha casa
                 </BuyButton>
               </div>
             </div>
@@ -273,11 +262,11 @@ export default function App() {
             <div className="lg:sticky lg:top-16 lg:col-span-4 lg:self-start">
               <span className="eyebrow text-faint">Diagnóstico</span>
               <h2 className="mt-6 max-w-[15ch] text-section text-cream">
-                Sua casa aguenta sete dias sem luz e sem água?
+                Sua casa aguenta 3 dias sem luz e sem água?
               </h2>
               <p className="mt-6 max-w-[38ch] text-small text-mist">
-                Cinco perguntas. No fim, a sua nota em cada pilar e qual módulo resolve cada
-                falha.
+                Cinco perguntas rápidas. No fim, você vê o que a sua casa já tem e o que ainda
+                falta.
               </p>
             </div>
 
@@ -295,9 +284,9 @@ export default function App() {
       <section id="depoimentos" className="bg-coal py-24 lg:py-28">
         <div className={SHELL}>
           <div className="mb-16 max-w-[30ch]">
-            <span className="eyebrow text-amber">Quem já entrou</span>
+            <span className="eyebrow text-amber">Depoimentos</span>
             <h2 className="mt-6 text-section text-cream">
-              O que chega depois da compra
+              Quem já comprou
             </h2>
           </div>
           <Testimonials />
@@ -326,11 +315,11 @@ export default function App() {
               <h2 className="mt-6 max-w-[12ch] text-section text-cream">Perguntas diretas</h2>
               <div className="mt-9">
                 <BuyButton from="CTA Fechamento" block>
-                  Quero meu acesso
+                  Quero preparar minha casa
                 </BuyButton>
               </div>
               <p className="mt-5 max-w-[34ch] text-[0.8125rem] text-faint">
-                Pagamento único · Acesso imediato · 7 dias de garantia
+                R$ 39,90 · pagamento único · acesso imediato · 7 dias de garantia
               </p>
             </div>
 

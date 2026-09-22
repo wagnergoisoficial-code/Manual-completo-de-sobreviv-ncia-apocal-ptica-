@@ -26,6 +26,18 @@ interface Depoimento {
   offset?: string;
 }
 
+/**
+ * COMO ACRESCENTAR UM PRINT
+ *
+ *   1. Salve a imagem em src/assets/images/ (ex.: depoimento-nome-sobrenome.jpeg).
+ *   2. Importe no topo deste arquivo, como o do Claudio.
+ *   3. Acrescente uma entrada abaixo, com o texto do print no alt e uma inclinação
+ *      diferente das vizinhas (entre -2 e 2, nunca zero). Um offset como 'lg:mt-14' em
+ *      prints alternados quebra a linha reta da fileira no computador.
+ *
+ * Só print real, de comprador real. No computador eles se arrumam em fileiras de dois;
+ * no celular, um embaixo do outro.
+ */
 const DEPOIMENTOS: Depoimento[] = [
   {
     src: claudioMariotto,
@@ -61,7 +73,7 @@ export default function Testimonials({ comAnotacao = true }: TestimonialsProps) 
         {DEPOIMENTOS.map((depoimento) => (
           <figure
             key={depoimento.src}
-            className={`group relative mx-auto w-full max-w-[560px] ${depoimento.offset ?? ''}`}
+            className={`group relative mx-auto w-full max-w-[560px] lg:mx-0 lg:w-[calc(50%-1.25rem)] ${depoimento.offset ?? ''}`}
             style={{ transform: `rotate(${depoimento.tilt}deg)` }}
           >
             {/* A mesma luz quente do resto da página, para o print não flutuar no vazio. */}

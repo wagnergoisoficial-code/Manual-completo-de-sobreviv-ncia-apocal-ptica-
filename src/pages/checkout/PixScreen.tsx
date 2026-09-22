@@ -1,21 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { Copy, Check, QrCode, Clock, ShieldCheck, ArrowRight, Loader2, Sparkles } from "lucide-react";
+import { Copy, Check, QrCode, Clock } from "lucide-react";
 import { PaymentTransaction } from "./types";
+import { PILL_BASE, PILL_VARIANTS } from "../../components/BuyButton";
 
 interface PixScreenProps {
   transaction: PaymentTransaction;
-  onSimulateApprove?: () => Promise<void>;
   onCancel?: () => void;
 }
 
-export const PixScreen: React.FC<PixScreenProps> = ({
-  transaction,
-  onSimulateApprove,
-  onCancel,
-}) => {
+/**
+ * O Pix gerado, esperando a transferência.
+ *
+ * No celular o botão de copiar vem antes do QR Code: quem está no celular paga colando
+ * o código no app do banco — escanear a própria tela não dá. O QR é para quem está no
+ * computador e paga pelo celular.
+ */
+export const PixScreen: React.FC<PixScreenProps> = ({ transaction, onCancel }) => {
   const [copied, setCopied] = useState(false);
   const [timeLeft, setTimeLeft] = useState<number>(1800); // 30 minutos em segundos
-  const [isApproving, setIsApproving] = useState(false);
 
   // Contagem regressiva da validade real do Pix
   useEffect(() => {
@@ -53,150 +55,94 @@ export const PixScreen: React.FC<PixScreenProps> = ({
     }
   };
 
-  const handleSimulate = async () => {
-    if (onSimulateApprove) {
-      setIsApproving(true);
-      try {
-        await onSimulateApprove();
-      } finally {
-        setIsApproving(false);
-      }
-    }
-  };
-
   return (
-    <div className="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-5 shadow-2xl">
-      {/* Topo do Pix */}
-      <div className="text-center space-y-1.5 border-b border-slate-800 pb-4">
-        <div className="inline-flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full text-emerald-400 text-xs font-semibold">
-          <Loader2 className="w-3.5 h-3.5 animate-spin" />
-          <span>Aguardando transferência Pix</span>
-        </div>
-        <h3 className="text-xl font-black text-white">
-          Pix Gerado — R$ 39,90
-        </h3>
-        <p className="text-xs text-slate-300">
-          Acesso à Plataforma Método 5P + Manual de Sobrevivência
+    <div className="space-y-8">
+      <div>
+        <span className="eyebrow flex items-center gap-3 text-amber">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-amber opacity-75" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-amber" />
+          </span>
+          Aguardando o pagamento
+        </span>
+        <h1 className="mt-5 text-section text-cream">Pix gerado</h1>
+        <p className="mt-3 text-lead text-mist">
+          R$ 39,90 · Manual Completo de Sobrevivência Apocalíptica + Plataforma Método 5P
         </p>
-
-        {/* Timer de Validade */}
-        <div className="flex items-center justify-center gap-1.5 text-xs text-amber-400 font-mono font-medium pt-1">
-          <Clock className="w-3.5 h-3.5" />
-          <span>Código válido por: {formatTimer(timeLeft)}</span>
-        </div>
+        <p className="mt-4 flex items-center gap-2 text-[0.8125rem] text-faint">
+          <Clock className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
+          Código válido por <span className="font-mono text-mist">{formatTimer(timeLeft)}</span>
+        </p>
       </div>
 
-      {/* Regra de Ouro Mobile First: No celular o botão COPIAR CÓDIGO PIX fica ACIMA do QR Code */}
-      <div className="space-y-2">
-        <button
-          type="button"
-          onClick={copyPixCode}
-          className="w-full py-4 px-5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-base sm:text-lg flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 active:scale-[0.99] transition-all cursor-pointer"
-        >
+      <div>
+        <button type="button" onClick={copyPixCode} className={`${PILL_BASE} ${PILL_VARIANTS.solid} w-full`}>
           {copied ? (
             <>
-              <Check className="w-5 h-5 text-slate-950 stroke-[3]" />
-              <span>Código Pix Copiado!</span>
+              <Check className="h-4 w-4 shrink-0" strokeWidth={2.5} />
+              Código copiado
             </>
           ) : (
             <>
-              <Copy className="w-5 h-5 text-slate-950" />
-              <span>Copiar código Pix</span>
+              <Copy className="h-4 w-4 shrink-0" strokeWidth={2.25} />
+              Copiar código Pix
             </>
           )}
         </button>
-
         {copied && (
-          <p className="text-center text-xs text-emerald-400 font-medium animate-fade-in">
-            Código copiado! Abra o aplicativo do seu banco e escolha "Pix Copia e Cola".
+          <p className="animate-fade-in mt-3 text-center text-[0.8125rem] text-mist">
+            Agora abra o app do seu banco e escolha <strong className="text-cream">Pix Copia e Cola</strong>.
           </p>
         )}
       </div>
 
-      {/* Exibição do QR Code para quem estiver no computador ou tablet */}
-      <div className="bg-slate-950 border border-slate-800 rounded-xl p-4 flex flex-col items-center justify-center text-center space-y-3">
-        <div className="bg-white p-3 rounded-lg shadow-inner">
+      <div className="flex flex-col items-center gap-4 border-y border-cream/10 py-8 text-center">
+        {/* O QR fica sobre branco: é o contraste que a câmera do banco precisa para ler. */}
+        <div className="bg-white p-3">
           {transaction.qrCodeImageUrl ? (
             <img
               src={transaction.qrCodeImageUrl}
               alt="QR Code do Pix de R$ 39,90"
-              className="w-48 h-48 sm:w-52 sm:h-52 object-contain"
+              className="h-48 w-48 object-contain sm:h-52 sm:w-52"
             />
           ) : (
-            <div className="w-48 h-48 flex flex-col items-center justify-center bg-slate-100 rounded text-slate-800 text-xs p-2">
-              <QrCode className="w-24 h-24 text-slate-800 mb-2" />
-              <span className="font-mono text-[10px] break-all max-h-12 overflow-hidden">
+            <div className="flex h-48 w-48 flex-col items-center justify-center p-2 text-night">
+              <QrCode className="mb-2 h-24 w-24" />
+              <span className="max-h-12 overflow-hidden break-all font-mono text-[10px]">
                 {transaction.qrCode ? transaction.qrCode.slice(0, 40) + "..." : "Carregando QR Code..."}
               </span>
             </div>
           )}
         </div>
-        <span className="text-[11px] text-slate-400">
-          Se estiver no computador, escaneie o QR Code acima com o app do seu banco.
+        <span className="text-[0.8125rem] text-faint">
+          No computador? Escaneie com o app do banco no celular.
         </span>
       </div>
 
-      {/* Passo a Passo em 3 Linhas Exatas */}
-      <div className="bg-slate-950/70 border border-slate-800 rounded-xl p-3.5 space-y-2.5 text-xs text-slate-300">
-        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-          Como pagar em 3 passos simples:
-        </span>
-        <div className="flex items-start gap-2.5">
-          <div className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-400 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-            1
-          </div>
-          <span>Abra o app do seu banco e escolha a opção <strong>Pix Copia e Cola</strong>.</span>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <div className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-400 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-            2
-          </div>
-          <span>Cole o código copiado acima e confirme o pagamento de <strong>R$ 39,90</strong>.</span>
-        </div>
-        <div className="flex items-start gap-2.5">
-          <div className="w-4 h-4 rounded-full bg-amber-500/20 text-amber-400 font-bold text-[10px] flex items-center justify-center shrink-0 mt-0.5">
-            3
-          </div>
-          <span>Aguarde nesta tela: o sistema identifica o pagamento sozinho em poucos segundos.</span>
-        </div>
+      <div>
+        <h2 className="eyebrow text-faint">Como pagar</h2>
+        <ol className="mt-5 space-y-4 text-small text-mist">
+          {[
+            <>Abra o app do seu banco e escolha <strong className="text-cream">Pix Copia e Cola</strong>.</>,
+            <>Cole o código e confirme o pagamento de <strong className="text-cream">R$ 39,90</strong>. O recebedor aparece como Ebanx.</>,
+            <>Pode voltar para esta tela: ela percebe o pagamento sozinha, em poucos segundos.</>,
+          ].map((passo, i) => (
+            <li key={i} className="flex items-baseline gap-4">
+              <span className="eyebrow shrink-0 text-amber">{String(i + 1).padStart(2, "0")}</span>
+              <span>{passo}</span>
+            </li>
+          ))}
+        </ol>
       </div>
-
-      {/* Status da Detecção Automática */}
-      <div className="flex items-center justify-center gap-2 text-xs text-slate-400 bg-slate-950/50 py-2 rounded-lg border border-slate-800/60">
-        <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-        </span>
-        <span>Identificando transferência do Pix automaticamente...</span>
-      </div>
-
-      {/* Botão de teste para desenvolvimento/demonstração funcional */}
-      {onSimulateApprove && (
-        <div className="pt-2 border-t border-slate-800/80">
-          <button
-            type="button"
-            onClick={handleSimulate}
-            disabled={isApproving}
-            className="w-full py-2.5 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-          >
-            {isApproving ? (
-              <Loader2 className="w-3.5 h-3.5 animate-spin text-amber-400" />
-            ) : (
-              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            )}
-            <span>Simular aprovação imediata do Pix (Ambiente de Teste)</span>
-          </button>
-        </div>
-      )}
 
       {onCancel && (
         <div className="text-center">
           <button
             type="button"
             onClick={onCancel}
-            className="text-xs text-slate-400 hover:text-slate-200 underline cursor-pointer"
+            className="text-[0.8125rem] text-faint underline underline-offset-2 hover:text-cream"
           >
-            Voltar e alterar forma de pagamento
+            Voltar e trocar a forma de pagamento
           </button>
         </div>
       )}

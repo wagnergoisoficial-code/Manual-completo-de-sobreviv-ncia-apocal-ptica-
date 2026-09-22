@@ -37,8 +37,10 @@ declare global {
 type PixelEvent = 'ViewContent' | 'Lead' | 'InitiateCheckout' | 'AddPaymentInfo' | 'Purchase';
 
 /**
- * A chave de desduplicação. Só faz sentido no Purchase, que também sai do servidor:
- * mesmo event_id nos dois lados, uma venda contada uma vez só.
+ * A chave de desduplicação: mesmo event_id nos dois lados, um evento contado uma vez só.
+ *
+ * Usada no Purchase, que também sai do nosso webhook, e no InitiateCheckout, que o Meta
+ * recebe em dobro — pelo navegador e pelo canal de servidor do próprio pixel.
  */
 interface PixelOptions {
   eventID: string;

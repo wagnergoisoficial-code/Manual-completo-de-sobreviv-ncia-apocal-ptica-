@@ -97,10 +97,10 @@ export default function OfferSection() {
 
           <div className="mt-7">
             <BuyButton from="CTA Oferta" block>
-              Quero meu acesso
+              Quero preparar minha casa
             </BuyButton>
             <p className="mt-5 text-[0.8125rem] leading-relaxed text-faint">
-              Pagamento com Pix ou cartão, em uma página segura.
+              Pix ou cartão · acesso imediato no seu e-mail
             </p>
           </div>
 
@@ -126,10 +126,11 @@ export default function OfferSection() {
             </div>
           </div>
 
+          {/* O aviso de que o Pix aparece como Ebanx no extrato mora só no checkout, logo
+              acima do botão de gerar o Pix — é lá que a pessoa vai ver o nome no banco. Aqui
+              ele seria uma dúvida a mais, na hora errada. */}
           <p className="mt-8 text-[0.8125rem] leading-relaxed text-faint">
-            Pagamento processado pelo Stripe, com Pix ou cartão — esta página não recebe
-            dados de pagamento. No extrato do Pix o recebedor aparece como{' '}
-            <span className="text-mist">Ebanx</span>, o parceiro do Stripe no Brasil.
+            Pagamento seguro processado pelo Stripe.
           </p>
         </div>
 

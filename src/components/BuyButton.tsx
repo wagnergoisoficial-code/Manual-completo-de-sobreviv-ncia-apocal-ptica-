@@ -19,11 +19,18 @@ interface BuyButtonProps {
   className?: string;
 }
 
-const BASE =
+/**
+ * A forma da pílula, exportada para o checkout.
+ *
+ * Lá os botões são <button> — gerar o Pix, pagar com cartão — e não links para /checkout,
+ * então não passam pelo CheckoutLink. Mas têm de ser a mesma pílula: é ela que diz, nas
+ * duas páginas, "esta é a ação".
+ */
+export const PILL_BASE =
   'group inline-flex items-center justify-center gap-2.5 rounded-full font-semibold ' +
   'px-8 py-4 text-[0.9375rem] tracking-[-0.01em] transition-colors duration-200';
 
-const VARIANTS = {
+export const PILL_VARIANTS = {
   solid: 'bg-amber text-night hover:bg-amber-bright',
   ghost: 'border border-cream/25 text-cream hover:border-amber hover:text-amber',
 } as const;
@@ -38,7 +45,7 @@ export default function BuyButton({
   return (
     <CheckoutLink
       from={from}
-      className={`${BASE} ${VARIANTS[variant]} ${block ? 'w-full sm:w-auto' : ''} ${className}`}
+      className={`${PILL_BASE} ${PILL_VARIANTS[variant]} ${block ? 'w-full sm:w-auto' : ''} ${className}`}
     >
       {children}
       <ArrowRight

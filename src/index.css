@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Caveat:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Caveat:wght@500;600&display=swap');
 @import "tailwindcss";
 
 /*
@@ -125,21 +125,16 @@
 /*
   A PÁGINA DE CHECKOUT
 
-  /checkout tem desenho próprio — outro projeto, outra fonte (Plus Jakarta Sans), outra
-  paleta (a escala slate padrão do Tailwind, com âmbar e esmeralda). Ela não usa nada
-  dos tokens acima, e isso é de propósito: a página de vendas convence, a de pagamento
-  tranquiliza, e cada uma tem a sua linguagem.
+  /checkout usa os mesmos tokens desta página — o mesmo preto, o mesmo âmbar, a mesma
+  Figtree e a mesma pílula. A pessoa que clica em comprar não pode sentir que mudou de
+  site na hora de pagar.
 
-  O que falta ali são estas duas animações, que o desenho usa pelo nome e o Tailwind
-  não conhece.
+  A única coisa própria dela é esta entrada suave, usada quando uma tela troca pela outra
+  (formulário → QR Code → acesso liberado).
 */
 @layer utilities {
   .animate-fade-in {
     animation: checkout-fade-in 0.35s ease-out both;
-  }
-
-  .animate-bounce-short {
-    animation: checkout-bounce-short 0.9s ease-out 1;
   }
 }
 
@@ -154,22 +149,8 @@
   }
 }
 
-@keyframes checkout-bounce-short {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  30% {
-    transform: translateY(-8px);
-  }
-  60% {
-    transform: translateY(-3px);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .animate-fade-in,
-  .animate-bounce-short {
+  .animate-fade-in {
     animation: none;
   }
 }

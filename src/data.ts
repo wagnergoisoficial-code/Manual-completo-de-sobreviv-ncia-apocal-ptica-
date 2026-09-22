@@ -16,6 +16,28 @@ export const VSL_POSTER_URL = import.meta.env.VITE_VSL_POSTER || "";
 export const EBOOK_TITLE = "Manual Completo de Sobrevivência Apocalíptica";
 export const EBOOK_SUBTITLE = "A plataforma que transforma a preparação da sua casa em um plano com passos marcados.";
 
+/**
+ * O que já aconteceu no Brasil — a seção logo depois do topo.
+ *
+ * Fatos públicos e conferíveis, contados sem adjetivo. Nada aqui pode ser exagerado: a
+ * página fala com uma família comum, e o que convence essa família é reconhecer o que ela
+ * mesma viu no jornal, não um cenário de fim do mundo.
+ */
+export const JA_ACONTECEU = [
+  {
+    quando: "Greve dos caminhoneiros, 2018",
+    oQue: "Em poucos dias, postos sem combustível e prateleiras vazias.",
+  },
+  {
+    quando: "Amapá, 2020",
+    oQue: "A maior parte do estado ficou dias sem luz, com racionamento de energia por semanas.",
+  },
+  {
+    quando: "Rio Grande do Sul, 2024",
+    oQue: "Enchentes deixaram bairros e cidades inteiras sem água potável.",
+  },
+] as const;
+
 export const CHAPTERS: Chapter[] = [
   {
     number: 1,
@@ -79,55 +101,62 @@ export const CHAPTERS: Chapter[] = [
   }
 ];
 
+/**
+ * O diagnóstico, em linguagem de casa.
+ *
+ * Cada pergunta é uma situação que a pessoa consegue imaginar na própria cozinha, e cada
+ * resposta é algo que ela diria em voz alta — nada de termo técnico. As notas (10, 40–50,
+ * 100) são as mesmas de antes, porque é delas que sai o resultado.
+ */
 export const QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     id: 1,
     category: "water_food",
-    question: "Em caso de colapso repentino da rede de abastecimento urbano, qual é a sua autonomia hídrica real?",
+    question: "Se a água da rua parar hoje, quantos dias sua casa aguenta?",
     options: [
-      { text: "Nenhuma. Dependo de compras diárias ou galões de água mineral.", points: 10, feedback: "Vulnerabilidade Crítica: Você é altamente dependente da infraestrutura pública para o insumo mais básico." },
-      { text: "Possuo reservas de água potável para no máximo 3 a 5 dias.", points: 40, feedback: "Vulnerabilidade Moderada: Você tem uma janela de adaptação curta, mas insuficiente para crises prolongadas." },
-      { text: "Possuo sistemas de captação de chuva e purificação ativa de múltiplos estágios para meses.", points: 100, feedback: "Resiliência Excelente: Sua infraestrutura de captação e esterilização está alinhada a padrões táticos." }
+      { text: "Nenhum. Compro água quando preciso.", points: 10, feedback: "A água acaba no primeiro dia." },
+      { text: "Uns 2 ou 3 dias.", points: 40, feedback: "Dá para os primeiros dias, não para uma falta longa." },
+      { text: "Mais de uma semana, e sei deixar a água segura para beber.", points: 100, feedback: "A água está resolvida." }
     ]
   },
   {
     id: 2,
     category: "energy",
-    question: "Se a rede elétrica falhar por mais de 2 semanas (cenário Grid-Down), como lidaria com a conservação e energia?",
+    question: "Se faltar luz por 3 dias, o que acontece na sua casa?",
     options: [
-      { text: "Toda a comida estragaria no congelador e eu ficaria sem iluminação ou carregamento.", points: 10, feedback: "Sem Autonomia: A falta de refrigeração e iluminação causará colapso alimentar imediato." },
-      { text: "Tenho baterias portáteis ou gerador básico a combustível para 2 ou 3 dias de emergência.", points: 50, feedback: "Autonomia Limitada: Dependência de combustíveis fósseis que desaparecerão rapidamente do mercado." },
-      { text: "Tenho microgeração solar independente de rede com banco de baterias LiFePO4 e inversores off-grid.", points: 100, feedback: "Autonomia Soberana: Você possui uma minirrede fechada, essencial para o longo prazo." }
+      { text: "Ficamos no escuro e a comida da geladeira estraga.", points: 10, feedback: "Sem luz, a casa para." },
+      { text: "Temos lanterna, mas a comida da geladeira se perde.", points: 50, feedback: "A luz está resolvida; a comida, não." },
+      { text: "Temos lanterna, pilhas e comida que não precisa de geladeira.", points: 100, feedback: "A casa segue funcionando." }
     ]
   },
   {
     id: 3,
     category: "comm_info",
-    question: "Sem internet celular, fibra óptica ou redes móveis, como você receberia informações cruciais ou falaria com aliados?",
+    question: "Se o celular e a internet pararem, como vocês ficam sabendo das notícias e se encontram?",
     options: [
-      { text: "Ficaria totalmente incomunicável e sem saber o que está ocorrendo lá fora.", points: 10, feedback: "Blackout Cognitivo: Sem dados táticos, você operará às cegas no caos." },
-      { text: "Faria uso de walkie-talkies brinquedo ou esperaria por notícias impressas / megafone de autoridades.", points: 45, feedback: "Autonomia Frágil: Alcance extremamente reduzido e dependência de canais sob controle estatal." },
-      { text: "Opero rádio PX/PY de alta frequência com antenas direcionais e conheço frequências de ondas curtas.", points: 100, feedback: "Autonomia Forte: Você tem inteligência eletromagnética ativa capaz de cruzar fronteiras." }
+      { text: "Não teríamos como saber de nada.", points: 10, feedback: "Sem notícia e sem contato." },
+      { text: "Temos um rádio, mas não combinamos nada entre nós.", points: 45, feedback: "Há notícia, mas não há plano." },
+      { text: "Temos rádio a pilha e um lugar combinado para nos encontrarmos.", points: 100, feedback: "Notícia e plano, os dois." }
     ]
   },
   {
     id: 4,
     category: "medical",
-    question: "Se um membro de seu grupo sofrer uma hemorragia arterial severa ou infecção aguda profunda sem hospitais disponíveis:",
+    question: "Se alguém se machucar em casa e a ambulância demorar, você sabe o que fazer?",
     options: [
-      { text: "Chamaria o socorro de emergência clássico (SAMU/bombeiros) e aguardaria.", points: 10, feedback: "Risco Letal: Em colapsos, o tempo de resposta institucional cessa por completo." },
-      { text: "Tenho uma maleta de primeiros socorros padrão com curativos comuns e esparadrapo.", points: 40, feedback: "Insuficiência Médica: Gazes comuns não contêm sangramentos arteriais severos ou infecções bacterianas." },
-      { text: "Possuo kit APH tático (torniquetes, agentes hemostáticos, selos de tórax) e antibióticos estocados.", points: 100, feedback: "Autonomia Médica: Nível tático avançado. Capacidade real de preservação da vida." }
+      { text: "Não. Eu ligaria e esperaria.", points: 10, feedback: "Tudo depende do socorro chegar." },
+      { text: "Tenho uma caixa de primeiros socorros, mas não sei usar direito.", points: 40, feedback: "O material existe; falta saber usar." },
+      { text: "Tenho a caixa completa e sei o básico de primeiros socorros.", points: 100, feedback: "Dá para cuidar até o socorro chegar." }
     ]
   },
   {
     id: 5,
     category: "tactical",
-    question: "Qual é a sua postura estratégica em termos de mobilidade e segurança perimetral urbana?",
+    question: "Se a Defesa Civil pedir para sair de casa agora, sua família sabe o que levar e para onde ir?",
     options: [
-      { text: "Ficaria no meu apartamento convencional acreditando que os portões de ferro do condomínio seguram invasões.", points: 10, feedback: "Alvo Estático: Prédios e condomínios tornam-se armadilhas térmicas e de fome em poucos dias." },
-      { text: "Tenho um veículo abastecido e planejo fugir para o interior assim que o pânico começar nas rodovias.", points: 45, feedback: "Risco Logístico: Rodovias congestionadas tornam-se zonas vermelhas de emboscada e retenção física." },
-      { text: "Adoto a filosofia do 'Homem Cinzento' com abrigo fortificado furtivamente e rotas alternativas de escape a pé mapeadas.", points: 100, feedback: "Estrategista Avançado: Mobilidade furtiva e fortificação invisível de baixo perfil." }
+      { text: "Não. A gente decidiria na hora.", points: 10, feedback: "A decisão fica para o pior momento." },
+      { text: "Sabemos para onde ir, mas nada está separado.", points: 45, feedback: "Há destino, mas a saída atrasa." },
+      { text: "Sim. A mochila está pronta e o destino está combinado.", points: 100, feedback: "A família sai em minutos." }
     ]
   }
 ];
@@ -135,7 +164,7 @@ export const QUIZ_QUESTIONS: QuizQuestion[] = [
 export const BONUSES: Bonus[] = [
   {
     id: 1,
-    title: "O Guia Secreto de Telecomunicações Resilientes",
+    title: "Guia de Comunicação sem Internet e sem Celular",
     value: "Grátis",
     description: "O atlas definitivo contendo o mapa de frequências oficiais do governo, frequências militares ativas e o manual prático para montar receptores de ondas curtas usando sucatas eletrônicas.",
     badge: "EXCLUSIVO DE HOJE"
@@ -149,7 +178,7 @@ export const BONUSES: Bonus[] = [
   },
   {
     id: 3,
-    title: "Guia da Farmácia Natural e Antibióticos de Emergência",
+    title: "Farmácia Doméstica de Emergência",
     value: "Grátis",
     description: "Como estocar antibióticos veterinários de forma segura, dosagens para humanos e o catálogo de plantas medicinais de alto rendimento atestadas por estudos de medicina de combate.",
     badge: "SOBREVIVÊNCIA BIOLÓGICA"
@@ -157,18 +186,32 @@ export const BONUSES: Bonus[] = [
 ];
 
 /**
- * As quatro perguntas que decidem a compra: preço, o que é, como chega e o que acontece
- * se não servir. As demais foram cortadas — respondê-las aqui era repetir, em parágrafo,
- * o que a página já mostra.
+ * As perguntas que decidem a compra, na ordem em que a dúvida aparece.
+ *
+ * Primeiro o que é (e o que não é — o nome "apocalíptica" assusta quem só quer se prevenir
+ * de um apagão), depois se serve para a casa da pessoa, e por fim preço, entrega e
+ * garantia. A primeira fica aberta: é a objeção que mais afasta.
  */
 export const FAQS = [
   {
-    question: "É assinatura?",
-    answer: "Não. É pagamento único, sem mensalidade: você paga uma vez e o acesso é vitalício, com as atualizações e os novos módulos inclusos."
+    question: "É só para fim do mundo?",
+    answer: "Não. Apesar do nome, o foco é o que já aconteceu no Brasil: apagão, enchente, falta de água e mercado vazio."
   },
   {
     question: "Estou comprando apenas um e-book?",
     answer: "Não. Você recebe a plataforma completa do Método 5P — área de membros com os 5 módulos, checklists e ferramentas — e, dentro dela, o Manual Completo em PDF para baixar, além dos 3 bônus."
+  },
+  {
+    question: "Moro em apartamento. Serve?",
+    answer: "Serve. O manual tem um capítulo específico para apartamento."
+  },
+  {
+    question: "Vou gastar muito com equipamento?",
+    answer: "Não. O plano começa pelo que você já tem em casa e mostra o que falta."
+  },
+  {
+    question: "É assinatura?",
+    answer: "Não. É pagamento único, sem mensalidade: você paga uma vez e o acesso é vitalício, com as atualizações e os novos módulos inclusos."
   },
   {
     question: "Como funciona o acesso depois que eu pago?",

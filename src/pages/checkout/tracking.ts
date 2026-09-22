@@ -53,14 +53,67 @@ export function getTrackingParams(): TrackingData {
   };
 }
 
-/** A pessoa chegou à tela de pagamento. */
+/**
+ * UM InitiateCheckout POR VISITA
+ *
+ * "Visita" é a aba: da primeira vez que ela abre o checkout até ser fechada. Recarregar,
+ * voltar da tela do Pix ou ir à página de vendas e retornar não é outra pessoa chegando
+ * ao pagamento — e contar de novo inflaria justamente o número que a campanha usa para
+ * aprender quem está perto de comprar.
+ *
+ * A marca fica em dois lugares. Na memória do módulo, que sobrevive a qualquer remontagem
+ * do React dentro da mesma carga. E no sessionStorage, que sobrevive ao recarregar.
+ *
+ * O event_id é o mesmo durante toda a visita. O Meta recebe cada evento duas vezes —
+ * pelo navegador e pelo canal de servidor que o próprio pixel mantém — e é por esse id
+ * que ele reconhece os dois como um só.
+ */
+const CHAVE_DA_VISITA = "checkout:initiate_checkout";
+let idEnviadoNestaCarga: string | null = null;
+
+function novoId(): string {
+  try {
+    return `ic-${crypto.randomUUID()}`;
+  } catch {
+    // randomUUID só existe em contexto seguro. Em produção sempre é; aqui é só garantia.
+    return `ic-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+  }
+}
+
+/** A pessoa chegou à tela de pagamento — conta uma vez só por visita. */
 export function trackInitiateCheckout(value: number = 39.9, currency: string = "BRL") {
-  trackPixel("InitiateCheckout", {
-    value,
-    currency,
-    content_name: PRODUTO,
-    content_category: "Educação / Preparação",
-  });
+  if (idEnviadoNestaCarga) return;
+
+  let eventId: string | null = null;
+  try {
+    eventId = sessionStorage.getItem(CHAVE_DA_VISITA);
+  } catch {
+    // Navegação privada pode bloquear o armazenamento: sobra a marca em memória.
+  }
+
+  if (eventId) {
+    idEnviadoNestaCarga = eventId;
+    return;
+  }
+
+  eventId = novoId();
+  idEnviadoNestaCarga = eventId;
+  try {
+    sessionStorage.setItem(CHAVE_DA_VISITA, eventId);
+  } catch {
+    // Idem: sem armazenamento, vale a marca em memória.
+  }
+
+  trackPixel(
+    "InitiateCheckout",
+    {
+      value,
+      currency,
+      content_name: PRODUTO,
+      content_category: "Educação / Preparação",
+    },
+    { eventID: eventId },
+  );
 }
 
 /** A pessoa escolheu como pagar e apertou o botão. */

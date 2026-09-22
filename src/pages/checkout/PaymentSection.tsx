@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Elements, PaymentElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import { Zap, CreditCard, ShieldCheck, AlertCircle, ArrowRight, Loader2, Lock, Shield, KeyRound } from "lucide-react";
+import { Zap, CreditCard, ArrowRight, Loader2, Lock } from "lucide-react";
 import { CustomerData } from "./types";
 import { trackAddPaymentInfo } from "./tracking";
 import { stripePromise } from "./stripe";
+import { PILL_BASE, PILL_VARIANTS } from "../../components/BuyButton";
 
 /**
  * As duas formas de pagar, no desenho desta página.
@@ -40,20 +41,31 @@ interface PaymentSectionProps {
   onValidateForm: () => boolean;
 }
 
-/** Os campos do cartão herdam o desenho da página em vez de impor o do Stripe. */
+/**
+ * Os campos do cartão herdam os tokens da página de vendas em vez de impor os do Stripe:
+ * o mesmo carvão de fundo, o mesmo creme no texto, o âmbar no foco e a Figtree.
+ */
 const APARENCIA = {
   theme: "night" as const,
   variables: {
-    colorPrimary: "#f59e0b",
-    colorBackground: "#020617",
-    colorText: "#e2e8f0",
-    colorTextSecondary: "#94a3b8",
-    colorDanger: "#fb7185",
-    fontFamily: "'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif",
-    borderRadius: "12px",
+    colorPrimary: "#f3b340",
+    colorBackground: "#121213",
+    colorText: "#f5f1ea",
+    colorTextSecondary: "#a9a29a",
+    colorDanger: "#f87171",
+    fontFamily: "Figtree, ui-sans-serif, system-ui, sans-serif",
+    borderRadius: "10px",
     spacingUnit: "4px",
   },
 };
+
+/** O iframe do Stripe não enxerga as fontes da página: a Figtree precisa ir por aqui. */
+const FONTES = [
+  { cssSrc: "https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600&display=swap" },
+];
+
+/** A pílula âmbar da página de vendas, ocupando a largura da coluna. */
+const BOTAO_PRINCIPAL = `${PILL_BASE} ${PILL_VARIANTS.solid} w-full disabled:cursor-not-allowed disabled:opacity-70`;
 
 /**
  * Os campos do cartão e o botão de pagar.
@@ -129,32 +141,49 @@ const CartaoStripe: React.FC<{
   };
 
   return (
-    <div className="space-y-3">
-      <div className="bg-slate-950/90 border border-slate-800 rounded-xl p-3 text-slate-200">
-        <PaymentElement options={{ layout: "tabs" }} />
-      </div>
+    <div className="space-y-5">
+      <PaymentElement options={{ layout: "tabs" }} />
 
-      <button
-        type="button"
-        onClick={pagar}
-        disabled={enviando || !stripe}
-        className="w-full py-4 px-6 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-base sm:text-lg tracking-wide flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20 active:scale-[0.99] transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-      >
+      <button type="button" onClick={pagar} disabled={enviando || !stripe} className={BOTAO_PRINCIPAL}>
         {enviando ? (
           <>
-            <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
-            <span>Processando Cartão...</span>
+            <Loader2 className="h-4 w-4 shrink-0 animate-spin" strokeWidth={2.25} />
+            Processando o cartão…
           </>
         ) : (
           <>
-            <span>Pagar com Cartão — R$ 39,90</span>
-            <ArrowRight className="w-5 h-5 text-slate-950 stroke-[3]" />
+            Pagar com cartão — R$&nbsp;39,90
+            <ArrowRight
+              className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+              strokeWidth={2.25}
+            />
           </>
         )}
       </button>
     </div>
   );
 };
+
+/** Uma aba do seletor. A escolhida acende; o âmbar fica só no ícone, porque âmbar é ação. */
+const Aba: React.FC<{
+  ativa: boolean;
+  onClick: () => void;
+  icone: React.ReactNode;
+  children: React.ReactNode;
+}> = ({ ativa, onClick, icone, children }) => (
+  <button
+    type="button"
+    role="tab"
+    aria-selected={ativa}
+    onClick={onClick}
+    className={`flex items-center justify-center gap-2 rounded-full py-2.5 text-[0.875rem] font-semibold transition-colors ${
+      ativa ? "bg-cream/10 text-cream" : "text-mist hover:text-cream"
+    }`}
+  >
+    <span className={ativa ? "text-amber" : "text-faint"}>{icone}</span>
+    {children}
+  </button>
+);
 
 export const PaymentSection: React.FC<PaymentSectionProps> = ({
   customer,
@@ -174,111 +203,76 @@ export const PaymentSection: React.FC<PaymentSectionProps> = ({
   };
 
   return (
-    <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 sm:p-5 space-y-4">
-      <div className="border-b border-slate-800/80 pb-2 flex items-center justify-between">
-        <h2 className="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-          <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 font-bold text-xs flex items-center justify-center">
-            2
-          </span>
-          Forma de Pagamento
-        </h2>
-        <span className="text-[11px] text-emerald-400 font-semibold flex items-center gap-1">
-          <ShieldCheck className="w-3.5 h-3.5" /> Ambiente Seguro
-        </span>
-      </div>
+    <section aria-labelledby="pagamento-titulo">
+      <h2 id="pagamento-titulo" className="eyebrow text-faint">
+        Pagamento
+      </h2>
 
-      {/* Abas: PIX (já selecionada por padrão) e CARTÃO */}
-      <div className="grid grid-cols-2 gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
-        <button
-          type="button"
+      {/* Pix vem escolhido: é aprovação na hora, e é como a maioria paga. */}
+      <div role="tablist" aria-label="Forma de pagamento" className="mt-5 grid grid-cols-2 gap-1 rounded-full border border-cream/12 p-1">
+        <Aba
+          ativa={activeTab === "pix"}
           onClick={() => {
             setActiveTab("pix");
             setCardRejection(null);
           }}
-          className={`py-2.5 px-3 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
-            activeTab === "pix"
-              ? "bg-slate-800 text-amber-400 shadow-md border border-amber-500/40"
-              : "text-slate-400 hover:text-slate-200"
-          }`}
+          icone={<Zap className="h-4 w-4" strokeWidth={2} />}
         >
-          <Zap className="w-4 h-4 text-emerald-400 fill-emerald-400/20" />
-          <span>PIX</span>
-          {/* Na coluna estreita do computador esta etiqueta quebrava em duas linhas e
-              desalinhava a aba. A mesma informação aparece logo abaixo, em verde. */}
-          <span className="hidden sm:inline-block lg:hidden text-[10px] bg-emerald-950/80 text-emerald-300 px-1.5 py-0.2 rounded border border-emerald-800">
-            Aprovação Imediata
-          </span>
-        </button>
-
-        <button
-          type="button"
+          Pix
+        </Aba>
+        <Aba
+          ativa={activeTab === "card"}
           onClick={() => setActiveTab("card")}
-          className={`py-2.5 px-3 rounded-lg text-xs sm:text-sm font-bold flex items-center justify-center gap-2 transition-all cursor-pointer ${
-            activeTab === "card"
-              ? "bg-slate-800 text-amber-400 shadow-md border border-amber-500/40"
-              : "text-slate-400 hover:text-slate-200"
-          }`}
+          icone={<CreditCard className="h-4 w-4" strokeWidth={2} />}
         >
-          <CreditCard className="w-4 h-4 text-slate-300" />
-          <span>CARTÃO</span>
-        </button>
+          Cartão
+        </Aba>
       </div>
 
-      {/* CONTEÚDO DA ABA PIX */}
       {activeTab === "pix" && (
-        <div className="space-y-4 pt-1">
-          <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-300 space-y-2">
-            <div className="flex items-center gap-2 text-emerald-400 font-bold">
-              <Zap className="w-4 h-4" />
-              <span>Aprovado na hora • Acesso imediato ao workbook e PDF</span>
-            </div>
-            <p className="text-slate-400 text-[11px] leading-relaxed">
-              Ao clicar no botão abaixo, geramos o seu código Pix oficial com valor exato de <strong>R$ 39,90</strong>.
-            </p>
-          </div>
+        <div className="mt-5">
+          {/* O aviso do Ebanx fica logo acima do botão, e não depois: quem vê um nome
+              estranho no app do banco na hora de confirmar desconfia e cancela. Avisado
+              antes, não é surpresa. */}
+          <p className="text-[0.8125rem] leading-relaxed text-faint">
+            <span className="text-mist">O código aparece aqui mesmo, com aprovação na hora.</span>{" "}
+            No extrato do Pix o recebedor aparece como <span className="text-mist">Ebanx</span>, o
+            parceiro do Stripe no Brasil.
+          </p>
 
-          {/* O ÚNICO BOTÃO COM COR FORTE: ÂMBAR */}
-          <button
-            type="button"
-            onClick={handlePixClick}
-            disabled={isProcessing}
-            className="w-full py-4 px-6 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-base sm:text-lg tracking-wide flex items-center justify-center gap-2 shadow-xl shadow-amber-500/20 active:scale-[0.99] transition-all cursor-pointer disabled:opacity-70 disabled:cursor-not-allowed"
-          >
+          <button type="button" onClick={handlePixClick} disabled={isProcessing} className={`${BOTAO_PRINCIPAL} mt-5`}>
             {isProcessing ? (
               <>
-                <Loader2 className="w-5 h-5 animate-spin text-slate-950" />
-                <span>Gerando Pix Seguro...</span>
+                <Loader2 className="h-4 w-4 shrink-0 animate-spin" strokeWidth={2.25} />
+                Gerando o Pix…
               </>
             ) : (
               <>
-                <span>Gerar Pix — R$ 39,90</span>
-                <ArrowRight className="w-5 h-5 text-slate-950 stroke-[3]" />
+                Gerar Pix — R$&nbsp;39,90
+                <ArrowRight
+                  className="h-4 w-4 shrink-0 transition-transform duration-200 group-hover:translate-x-0.5"
+                  strokeWidth={2.25}
+                />
               </>
             )}
           </button>
         </div>
       )}
 
-      {/* CONTEÚDO DA ABA CARTÃO */}
       {activeTab === "card" && (
-        <div className="space-y-4 pt-1">
-          {/* Mensagem em caso de Cartão Recusado */}
+        <div className="mt-5 space-y-5">
           {cardRejection && (
-            <div className="bg-rose-950/40 border border-rose-800/80 rounded-xl p-3.5 text-xs space-y-2 text-rose-200 animate-fade-in">
-              <div className="flex items-center gap-2 text-rose-300 font-bold">
-                <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
-                <span>{cardRejection}</span>
-              </div>
+            <div className="animate-fade-in rounded-[10px] border border-red-400/40 bg-red-400/[0.06] p-4">
+              <p className="text-small text-cream">{cardRejection}</p>
               <button
                 type="button"
                 onClick={() => {
                   setCardRejection(null);
                   setActiveTab("pix");
                 }}
-                className="w-full mt-1 py-2.5 px-3 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
+                className={`${PILL_BASE} ${PILL_VARIANTS.ghost} mt-4 w-full`}
               >
-                <Zap className="w-4 h-4 fill-slate-950" />
-                <span>Pagar com Pix — Aprovação Imediata</span>
+                Pagar com Pix — aprovação imediata
               </button>
             </div>
           )}
@@ -293,6 +287,7 @@ export const PaymentSection: React.FC<PaymentSectionProps> = ({
                 paymentMethodTypes: ["card"],
                 locale: "pt-BR",
                 appearance: APARENCIA,
+                fonts: FONTES,
               }}
             >
               <CartaoStripe
@@ -306,62 +301,22 @@ export const PaymentSection: React.FC<PaymentSectionProps> = ({
           ) : (
             /* Os campos ainda não têm como montar: falta a chave pública ou o preço
                ainda está vindo do servidor. O Pix continua ali do lado, inteiro. */
-            <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-4 text-xs text-slate-300 space-y-3">
-              <div className="flex items-center gap-2 text-amber-400 font-semibold">
-                <Loader2 className="w-4 h-4 animate-spin text-amber-400" />
-                <span>Abrindo os campos do cartão...</span>
-              </div>
-              <p className="text-[11px] text-slate-400 leading-relaxed">
-                Se demorar, use a aba <strong className="text-slate-200">PIX</strong>: a aprovação é
-                imediata e o acesso sai na hora.
+            <div className="flex items-start gap-4 py-2">
+              <span className="mt-0.5 h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-cream/20 border-t-amber" />
+              <p className="text-small text-mist">
+                Abrindo os campos do cartão. Se demorar, use o{" "}
+                <strong className="font-semibold text-cream">Pix</strong>: a aprovação é imediata.
               </p>
             </div>
           )}
         </div>
       )}
 
-      {/* Seção visual de alta percepção de segurança */}
-      <div className="pt-2 border-t border-slate-800/80 space-y-2.5">
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-          <div className="bg-slate-950/80 border border-slate-800/90 rounded-xl p-2.5 flex items-center gap-2.5 sm:flex-col sm:text-center sm:gap-1.5">
-            <div className="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shrink-0 text-emerald-400">
-              <ShieldCheck className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold text-white block leading-tight">Ambiente Seguro</span>
-              <span className="text-[9px] text-slate-400 block leading-tight">Certificado SSL 256-bit</span>
-            </div>
-          </div>
-
-          <div className="bg-slate-950/80 border border-slate-800/90 rounded-xl p-2.5 flex items-center gap-2.5 sm:flex-col sm:text-center sm:gap-1.5">
-            <div className="w-7 h-7 rounded-lg bg-sky-500/10 border border-sky-500/30 flex items-center justify-center shrink-0 text-sky-400">
-              <KeyRound className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold text-white block leading-tight">Criptografia de Ponta a Ponta</span>
-              <span className="text-[9px] text-slate-400 block leading-tight">Dados 100% blindados</span>
-            </div>
-          </div>
-
-          <div className="bg-slate-950/80 border border-slate-800/90 rounded-xl p-2.5 flex items-center gap-2.5 sm:flex-col sm:text-center sm:gap-1.5">
-            <div className="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-center justify-center shrink-0 text-amber-400">
-              <Lock className="w-4 h-4" />
-            </div>
-            <div>
-              <span className="text-[11px] font-bold text-white block leading-tight">Privacidade Garantida</span>
-              <span className="text-[9px] text-slate-400 block leading-tight">Conforme a LGPD</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Garantia incondicional de 7 dias */}
-        <div className="text-center pt-1">
-          <p className="text-xs text-slate-400 font-medium inline-flex items-center justify-center gap-1.5">
-            <Shield className="w-3.5 h-3.5 text-amber-400" />
-            <span>Garantia incondicional de 7 dias • Reembolso integral sem burocracia</span>
-          </p>
-        </div>
-      </div>
-    </div>
+      {/* A mesma linha que fica embaixo dos botões da página de vendas. */}
+      <p className="mt-4 flex items-center justify-center gap-2 text-center text-[0.8125rem] text-faint">
+        <Lock className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
+        Pagamento único · Acesso imediato · 7 dias de garantia
+      </p>
+    </section>
   );
 };

@@ -15,18 +15,26 @@
     <link rel="preconnect" href="https://www.youtube-nocookie.com" crossorigin />
     <title>Manual de Sobrevivência Apocalíptica - Oficial</title>
 
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Code — só no domínio de produção.
+         O mesmo build roda no endereço .netlify.app, nos deploys de teste e no localhost.
+         Sem esta trava, cada visita a esses lugares entra no pixel da campanha como se
+         fosse um cliente — e o Meta aprende com gente que nunca viu um anúncio.
+         Fora da lista o fbq nem chega a existir, e todo disparo da página vira nada. -->
     <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', '1620681930065193');
-      fbq('track', 'PageView');
+      (function () {
+        if (location.hostname !== 'www.manualcompletodesobrevivencia.com') return;
+
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', '1620681930065193');
+        fbq('track', 'PageView');
+      })();
     </script>
     <!-- End Meta Pixel Code -->
   </head>
