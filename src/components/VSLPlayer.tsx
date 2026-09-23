@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Play, Pause, Volume2, VolumeX, X } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { YOUTUBE_VIDEO_URL, VSL_POSTER_URL } from '../data';
 
@@ -143,43 +143,18 @@ function PlayDisc() {
 }
 
 /**
- * Fachada do vídeo: um thumbnail nosso que abre o player numa camada por cima da página.
+ * Fachada do vídeo: um thumbnail nosso que dá lugar ao player no próprio quadro.
  *
- * O iframe embutido direto no hero carregava junto o "Assista no YouTube" — um convite
- * para sair da página de vendas bem no meio da decisão, e voltar dali é raro. Aqui o vídeo
- * abre por cima; ao fechar, a pessoa continua exatamente onde parou, com o CTA logo abaixo.
+ * O vídeo toca onde está, em qualquer tela. A camada por cima custava um toque a mais no
+ * celular: um para abrir a camada e outro no play do YouTube, porque o navegador do
+ * celular não deixa um vídeo com som começar sozinho — a não ser que o iframe nasça
+ * DENTRO do toque da pessoa. É exatamente isso que acontece aqui: o toque troca o
+ * thumbnail pelo iframe, e o gesto vale como permissão. Um toque, o vídeo começa.
+ *
+ * Quem quiser a tela cheia tem o botão do próprio player, sem nada no caminho.
  */
 function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isPlayerLoaded, setIsPlayerLoaded] = useState<boolean>(false);
-
-  /**
-   * No celular o vídeo toca no próprio quadro, sem camada por cima.
-   *
-   * O modal custava dois toques: um para abrir a camada e outro no play do YouTube,
-   * porque o navegador do celular não deixa um vídeo com som começar sozinho — a não
-   * ser que o iframe nasça DENTRO do toque da pessoa. É exatamente isso que acontece
-   * aqui: o toque troca o thumbnail pelo iframe, e o gesto vale como permissão.
-   *
-   * No computador o modal continua: lá a tela é grande e ver o vídeo do tamanho da
-   * janela vale a camada — e o problema dos dois toques não existe, porque o navegador
-   * de computador deixa o som começar.
-   */
-  const [tocandoAqui, setTocandoAqui] = useState<boolean>(false);
-
-  /**
-   * Quando o modal abriu.
-   *
-   * O fundo fecha ao ser clicado, e isso cria uma janela perigosa nos primeiros
-   * instantes: o clique fantasma que o celular dispara depois do toque, ou o segundo
-   * clique de quem ficou impaciente com o player carregando, aterrissa no fundo recém-
-   * montado e fecha o que acabou de abrir. Para quem está do outro lado, o vídeo
-   * simplesmente não abriu — e a pessoa clica de novo.
-   *
-   * Meio segundo de carência resolve sem tirar nada de ninguém: ninguém decide fechar
-   * um vídeo antes de ele aparecer.
-   */
-  const openedAtRef = useRef<number>(0);
+  const [tocando, setTocando] = useState<boolean>(false);
 
   // O hover não existe no celular, e é justamente lá que a espera dói mais. Depois que a
   // página assenta, a conexão é aberta de qualquer jeito — o vídeo é o centro do hero,
@@ -192,30 +167,7 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
   // Nem todo vídeo tem versão maxres; o hqdefault existe sempre.
   const [posterSrc, setPosterSrc] = useState<string>(VSL_POSTER_URL || `https://i.ytimg.com/vi/${youtubeId}/maxresdefault.jpg`);
 
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsOpen(false);
-    };
-    // Sem isto a página rola atrás da camada enquanto o vídeo está aberto.
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.addEventListener('keydown', handleKeyDown);
-
-    // Rede de segurança: se o onLoad do iframe nunca vier — conexão ruim, bloqueador,
-    // player recusado —, um spinner girando para sempre é pior do que a espera. Passados
-    // 8 segundos ele sai do caminho e entrega a tela ao YouTube, seja lá o que ele mostre.
-    const giveUp = setTimeout(() => setIsPlayerLoaded(true), 8000);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener('keydown', handleKeyDown);
-      clearTimeout(giveUp);
-    };
-  }, [isOpen]);
-
-  if (tocandoAqui) {
+  if (tocando) {
     return (
       <Screen>
         {/* O thumbnail continua atrás enquanto o player carrega: sem ele, o quadro
@@ -238,105 +190,37 @@ function YouTubeFacade({ youtubeId }: { youtubeId: string }) {
   }
 
   return (
-    <>
-      <Screen>
-        <button
-          type="button"
-          onClick={() => {
-            // A decisão é tomada no clique, e não no render: assim uma troca de
-            // orientação ou um redimensionamento não deixa o componente num modo
-            // que não combina mais com a tela.
-            const telaGrande =
-              typeof window !== 'undefined' &&
-              window.matchMedia('(min-width: 1024px)').matches;
-
-            if (telaGrande) {
-              setIsPlayerLoaded(false);
-              openedAtRef.current = Date.now();
-              setIsOpen(true);
-              return;
-            }
-            setTocandoAqui(true);
-          }}
-          aria-label="Assistir à apresentação"
-          className="group absolute inset-0 h-full w-full cursor-pointer"
-        >
-          <img
-            src={posterSrc}
-            alt=""
-            aria-hidden="true"
-            /* O poster é a primeira imagem que a pessoa vê no hero: adiar a carga dele
-               atrasa justamente o que convence a clicar. */
-            loading="eager"
-            fetchPriority="high"
-            onError={() => setPosterSrc(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`)}
-            className="absolute inset-0 h-full w-full object-cover opacity-95 transition-opacity duration-300 group-hover:opacity-100"
-          />
-          {/* O thumbnail é desenhado: headline, marca e composição próprias, e o centro
-              dele é onde mora a frase. Um disco no meio cobria justamente o "PLANO?".
-              O controle desce para o canto, sobre a vinheta — a arte fica inteira e o
-              quadro todo continua clicável. */}
-          <span className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-night/85 via-night/35 to-transparent" />
-          {/* O player leva um tempo para responder. O botão, não: ele encolhe no toque,
-              para a pessoa saber que foi registrado antes de qualquer coisa carregar. */}
-          <span className="absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-amber py-2.5 pl-3.5 pr-5 text-night transition-transform duration-200 group-hover:scale-[1.04] group-active:scale-95 sm:bottom-6 sm:left-6">
-            <Play className="h-4 w-4 translate-x-[1px] fill-current" />
-            <span className="text-[0.875rem] font-semibold tracking-[-0.01em]">Assistir</span>
-          </span>
-        </button>
-      </Screen>
-
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Apresentação em vídeo"
-            onClick={(event) => {
-              const isBackdropItself = event.target === event.currentTarget;
-              if (isBackdropItself && Date.now() - openedAtRef.current > 500) {
-                setIsOpen(false);
-              }
-            }}
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-night/96 p-4 backdrop-blur-sm sm:p-8"
-          >
-            <div className="w-full max-w-5xl">
-              <div className="mb-3 flex items-center justify-between gap-4">
-                <span className="eyebrow text-mist">Apresentação</span>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="flex cursor-pointer items-center gap-2 rounded-full border border-cream/25 px-4 py-2 text-[0.8125rem] font-medium text-mist transition-colors hover:border-amber hover:text-amber"
-                >
-                  Fechar
-                  <X className="h-3.5 w-3.5" />
-                </button>
-              </div>
-              <div className="relative aspect-video bg-black ring-1 ring-cream/12">
-                {!isPlayerLoaded && (
-                  <span className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 bg-black">
-                    <span className="h-9 w-9 animate-spin rounded-full border-2 border-cream/20 border-t-amber" />
-                    <span className="eyebrow text-faint">Carregando o vídeo</span>
-                  </span>
-                )}
-                <iframe
-                  onLoad={() => setIsPlayerLoaded(true)}
-                  className="h-full w-full border-0"
-                  src={`https://www.youtube-nocookie.com/embed/${youtubeId}?rel=0&modestbranding=1&autoplay=1&playsinline=1`}
-                  title="Vídeo de Apresentação"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+    <Screen>
+      <button
+        type="button"
+        onClick={() => setTocando(true)}
+        aria-label="Assistir à apresentação"
+        className="group absolute inset-0 h-full w-full cursor-pointer"
+      >
+        <img
+          src={posterSrc}
+          alt=""
+          aria-hidden="true"
+          /* O poster é a primeira imagem que a pessoa vê no hero: adiar a carga dele
+             atrasa justamente o que convence a clicar. */
+          loading="eager"
+          fetchPriority="high"
+          onError={() => setPosterSrc(`https://i.ytimg.com/vi/${youtubeId}/hqdefault.jpg`)}
+          className="absolute inset-0 h-full w-full object-cover opacity-95 transition-opacity duration-300 group-hover:opacity-100"
+        />
+        {/* O thumbnail é desenhado: headline, marca e composição próprias, e o centro
+            dele é onde mora a frase. Um disco no meio cobria justamente o "PLANO?".
+            O controle desce para o canto, sobre a vinheta — a arte fica inteira e o
+            quadro todo continua clicável. */}
+        <span className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-night/85 via-night/35 to-transparent" />
+        {/* O player leva um tempo para responder. O botão, não: ele encolhe no toque,
+            para a pessoa saber que foi registrado antes de qualquer coisa carregar. */}
+        <span className="absolute bottom-4 left-4 flex items-center gap-3 rounded-full bg-amber py-2.5 pl-3.5 pr-5 text-night transition-transform duration-200 group-hover:scale-[1.04] group-active:scale-95 sm:bottom-6 sm:left-6">
+          <Play className="h-4 w-4 translate-x-[1px] fill-current" />
+          <span className="text-[0.875rem] font-semibold tracking-[-0.01em]">Assistir</span>
+        </span>
+      </button>
+    </Screen>
   );
 }
 
