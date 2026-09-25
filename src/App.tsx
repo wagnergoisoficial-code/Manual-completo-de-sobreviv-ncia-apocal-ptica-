@@ -65,8 +65,8 @@ export default function App() {
             referrerPolicy="no-referrer"
           />
           {/* O sol da referência: a luz vem de um ponto, não de um degradê chapado. */}
-          <div className="absolute inset-0 bg-[radial-gradient(105%_80%_at_74%_34%,rgba(255,176,64,0.34),transparent_58%)]" />
-          <div className="absolute inset-0 bg-[linear-gradient(100deg,#0b0b0c_14%,rgba(11,11,12,0.9)_40%,rgba(11,11,12,0.52)_68%,rgba(11,11,12,0.8)_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(105%_80%_at_74%_34%,rgba(251,191,36,0.34),transparent_58%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(100deg,#020617_14%,rgba(2,6,23,0.9)_40%,rgba(2,6,23,0.52)_68%,rgba(2,6,23,0.8)_100%)]" />
           <div className="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-night via-night/75 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-night via-night/80 to-transparent" />
         </div>
@@ -196,7 +196,7 @@ export default function App() {
             className="h-full w-full scale-[1.9] object-cover object-[50%_72%] opacity-[0.34] blur-[2px]"
             referrerPolicy="no-referrer"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,#0b0b0c,rgba(11,11,12,0.55)_50%,#0b0b0c)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,#020617,rgba(2,6,23,0.55)_50%,#020617)]" />
         </div>
 
         <div className={`relative ${SHELL} text-center`}>
@@ -298,7 +298,7 @@ export default function App() {
       <section id="oferta" className="relative overflow-hidden bg-coal py-24 lg:py-32">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_70%_at_18%_50%,rgba(243,179,64,0.10),transparent_62%)]"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(90%_70%_at_18%_50%,rgba(245,158,11,0.10),transparent_62%)]"
         />
         <div className="relative">
           <OfferSection />

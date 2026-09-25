@@ -48,8 +48,8 @@ interface PaymentSectionProps {
 const APARENCIA = {
   theme: "night" as const,
   variables: {
-    colorPrimary: "#f3b340",
-    colorBackground: "#121213",
+    colorPrimary: "#f59e0b",
+    colorBackground: "#0f172a",
     colorText: "#f5f1ea",
     colorTextSecondary: "#a9a29a",
     colorDanger: "#f87171",

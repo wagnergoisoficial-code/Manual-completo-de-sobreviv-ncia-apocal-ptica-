@@ -23,7 +23,7 @@ export default function BookObject({
     <div className={`relative mx-auto ${className}`}>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-16 bg-[radial-gradient(ellipse_at_50%_40%,rgba(243,179,64,0.20),transparent_66%)] blur-2xl"
+        className="pointer-events-none absolute -inset-16 bg-[radial-gradient(ellipse_at_50%_40%,rgba(245,158,11,0.20),transparent_66%)] blur-2xl"
       />
       <div className="relative [perspective:1600px]">
         <div className="relative [transform:rotateY(-13deg)_rotateX(2deg)] [transform-style:preserve-3d]">
@@ -42,7 +42,7 @@ export default function BookObject({
           {/* Brilho da luz âmbar batendo na capa pela direita. */}
           <span
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(102deg,rgba(0,0,0,0.42),transparent_38%,rgba(255,200,92,0.14))]"
+            className="pointer-events-none absolute inset-0 bg-[linear-gradient(102deg,rgba(0,0,0,0.42),transparent_38%,rgba(251,191,36,0.14))]"
           />
         </div>
       </div>

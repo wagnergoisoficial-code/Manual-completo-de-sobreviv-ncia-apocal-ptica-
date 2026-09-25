@@ -124,7 +124,7 @@ function Screen({ children }: { children: React.ReactNode }) {
     <div className="relative" id="vsl-module">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -inset-8 sm:-inset-14 bg-[radial-gradient(ellipse_at_center,rgba(243,179,64,0.16),transparent_68%)] blur-2xl"
+        className="pointer-events-none absolute -inset-8 sm:-inset-14 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.16),transparent_68%)] blur-2xl"
       />
       <div className="relative aspect-video w-full overflow-hidden bg-coal ring-1 ring-cream/12">
         {children}

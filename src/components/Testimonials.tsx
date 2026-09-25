@@ -79,7 +79,7 @@ export default function Testimonials({ comAnotacao = true }: TestimonialsProps) 
             {/* A mesma luz quente do resto da página, para o print não flutuar no vazio. */}
             <span
               aria-hidden="true"
-              className="pointer-events-none absolute -inset-6 bg-[radial-gradient(ellipse_at_center,rgba(243,179,64,0.16),transparent_70%)] blur-2xl"
+              className="pointer-events-none absolute -inset-6 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.16),transparent_70%)] blur-2xl"
             />
             <img
               src={depoimento.src}

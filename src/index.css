@@ -6,7 +6,15 @@
 
   A página é fotográfica antes de ser gráfica: a profundidade vem da luz na imagem,
   não de bordas, cartões ou sombras. Uma única cor de acento (âmbar) carrega ação e
-  ênfase; tudo o mais é preto quente, creme e névoa.
+  ênfase; tudo o mais é o azul-preto frio do checkout.
+
+  As superfícies e o âmbar vêm de Check-out-manual, e são os do Tailwind: a família
+  slate no fundo, a família amber no acento. Quem sai da página de vendas e cai no
+  /checkout não pode enxergar uma troca de cor no meio da compra.
+
+  A tinta não veio de lá: o creme quente é desta página e fica. É ele que impede o
+  azul-preto de virar tela de painel — e sobre o fundo novo ainda separa de sobra,
+  com 5,5:1 no mais discreto dos três, acima do mínimo para texto pequeno.
 
   Duas regras de forma que dão identidade e nunca se misturam:
     · Ação  → pílula (raio total). Só botões e links de compra.
@@ -18,20 +26,20 @@
   --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
   --font-hand: "Caveat", ui-serif, cursive;
 
-  /* Superfícies — preto quente, do mais fundo ao mais claro */
-  --color-night: #0b0b0c;
-  --color-coal: #121213;
-  --color-ash: #191919;
-  --color-slate: #232323;
+  /* Superfícies — do mais fundo ao mais claro. Estas vêm do checkout. */
+  --color-night: #020617;  /* slate-950 — o fundo do checkout */
+  --color-coal: #0f172a;   /* slate-900 — os painéis */
+  --color-ash: #1e293b;    /* slate-800 — a cor das divisas */
+  --color-slate: #334155;  /* slate-700 */
 
-  /* Tinta */
+  /* Tinta — creme quente, desta página. Não é a do checkout, de propósito. */
   --color-cream: #f5f1ea;
   --color-mist: #a9a29a;
   --color-faint: #8b857d;
 
-  /* Acento único */
-  --color-amber: #f3b340;
-  --color-amber-bright: #ffc85c;
+  /* Acento único — o par exato do botão de pagar: fundo e hover */
+  --color-amber: #f59e0b;         /* amber-500 */
+  --color-amber-bright: #fbbf24;  /* amber-400 */
 
   /* Escala — o salto do micro-caps para a headline é a hierarquia da referência */
   --text-hero: clamp(2.1rem, 3.6vw, 3.25rem);
@@ -77,7 +85,7 @@
 
   ::selection {
     background-color: var(--color-amber);
-    color: #000;
+    color: var(--color-night);
   }
 
   /* O foco precisa existir sobre foto escura e sobre o âmbar chapado. */

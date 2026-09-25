@@ -41,7 +41,7 @@ export default function OfferSection() {
       <figure className="relative mb-14 lg:mb-20">
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(243,179,64,0.16),transparent_70%)] blur-3xl sm:-inset-14"
+          className="pointer-events-none absolute -inset-8 bg-[radial-gradient(ellipse_at_center,rgba(245,158,11,0.16),transparent_70%)] blur-3xl sm:-inset-14"
         />
         <picture>
           <source media="(min-width: 640px)" srcSet={bannerOferta} />
