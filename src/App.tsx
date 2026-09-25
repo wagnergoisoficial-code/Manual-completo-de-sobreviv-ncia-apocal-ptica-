@@ -12,6 +12,7 @@ import OfferSection from './components/OfferSection';
 import FAQ from './components/FAQ';
 import BuyButton from './components/BuyButton';
 import MobileStickyCTA from './components/MobileStickyCTA';
+import WhatsAppFloat from './components/WhatsAppFloat';
 import Testimonials from './components/Testimonials';
 import { HandArrow, HandNote, HandUnderline } from './components/Annotation';
 import { trackPixel } from './pixel';
@@ -345,6 +346,7 @@ export default function App() {
       </footer>
 
       <MobileStickyCTA />
+      <WhatsAppFloat />
 
     </div>
   );

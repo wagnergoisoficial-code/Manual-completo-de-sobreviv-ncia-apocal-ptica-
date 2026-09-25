@@ -1,6 +1,7 @@
 import React from 'react';
 import { HandArrow, HandNote } from './Annotation';
 import claudioMariotto from '../assets/images/depoimento-claudio-mariotto.jpeg';
+import herminioMacamo from '../assets/images/depoimento-herminio-macamo.jpeg';
 
 /**
  * Prova social em print, não em citação diagramada.
@@ -43,6 +44,12 @@ const DEPOIMENTOS: Depoimento[] = [
     src: claudioMariotto,
     alt: 'Comentário de Claudio Mariotto: “Comprei! Material claro, objetivo e direto! Me chamou a atenção as falas para o equilíbrio emocional enquanto os protocolos são aplicados.”',
     tilt: -1.6,
+  },
+  {
+    src: herminioMacamo,
+    alt: 'Mensagem de Herminio Macamo no WhatsApp: “Olá, gostei do conteúdo, ficou muito bom, obrigado por esta informação, minha esposa que me falou dessa plataforma e o livro, informação bem importante que merece nossa total atenção.”',
+    tilt: 1.4,
+    offset: 'lg:mt-14',
   },
 ];
 
