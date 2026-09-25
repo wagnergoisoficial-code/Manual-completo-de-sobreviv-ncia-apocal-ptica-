@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight } from 'lucide-react';
 import CheckoutLink from './CheckoutLink';
+import { ACAO_CRITICA } from './WhatsAppFloat';
 
 /**
  * O único botão de compra da página, em duas intensidades.
@@ -31,7 +32,9 @@ export const PILL_BASE =
   'px-8 py-4 text-[0.9375rem] tracking-[-0.01em] transition-colors duration-200';
 
 export const PILL_VARIANTS = {
-  solid: 'bg-amber text-night hover:bg-amber-bright',
+  /* A marca vai na variante cheia porque é ela que significa comprar ou pagar, nas duas
+     páginas. É o que faz o botão do WhatsApp se recolher antes de cobrir o toque. */
+  solid: `${ACAO_CRITICA} bg-amber text-night hover:bg-amber-bright`,
   ghost: 'border border-cream/25 text-cream hover:border-amber hover:text-amber',
 } as const;
 

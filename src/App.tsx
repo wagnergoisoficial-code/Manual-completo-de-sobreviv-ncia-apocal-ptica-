@@ -346,7 +346,7 @@ export default function App() {
       </footer>
 
       <MobileStickyCTA />
-      <WhatsAppFloat />
+      <WhatsAppFloat acimaDaBarraDeCompra />
 
     </div>
   );

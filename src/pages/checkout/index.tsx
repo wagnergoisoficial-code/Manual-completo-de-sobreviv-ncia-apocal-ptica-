@@ -8,6 +8,7 @@ import FAQ from "../../components/FAQ";
 import { PixScreen } from "./PixScreen";
 import { ThankYouScreen } from "./ThankYouScreen";
 import { Footer } from "./Footer";
+import WhatsAppFloat from "../../components/WhatsAppFloat";
 import { LegalModals } from "./LegalModals";
 import { CustomerData, PaymentTransaction, TrackingData } from "./types";
 import { getTrackingParams, trackInitiateCheckout, trackAddPaymentInfo } from "./tracking";
@@ -438,6 +439,9 @@ export default function CheckoutPage() {
 
       {/* Termos e privacidade abrem por cima, sem tirar a pessoa da compra. */}
       <LegalModals modalType={legalModal} onClose={() => setLegalModal(null)} />
+
+      {/* Aqui não há barra fixa de compra, então ele fica no canto de baixo mesmo. */}
+      <WhatsAppFloat />
     </div>
   );
 }
