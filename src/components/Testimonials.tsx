@@ -126,6 +126,19 @@ const DEPOIMENTOS: Depoimento[] = [
     tira nada da prova — o que convence é o balão, não o cabeçalho.
 */
 
+/**
+ * Largura máxima de cada print — o botão de volume da seção.
+ *
+ * Com onze prints, é este número que decide se a seção respira ou vira um corredor de
+ * imagens. No computador ele manda antes da conta de meia coluna (que dá 536px), então
+ * mexer aqui encolhe os dois lados de uma vez.
+ *
+ * No celular a tela quase sempre é mais estreita do que isto, e aí quem manda é a tela:
+ * abaixar mais só teria efeito lá se descesse abaixo da largura de um celular, e aí o
+ * print ficaria pequeno demais para o texto do balão ser lido.
+ */
+const LARGURA_DO_PRINT = 'max-w-[440px]';
+
 interface TestimonialsProps {
   /**
    * A anotação manuscrita pede margem para existir.
@@ -153,7 +166,7 @@ export default function Testimonials({ comAnotacao = true }: TestimonialsProps) 
         {DEPOIMENTOS.map((depoimento) => (
           <figure
             key={depoimento.src}
-            className={`group relative mx-auto w-full max-w-[560px] lg:mx-0 lg:w-[calc(50%-1.25rem)] ${depoimento.offset ?? ''}`}
+            className={`group relative mx-auto w-full ${LARGURA_DO_PRINT} lg:w-[calc(50%-1.25rem)] ${depoimento.offset ?? ''}`}
             style={{ transform: `rotate(${depoimento.tilt}deg)` }}
           >
             {/* A mesma luz quente do resto da página, para o print não flutuar no vazio. */}
