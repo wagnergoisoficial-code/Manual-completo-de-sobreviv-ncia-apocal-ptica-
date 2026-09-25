@@ -2,6 +2,15 @@ import React from 'react';
 import { HandArrow, HandNote } from './Annotation';
 import claudioMariotto from '../assets/images/depoimento-claudio-mariotto.jpeg';
 import herminioMacamo from '../assets/images/depoimento-herminio-macamo.jpeg';
+import natanaelLopes from '../assets/images/depoimento-natanael-lopes.jpeg';
+import marquinhos from '../assets/images/depoimento-marquinhos.jpeg';
+import heitorSantos from '../assets/images/depoimento-heitor-santos.jpeg';
+import natanJunior from '../assets/images/depoimento-natan-junior.jpeg';
+import claraCristina from '../assets/images/depoimento-clara-cristina.jpeg';
+import compradorAnonimo from '../assets/images/depoimento-comprador-anonimo.jpeg';
+import maralisa from '../assets/images/depoimento-maralisa.jpeg';
+import naty from '../assets/images/depoimento-naty.jpeg';
+import marcosVinicius from '../assets/images/depoimento-marcos-vinicius.jpeg';
 
 /**
  * Prova social em print, não em citação diagramada.
@@ -51,7 +60,71 @@ const DEPOIMENTOS: Depoimento[] = [
     tilt: 1.4,
     offset: 'lg:mt-14',
   },
+  {
+    src: natanaelLopes,
+    alt: 'Mensagem de Natanael Lopes no WhatsApp: “O material é muito bom mesmo! Conteúdo completo, fácil de entender e muito útil para quem quer começar a se preparar. Gostei bastante!”',
+    tilt: -1.1,
+  },
+  {
+    src: marquinhos,
+    alt: 'Mensagem de Marquinhos no WhatsApp: “Eu achava que estava preparado até conhecer esse material. O Método me mostrou muita coisa que eu estava deixando passar. Gostei demais da compra!”',
+    tilt: 1.7,
+    offset: 'lg:mt-10',
+  },
+  {
+    src: heitorSantos,
+    alt: 'Mensagem de Heitor Santos no WhatsApp: “Já comprei outros conteúdos desse nicho, mas esse foi de longe o melhor material que encontrei até agora. Muito completo, prático e bem feito. Superou minhas expectativas!”',
+    tilt: -1.9,
+  },
+  {
+    src: natanJunior,
+    alt: 'Mensagem de Natan Júnior no WhatsApp: “Boa tarde! Passei só para dizer que gostei muito do material. É completo, fácil de entender e a plataforma me surpreendeu bastante. Parabéns pelo trabalho!”',
+    tilt: 1.2,
+    offset: 'lg:mt-16',
+  },
+  {
+    src: claraCristina,
+    alt: 'Mensagem de Clara Cristina no WhatsApp: “Olá, tudo bem? Estou muito satisfeita com o material. Dá para perceber que foi feito com muita pesquisa e cuidado. Tem muita informação útil reunida em um só lugar. Gostei muito!”',
+    tilt: -1.4,
+  },
+  {
+    /* O print deste chega sem nome salvo, só com o número. Ver a observação no fim
+       deste arquivo antes de publicar. */
+    src: compradorAnonimo,
+    alt: 'Mensagem de um comprador no WhatsApp: “Olá, como vai? Comprei o material e estou gostando muito. Tem muita informação importante que eu nem imaginava. Foi uma ótima compra, parabéns pelo trabalho!”',
+    tilt: 1.8,
+    offset: 'lg:mt-12',
+  },
+  {
+    src: maralisa,
+    alt: 'Mensagem de Maralisa no WhatsApp: “Comprei o Método e gostei muito. O conteúdo é simples, prático e me ajudou a entender por onde começar minha preparação. Valeu muito a pena!”',
+    tilt: -1.2,
+  },
+  {
+    src: naty,
+    alt: 'Mensagem de Naty no WhatsApp: “Foi uma das melhores compras que fiz. O Método abriu meus olhos para coisas que eu nunca tinha pensado antes. Conteúdo muito completo e a plataforma é excelente. Recomendo!”',
+    tilt: 1.5,
+    offset: 'lg:mt-14',
+  },
+  {
+    src: marcosVinicius,
+    alt: 'Mensagem de Marcos Vinicius no WhatsApp: “Olá, boa tarde! Queria agradecer pelo material. Estou lendo e realmente me surpreendeu pela quantidade de informações importantes. A plataforma também ficou muito boa. Excelente trabalho!”',
+    tilt: -1.7,
+  },
 ];
+
+/*
+  DUAS COISAS PARA RESOLVER FORA DO CÓDIGO
+
+  · Três prints — Marquinhos, Maralisa e Naty — dizem "Método 4P" na imagem. A página
+    vende o Método 5P, com 5 módulos, e escreve 5P em todo lugar. Quem lê os dois no
+    mesmo rolar percebe. Não dá para corrigir daqui: ou os prints são refeitos, ou esses
+    três saem. Nos alt eu escrevi só "o Método", para o texto não repetir o erro.
+
+  · O print do comprador sem nome mostra o telefone dele inteiro no cabeçalho, e isso
+    vai ao ar para qualquer visitante. Cortar a faixa de cima da imagem resolve e não
+    tira nada da prova — o que convence é o balão, não o cabeçalho.
+*/
 
 interface TestimonialsProps {
   /**
